@@ -6,7 +6,7 @@ pipeline {
         ENV_TYPE = "production"
         PORT = 4104
         NAMESPACE = "spectragram-de"
-        REGISTRY_HOSTNAME = "BoldJaguars"
+        REGISTRY_HOSTNAME = "boldjaguars"
         REGISTRY = "registry.hub.docker.com"
         PROJECT = "spectra"
         DEPLOYMENT_NAME = "spectra-deployment"
