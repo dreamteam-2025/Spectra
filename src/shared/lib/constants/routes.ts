@@ -3,6 +3,7 @@ export const ROUTES = {
     HOME: "/",
     TERMS: "/terms",
     PRIVACY: "/privacy",
+    ERROR404: "/error404",
   },
   AUTH: {
     LOGIN: "/auth/login",

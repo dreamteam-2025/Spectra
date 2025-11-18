@@ -1,7 +1,7 @@
 import { ROUTES } from "@/shared/lib/constants";
 import Link from "next/link";
 
-export default function Login() {
+export default function SignIn() {
   return (
     <main>
       <h1>Sign In</h1>
