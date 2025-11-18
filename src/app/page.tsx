@@ -1,3 +1,4 @@
+import { Card } from "@/shared/ui/Card/Card";
 import styles from "./page.module.scss";
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     <>
       <main>
         <h1>Spectra. Main Page</h1>
+        <Card width={100} height={100} />
       </main>
     </>
   );
