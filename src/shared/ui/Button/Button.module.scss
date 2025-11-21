@@ -1,0 +1,116 @@
+$button-padding-default: 6px 52px;
+$button-padding-small: 6px 24px;
+$cursor-disabled: not-allowed;
+
+.button {
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  border: none;
+  outline: none;
+}
+
+.primary {
+  color: var(--light-100);
+  background: var(--accent-500);
+  padding: $button-padding-default;
+
+  &:not(:disabled):hover {
+    background: var(--accent-100);
+  }
+
+  &:not(:disabled):active {
+    background: var(--accent-700);
+  }
+
+  &:not(:disabled):focus-visible {
+    outline: 2px solid var(--accent-700);
+  }
+
+  &:disabled {
+    cursor: $cursor-disabled;
+    color: var(--light-900);
+    background: var(--accent-900);
+  }
+}
+
+.secondary {
+  color: var(--light-100);
+  background: var(--dark-300);
+  padding: $button-padding-default;
+
+  &:not(:disabled):hover {
+    background: var(--dark-100);
+  }
+
+  &:not(:disabled):active {
+    background: var(--dark-400);
+  }
+
+  &:not(:disabled):focus-visible {
+    outline: 2px solid var(--accent-300);
+  }
+
+  &:disabled {
+    cursor: $cursor-disabled;
+    color: var(--light-900);
+    background: var(--dark-500);
+  }
+}
+
+.outlined {
+  color: var(--accent-500);
+  border: 1px solid var(--accent-500);
+  background: transparent;
+  padding: $button-padding-default;
+
+  &:not(:disabled):hover {
+    color: var(--accent-100);
+    border: 1px solid var(--accent-100);
+  }
+
+  &:not(:disabled):active {
+    color: var(--accent-700);
+    border: 1px solid var(--accent-700);
+  }
+
+  &:not(:disabled):focus-visible {
+    border: none;
+    outline: 2px solid var(--accent-700);
+  }
+
+  &:disabled {
+    cursor: $cursor-disabled;
+    color: var(--accent-900);
+    border: 1px solid var(--accent-900);
+    background: transparent;
+  }
+}
+
+.small {
+  color: var(--accent-500);
+  background: transparent;
+  padding: $button-padding-small;
+
+  &:not(:disabled):hover {
+    color: var(--accent-100);
+  }
+
+  &:not(:disabled):active {
+    color: var(--accent-700);
+  }
+
+  &:not(:disabled):focus-visible {
+    outline: 2px solid var(--accent-700);
+  }
+
+  &:disabled {
+    cursor: $cursor-disabled;
+    color: var(--accent-900);
+  }
+}
