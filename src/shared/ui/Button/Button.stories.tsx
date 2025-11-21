@@ -123,37 +123,37 @@ export const OutlinedDisabled: Story = {
 
 /* SMALL */
 
-export const Small: Story = {
+export const Ghost: Story = {
   args: {
-    children: "Small",
-    variant: "small",
+    children: "Ghost",
+    variant: "ghost",
   },
 };
 
-export const SmallHover: Story = {
+export const GhostHover: Story = {
   args: {
-    children: "Small Hover",
-    variant: "small",
+    children: "Ghost Hover",
+    variant: "ghost",
   },
   parameters: {
     pseudo: { hover: true },
   },
 };
 
-export const SmallActive: Story = {
+export const GhostActive: Story = {
   args: {
-    children: "Small Active",
-    variant: "small",
+    children: "Ghost Active",
+    variant: "ghost",
   },
   parameters: {
     pseudo: { active: true },
   },
 };
 
-export const SmallDisabled: Story = {
+export const GhostDisabled: Story = {
   args: {
-    children: "Small Disabled",
-    variant: "small",
+    children: "Ghost Disabled",
+    variant: "ghost",
     disabled: true,
   },
 };

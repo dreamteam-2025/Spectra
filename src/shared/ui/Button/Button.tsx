@@ -1,20 +1,20 @@
-import React from "react";
-import * as Radix from "@radix-ui/react-primitive";
+import React, { ComponentProps } from "react";
+import { Primitive } from "@radix-ui/react-primitive";
 import s from "./Button.module.scss";
 
 type Props = {
   children: React.ReactNode;
-  variant: "primary" | "secondary" | "outlined" | "small";
+  variant: "primary" | "secondary" | "outlined" | "ghost";
   disabled?: boolean;
   className?: string;
-};
+} & ComponentProps<typeof Primitive.button>;
 
 export const Button = ({ children, variant = "primary", disabled = false, className = "", ...rest }: Props) => {
   const classes = `${s.button} ${s[variant]} ${className}`.trim();
 
   return (
-    <Radix.Primitive.button className={classes} disabled={disabled} {...rest}>
+    <Primitive.button className={classes} disabled={disabled} {...rest}>
       {children}
-    </Radix.Primitive.button>
+    </Primitive.button>
   );
 };

@@ -1,10 +1,9 @@
-$button-padding-default: 6px 52px;
-$button-padding-small: 6px 24px;
 $cursor-disabled: not-allowed;
 
 .button {
   font-size: 16px;
   font-weight: 600;
+  padding: 6px 24px;
   cursor: pointer;
   border-radius: 2px;
 
@@ -18,7 +17,6 @@ $cursor-disabled: not-allowed;
 .primary {
   color: var(--light-100);
   background: var(--accent-500);
-  padding: $button-padding-default;
 
   &:not(:disabled):hover {
     background: var(--accent-100);
@@ -42,7 +40,6 @@ $cursor-disabled: not-allowed;
 .secondary {
   color: var(--light-100);
   background: var(--dark-300);
-  padding: $button-padding-default;
 
   &:not(:disabled):hover {
     background: var(--dark-100);
@@ -67,7 +64,6 @@ $cursor-disabled: not-allowed;
   color: var(--accent-500);
   border: 1px solid var(--accent-500);
   background: transparent;
-  padding: $button-padding-default;
 
   &:not(:disabled):hover {
     color: var(--accent-100);
@@ -92,10 +88,9 @@ $cursor-disabled: not-allowed;
   }
 }
 
-.small {
+.ghost {
   color: var(--accent-500);
   background: transparent;
-  padding: $button-padding-small;
 
   &:not(:disabled):hover {
     color: var(--accent-100);
