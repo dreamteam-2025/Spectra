@@ -1,5 +1,6 @@
 import { Card } from "@/shared/ui/Card/Card";
 import styles from "./page.module.scss";
+import { Input } from "@/shared/ui/Input/Input";
 
 export default function Home() {
   return (
