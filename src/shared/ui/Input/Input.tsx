@@ -3,8 +3,8 @@
 import React, { useState, useId } from "react";
 import { Primitive } from "@radix-ui/react-primitive";
 import s from "./Input.module.scss";
-import eyeIcon from "../../../../public/icons/eye.svg";
-import eyeOffIcon from "../../../../public/icons/eye-off.svg";
+import eyeIcon from "../../../../public/icons/eye-outline.svg";
+import eyeOffIcon from "../../../../public/icons/eye-off-outline.svg";
 import searchIcon from "../../../../public/icons/search.svg";
 import Image from "next/image";
 

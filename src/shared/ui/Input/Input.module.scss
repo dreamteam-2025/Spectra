@@ -1,11 +1,11 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  
+
   &.fullWidth {
     max-width: 100%;
   }
-  
+
   &:not(.fullWidth) {
     max-width: 300px;
   }
@@ -25,7 +25,7 @@
   line-height: 24px;
   letter-spacing: 0;
   transition: border-color 0.2s ease;
-  outline: none; // Добавляем для consistency
+  outline: none;
 
   &::placeholder {
     color: var(--light-900);
@@ -46,9 +46,9 @@
 
   &.errorInput {
     border-color: var(--danger-500);
-    
+
     &:focus {
-      border-color: var(--danger-500); // Сохраняем красный цвет при фокусе на ошибке
+      border-color: var(--danger-500);
     }
   }
 
@@ -56,17 +56,17 @@
     border-color: var(--dark-100);
     color: var(--dark-100);
     cursor: not-allowed;
-    
+
     &::placeholder {
       color: var(--dark-100);
     }
   }
-  
+
   // Модификаторы для иконок
   &.withIcon:not(.searchInput) {
     padding-right: 36px;
   }
-  
+
   &.searchInput {
     padding-left: 36px;
   }
@@ -104,13 +104,13 @@
   align-items: center;
   cursor: pointer;
   padding: 0;
-  color: var(--light-100); // Для consistency
-  
+  color: var(--light-100);
+
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
-  
+
   &:focus-visible {
     outline: 2px solid var(--accent-500);
     outline-offset: 2px;
@@ -129,8 +129,5 @@
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: var(--light-900); // Цвет иконки поиска
+  color: var(--light-900);
 }
-
-
-
