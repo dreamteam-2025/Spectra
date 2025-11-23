@@ -45,3 +45,6 @@ package-lock.json
 yarn.lock
 *storybook.log
 storybook-static
+
+# webshtorm
+.idea
