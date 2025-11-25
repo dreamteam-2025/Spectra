@@ -40,7 +40,6 @@ export const Input = ({
   const eyeOffIcon = "/icons/eye-off-outline.svg";
   const searchIcon = "/icons/search.svg";
 
-
   // Состояние для переключения видимости пароля
   const [showPassword, setShowPassword] = useState(false);
 
