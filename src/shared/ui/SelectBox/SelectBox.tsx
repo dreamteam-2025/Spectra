@@ -6,7 +6,7 @@ import { Props } from "./SelectBox.types";
 import { useId } from "react";
 
 export const SelectBox = (props: Props) => {
-  const { value, label, options, disabled, placeholder, onChange, ...rest } = props;
+  const { value, label, options, disabled, placeholder, onChange, width, height, ...rest } = props;
   const selected = options.find(o => o.value === value);
 
   const id = useId();
@@ -20,7 +20,17 @@ export const SelectBox = (props: Props) => {
           </label>
         )}
         <Select.Root {...rest} value={value} onValueChange={onChange} disabled={disabled}>
-          <Select.Trigger id={id} className={s.trigger} aria-label={label || placeholder || ""}>
+          <Select.Trigger
+            id={id}
+            className={s.trigger}
+            style={
+              {
+                "--select-width": width,
+                "--select-height": height,
+              } as React.CSSProperties
+            }
+            aria-label={label || placeholder || ""}
+          >
             {selected?.icon && (
               <Select.Icon className={s.iconLeft}>
                 <img src={`/icons/${selected.icon}.svg`} alt="icon" />

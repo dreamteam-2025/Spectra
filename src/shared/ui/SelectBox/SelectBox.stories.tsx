@@ -74,6 +74,14 @@ export const Preselected: Story = {
   },
 };
 
+export const CustomStyles: Story = {
+  render: StatefulTemplate,
+  args: {
+    width: "350px",
+    height: "50px",
+  },
+};
+
 export const ManyOptions: Story = {
   render: StatefulTemplate,
   args: {

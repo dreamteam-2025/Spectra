@@ -15,8 +15,8 @@
 .trigger {
   all: unset;
   box-sizing: border-box;
-  min-width: 180px;
-  height: 36px;
+  min-width: var(--select-width, 180px);
+  height: var(--select-height, 36px);
   padding: 6px 42px 6px 12px;
   display: inline-flex;
   align-items: center;
@@ -28,10 +28,6 @@
   cursor: pointer;
   position: relative;
   font-size: 16px;
-}
-
-.trigger > span {
-  margin-right: 10px;
 }
 
 .trigger:not([data-disabled]):hover {
@@ -60,6 +56,7 @@
   height: 20px;
   display: inline-flex;
   pointer-events: none;
+  margin-right: 12px;
 }
 
 .icon {
@@ -82,7 +79,7 @@
 
 //Добавила скролл в случае если будет больще 3-х option-ов()
 .viewport {
-  max-height: 96px; //calc(32px * 3)
+  max-height: calc(var(--select-height, 36px) * 3);
   overflow-y: scroll;
 }
 
@@ -96,7 +93,7 @@
 
 .item {
   font-size: 16px;
-  line-height: 1;
+  height: 36px;
   padding: 8px 12px;
   cursor: pointer;
   color: var(--light-100);

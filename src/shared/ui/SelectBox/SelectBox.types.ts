@@ -14,4 +14,6 @@ export type Props = Omit<RadixRootProps, "onValueChange"> & {
   options: SelectOption[];
   placeholder?: string;
   onChange: (value: string) => void;
+  width?: string;
+  height?: string;
 };
