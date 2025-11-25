@@ -62,7 +62,7 @@
     }
   }
 
-  // Модификаторы для иконок
+
   &.withIcon:not(.searchInput) {
     padding-right: 36px;
   }
@@ -77,14 +77,14 @@
   font-size: 14px;
   line-height: 24px;
   color: var(--light-900);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .error {
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
-  margin-top: 4px;
+  margin-top: 2px;
   color: var(--danger-500);
 }
 
@@ -95,7 +95,7 @@
 
 .iconButton {
   position: absolute;
-  right: 8px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -116,11 +116,6 @@
     outline-offset: 2px;
     border-radius: 2px;
   }
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
 }
 
 .iconSearch {

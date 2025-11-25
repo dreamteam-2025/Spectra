@@ -3,10 +3,6 @@
 import React, { useState, useId } from "react";
 import { Primitive } from "@radix-ui/react-primitive";
 import s from "./Input.module.scss";
-import eyeIcon from "../../../../public/icons/eye-outline.svg";
-import eyeOffIcon from "../../../../public/icons/eye-off-outline.svg";
-import searchIcon from "../../../../public/icons/search.svg";
-import Image from "next/image";
 
 // Типы пропсов компонента
 type Props = {
@@ -39,6 +35,12 @@ export const Input = ({
   const generatedId = useId();
   const inputId = id || `input-${generatedId}`;
 
+  //Иконки
+  const eyeIcon = "/icons/eye-outline.svg";
+  const eyeOffIcon = "/icons/eye-off-outline.svg";
+  const searchIcon = "/icons/search.svg";
+
+
   // Состояние для переключения видимости пароля
   const [showPassword, setShowPassword] = useState(false);
 
@@ -69,11 +71,11 @@ export const Input = ({
           aria-label={showPassword ? "Hide password" : "Show password"}
           aria-pressed={showPassword}
         >
-          <Image
+          <img
             src={showPassword ? eyeIcon : eyeOffIcon}
             alt=""
-            width={20}
-            height={20}
+            width={24}
+            height={24}
             className={s.icon}
             aria-hidden="true"
           />
@@ -84,7 +86,7 @@ export const Input = ({
     if (type === "search") {
       return (
         <div className={s.search} aria-hidden="true">
-          <Image src={searchIcon} alt="" width={20} height={20} className={`${s.icon} ${s.iconSearch}`} />
+          <img src={searchIcon} alt="" width={24} height={24} className={`${s.icon} ${s.iconSearch}`} />
         </div>
       );
     }
