@@ -7,20 +7,21 @@
 
 .label {
   font-size: 14px;
+  display: block;
   color: var(--light-900);
   padding-bottom: 2px;
 }
 
 .trigger {
-  all: unset; //Сбрасывает все браузрные стили элемента.
+  all: unset;
   box-sizing: border-box;
   min-width: 180px;
   height: 36px;
   padding: 6px 42px 6px 12px;
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
   border: 1px solid var(--dark-300);
+  border-radius: 2px;
   background: var(--dark-700);
   color: var(--light-100);
   font-size: 14px;
@@ -29,9 +30,8 @@
   font-size: 16px;
 }
 
-//Растягивает value селекта(который radix вставляет в span) по всему свободному пространству trigger-a.
 .trigger > span {
-  flex: 1;
+  margin-right: 10px;
 }
 
 .trigger:not([data-disabled]):hover {
@@ -58,7 +58,6 @@
 .iconLeft {
   width: 20px;
   height: 20px;
-  right: 10px;
   display: inline-flex;
   pointer-events: none;
 }
@@ -83,7 +82,7 @@
 
 //Добавила скролл в случае если будет больще 3-х option-ов()
 .viewport {
-  max-height: 110px;
+  max-height: 96px; //calc(32px * 3)
   overflow-y: scroll;
 }
 
