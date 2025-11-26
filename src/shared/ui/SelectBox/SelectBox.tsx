@@ -2,34 +2,41 @@
 
 import * as Select from "@radix-ui/react-select";
 import s from "./SelectBox.module.scss";
-
-type Props = {
-  label: string;
-  options: string[];
-  value: string;
-  placeholder?: string;
-  disabled?: boolean;
-  icon?: string; // Необходимо передать имя svg файла с иконкой без '.svg'
-  onChange: (val: string) => void;
-};
+import { Props } from "./SelectBox.types";
+import { useId } from "react";
 
 export const SelectBox = (props: Props) => {
-  const { value, label, options, placeholder, disabled, icon, onChange } = props;
+  const { value, label, options, disabled, placeholder, onChange, width, height, ...rest } = props;
+  const selected = options.find(o => o.value === value);
+
+  const id = useId();
 
   return (
     <>
       <div className="wrapper">
-        {label && <div className={s.label}>{label}</div>}
-        <Select.Root value={value} onValueChange={onChange} disabled={disabled}>
-          <Select.Trigger className={s.trigger} aria-label={label ?? placeholder}>
-            {icon && (
+        {label && (
+          <label htmlFor={id} className={s.label}>
+            {label}
+          </label>
+        )}
+        <Select.Root {...rest} value={value} onValueChange={onChange} disabled={disabled}>
+          <Select.Trigger
+            id={id}
+            className={s.trigger}
+            style={
+              {
+                "--select-width": width,
+                "--select-height": height,
+              } as React.CSSProperties
+            }
+            aria-label={label || placeholder || ""}
+          >
+            {selected?.icon && (
               <Select.Icon className={s.iconLeft}>
-                <img src={"/icons/" + icon + ".svg"} alt="icon" />
+                <img src={`/icons/${selected.icon}.svg`} alt="icon" />
               </Select.Icon>
             )}
 
-            {/* здесь оторажается vale указанное
-            в root, а placeholder в зависимости от того указан он или нет */}
             <Select.Value placeholder={placeholder} />
 
             <Select.Icon className={s.icon}>
@@ -37,14 +44,11 @@ export const SelectBox = (props: Props) => {
             </Select.Icon>
           </Select.Trigger>
           <Select.Portal>
-            {/* ⬇️ sideOffset={-1} нужен чтобы убрать расстояние между триггетом и выпадающим
-            контентом, position="popper" указывает что контент располагается относительно
-            портала, т.е. не рядом с тригером */}
             <Select.Content className={s.content} sideOffset={-1} position="popper">
               <Select.Viewport className={s.viewport}>
                 {options.map(option => (
-                  <Select.Item key={option} value={option} className={s.item}>
-                    <Select.ItemText>{option}</Select.ItemText>
+                  <Select.Item key={option.value} value={option.value} className={s.item}>
+                    <Select.ItemText>{option.label}</Select.ItemText>
                   </Select.Item>
                 ))}
               </Select.Viewport>
