@@ -18,4 +18,10 @@ select {
 
 body {
   font-family: "Inter", sans-serif;
+  background-color: var(--dark-700);
+  color: var(--light-100);
+}
+
+a {
+  color: var(--accent-300);
 }
