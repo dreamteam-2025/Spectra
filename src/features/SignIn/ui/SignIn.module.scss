@@ -1,0 +1,80 @@
+.main {
+  width: 378px;
+  height: 504px;
+  margin: 36px auto 0;
+  border: 1px solid var(--light-900);
+  padding: 24px;
+  background-color: var(--dark-500);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.h1 {
+  font-size: 20px;
+  margin-top: 4px;
+}
+
+.icons {
+  margin-top: 20px;
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+
+  button {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+
+    // опционально: добавить hover эффект
+    &:hover {
+      opacity: 0.8;
+    }
+
+    // опционально: убрать outline при фокусе и добавить свой
+    &:focus {
+      outline: none;
+      // или добавить свой стиль фокуса
+    }
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%; // чтобы inputs растягивались
+  margin-top: 24px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.forgotPass {
+  margin-top: 14px;
+  align-self: flex-end;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--light-900);
+}
+
+.signInBtn {
+  margin-top: 30px;
+}
+
+.text {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.signUpLink {
+  margin-top: 18px;
+  text-align: center;
+  text-decoration: none;
+}
