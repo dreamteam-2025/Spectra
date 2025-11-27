@@ -1,0 +1,23 @@
+body{
+    background-color: black;
+}
+
+.wrapper{
+    width: 100%;
+    .backToSignUp{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 171%;
+        color: var(--light-100);
+        text-decoration: none;
+        width: 142px;
+        margin-left: 60px;
+        display: flex;
+        img{
+            filter: brightness(0) invert(1);
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+    }
+}
