@@ -1,0 +1,93 @@
+$font-weight-regular: 400;
+$line-height-default: 24px;
+$text-transform-default: capitalize;
+$font-size-sm: 14px;
+$transition-color: color 0.3s ease;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  --textarea-disabled-color: var(--dark-100);
+
+  .label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-regular;
+    color: var(--light-900);
+    text-transform: $text-transform-default;
+    line-height: $line-height-default;
+    transition: $transition-color;
+
+    &.labelDisabled {
+      color: var(--textarea-disabled-color);
+    }
+  }
+
+  .textarea {
+    width: 100%;
+    resize: none;
+    font-size: 16px;
+    font-weight: $font-weight-regular;
+    background: var(--dark-500);
+    color: var(--light-900);
+    border: 1px solid var(--dark-100);
+    border-radius: 2px;
+    padding: 6px 12px;
+    min-height: 84px;
+    text-transform: $text-transform-default;
+    line-height: $line-height-default;
+    transition: border-color 0.3s ease, color 0.3s ease;
+
+    &::placeholder {
+      color: var(--light-900);
+      transition: $transition-color;
+    }
+
+    &:hover:not(.disabled):not(.error):not(:focus) {
+      border-color: var(--dark-100) !important;
+      color: var(--light-900) !important;
+    }
+
+    &:active:not(.disabled):not(.error):not(:focus) {
+      border-color: var(--light-100);
+      color: var(--light-900);
+    }
+
+    &:focus-visible:not(.disabled):not(.error) {
+      border-color: transparent;
+      outline: 1px solid var(--accent-700);
+      outline-offset: -1px;
+      color: var(--light-100);
+    }
+
+    &:not(:placeholder-shown):not(.disabled):not(.error):not(:focus) {
+      border-color: var(--light-100);
+      color: var(--light-100);
+    }
+
+    &.error {
+      border-color: var(--danger-500);
+      color: var(--light-100);
+      outline: none;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      border-color: var(--dark-100);
+      color: var(--textarea-disabled-color);
+
+      &::placeholder {
+        color: var(--textarea-disabled-color);
+      }
+    }
+  }
+
+  .errorText {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-regular;
+    color: var(--danger-500);
+    line-height: $line-height-default;
+    text-transform: $text-transform-default;
+  }
+}

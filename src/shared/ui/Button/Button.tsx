@@ -10,7 +10,7 @@ type Props = {
 } & ComponentProps<typeof Primitive.button>;
 
 export const Button = ({ children, variant = "primary", disabled = false, className = "", ...rest }: Props) => {
-  const classes = `${s.button} ${s[variant]} ${className}`.trim();
+  const classes = [s.button, s[variant], className].filter(Boolean).join(" ");
 
   return (
     <Primitive.button className={classes} disabled={disabled} {...rest}>
