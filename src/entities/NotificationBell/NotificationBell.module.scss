@@ -1,0 +1,34 @@
+.notificationIcon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+  svg {
+    width: 18px;
+    height: 20px;
+    color: white;
+  }
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+
+  width: 14px;
+  height: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #ff2c55;
+  color: white;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  border-radius: 50%;
+  border: 2px solid #0f0f0f; // под контраст с фоном
+}
