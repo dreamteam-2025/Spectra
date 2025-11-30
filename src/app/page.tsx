@@ -1,4 +1,4 @@
-import { Card } from "@/shared/ui/Card/Card";
+import { Card } from "@/shared/ui";
 import styles from "./page.module.scss";
 
 export default function Home() {
