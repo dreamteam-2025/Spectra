@@ -1,3 +1,5 @@
+"use client";
+
 import React, { ComponentProps } from "react";
 import { Primitive } from "@radix-ui/react-primitive";
 import s from "./Button.module.scss";

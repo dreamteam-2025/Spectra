@@ -1,3 +1,5 @@
+"use client";
+
 import { CSSProperties, HTMLAttributes } from "react";
 import s from "./Card.module.scss";
 
