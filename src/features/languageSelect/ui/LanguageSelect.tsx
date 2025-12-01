@@ -1,7 +1,7 @@
 "use client";
 
-import { SelectBox } from "@/shared/ui/SelectBox/SelectBox";
-import { SelectOption } from "@/shared/ui/SelectBox/SelectBox.types";
+import { SelectBox } from "@/shared";
+import type { SelectOption } from "@/shared";
 import { useState } from "react";
 
 export const LanguageSelect = () => {
