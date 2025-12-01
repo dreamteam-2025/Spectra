@@ -1,0 +1,39 @@
+"use client";
+
+import s from "./Header.module.scss";
+import { Button } from "@/shared/ui/Button/Button";
+import { NotificationBell } from "@/entities/NotificationBell/NotificationBell";
+import Link from "next/link";
+import { ROUTES } from "@/shared/lib/constants";
+import { LanguageSelect } from "@/features/LanguageSelect/LanguageSelect";
+
+export const Header = () => {
+  const isLoggedIn: boolean = true;
+
+  return (
+    <header className={s.header}>
+      <div className={s.inner}>
+        <div className={s.row}>
+          <div className={s.logo}>Spectra</div>
+
+          <div className={s.right}>
+            {isLoggedIn && <NotificationBell count={5} clickHandler={() => alert("click the bell")}></NotificationBell>}
+
+            <LanguageSelect />
+
+            {!isLoggedIn && (
+              <>
+                <Link href={ROUTES.AUTH.LOGIN}>
+                  <Button variant="ghost">Log In</Button>
+                </Link>
+                <Link href={ROUTES.AUTH.SIGNUP}>
+                  <Button variant="primary">Sign Up</Button>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
