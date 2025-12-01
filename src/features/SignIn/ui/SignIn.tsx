@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Input } from "@/shared/ui/Input/Input";
 import { Button } from "@/shared/ui/Button/Button";
 import { useForm } from "react-hook-form";
+import { Card } from "@/shared/ui/Card/Card";
 
 interface SignInForm {
   email: string;
@@ -26,7 +27,8 @@ export default function SignIn() {
   };
 
   return (
-    <main className={s.main}>
+    <main>
+      <Card  className={s.main}>
       <h1 className={s.h1}>Sign In</h1>
       <div className={s.icons}>
         <button type="button">
@@ -76,6 +78,7 @@ export default function SignIn() {
           Sign Up
         </Link>
       </form>
+      </Card>
     </main>
   );
 }

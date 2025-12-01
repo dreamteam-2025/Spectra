@@ -1,6 +1,6 @@
 .main {
   width: 378px;
-  height: 504px;
+  min-height: 504px;
   margin: 36px auto 0;
   border: 1px solid var(--light-900);
   padding: 24px;
@@ -13,6 +13,7 @@
 .h1 {
   font-size: 20px;
   margin-top: 4px;
+  text-align: center;
 }
 
 .icons {
@@ -57,10 +58,10 @@
 }
 
 .forgotPass {
-  margin-top: 14px;
+  margin-top: 38px;
   align-self: flex-end;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--light-900);
 }
 
