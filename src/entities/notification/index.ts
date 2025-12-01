@@ -1,1 +1,1 @@
-//export * from "./ui"
+export { NotificationBell } from "./ui/NotificationBell";

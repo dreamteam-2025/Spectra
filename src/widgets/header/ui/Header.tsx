@@ -1,11 +1,11 @@
 "use client";
 
 import s from "./Header.module.scss";
-import { Button } from "@/shared/ui/Button/Button";
-import { NotificationBell } from "@/entities/NotificationBell/NotificationBell";
+import { Button } from "@/shared";
 import Link from "next/link";
-import { ROUTES } from "@/shared/lib/constants";
-import { LanguageSelect } from "@/features/LanguageSelect/LanguageSelect";
+import { ROUTES } from "@/shared";
+import { LanguageSelect } from "@/features";
+import { NotificationBell } from "@/entities";
 
 export const Header = () => {
   const isLoggedIn: boolean = true;
