@@ -12,7 +12,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "../model/validation";
 
-type SignInForm = z.infer<typeof signInSchema>;
+export type SignInForm = z.infer<typeof signInSchema>;
 
 export default function SignIn() {
   const {
@@ -88,3 +88,8 @@ export default function SignIn() {
     </main>
   );
 }
+
+
+
+
+
