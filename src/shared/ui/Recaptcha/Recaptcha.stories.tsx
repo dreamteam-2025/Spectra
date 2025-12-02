@@ -115,7 +115,7 @@ const RecaptchaStoryMock = (props: RecaptchaProps) => {
 };
 
 const meta: Meta<typeof Recaptcha> = {
-  title: "Shared/Recaptcha",
+  title: "UI/Recaptcha",
   component: Recaptcha,
   tags: ["autodocs"],
   parameters: {
