@@ -1,9 +1,8 @@
-body{
-    background-color: black;
-}
-
 .wrapper{
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 25px;
     .backToSignUp{
         font-weight: 400;
         font-size: 14px;

@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
-import { PrivacyPolicy } from "./PrivacyPolicy";
+import { Privacy } from "./Privacy";
 
 const meta = {
-  title: "Widgets/PrivacyPolicy",
-  component: PrivacyPolicy,
+  title: "Page/Privacy",
+  component: Privacy,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof PrivacyPolicy>;
+} satisfies Meta<typeof Privacy>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { CreateNewPassword } from "./CreateNewPassword";
 
 const meta = {
-  title: "Widgets/CreateNewPassword",
+  title: "Page/CreateNewPassword",
   component: CreateNewPassword,
   parameters: {
     layout: "centered",

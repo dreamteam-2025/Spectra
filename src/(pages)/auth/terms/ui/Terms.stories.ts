@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
-import { TermsOfService } from "./TermsOfService";
+import { Terms } from "./Terms";
 
 const meta = {
-  title: "Widgets/TermsOfService",
-  component: TermsOfService,
+  title: "Page/Terms",
+  component: Terms,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof TermsOfService>;
+} satisfies Meta<typeof Terms>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
