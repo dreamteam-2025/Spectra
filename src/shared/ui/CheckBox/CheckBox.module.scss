@@ -1,0 +1,138 @@
+// Обертка над всем CheckBox
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: max-content;
+}
+
+// Весь интерактивный элемент
+.checkboxRoot {
+  position: relative;
+  height: 18px;
+  width: 18px;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  border-radius: 2px;
+  border: 2px solid var(--light-500);
+  background: transparent;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    background: var(--dark-100);
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+
+    z-index: -1;
+
+    transition:
+      opacity 0.2s ease,
+      background-color 0.2s ease;
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    background: var(--dark-300);
+    transition:
+      opacity 0.1s ease,
+      background-color 0.2s ease;
+  }
+
+  &:not(:hover)::before {
+    transition:
+      opacity 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  &:focus-visible::before {
+    opacity: 1;
+    background: var(--dark-500);
+    transition:
+      opacity 0.2s ease,
+      background-color 0s ease;
+  }
+
+  &:active::before {
+    opacity: 1;
+    background: var(--dark-100);
+  }
+
+  // Чекбокс нажат
+  &[data-state="checked"] {
+    background: var(--light-500);
+
+    &[data-disabled] {
+      background: var(--dark-100);
+    }
+  }
+
+  // Состояние disabled
+  &[data-disabled] {
+    cursor: not-allowed;
+    border-color: var(--dark-100);
+    //opacity: 0.5;
+
+    // Отключить все интерактивные состояния
+    &:hover::before,
+    &:active::before,
+    &:focus-visible::before {
+      opacity: 0 !important;
+    }
+  }
+}
+
+// Индикатор состояния (нажат/не нажат)
+.checkboxIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  &[data-state="checked"] {
+    &[data-disabled] {
+      // получаем примерно нужный цвет
+      filter: invert(94%) sepia(8%) saturate(163%) hue-rotate(173deg) brightness(91%) contrast(90%);
+    }
+  }
+}
+
+// "Иконка" чекбокса (непосредственно галочка)
+.checkboxIcon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+// Текст рядом с CheckBox
+.checkboxLabel {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  cursor: pointer;
+  user-select: none;
+  color: var(--light-100);
+
+  .checkboxRoot:disabled + & {
+    cursor: not-allowed;
+    color: var(--light-900);
+  }
+}
