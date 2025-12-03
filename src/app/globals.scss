@@ -1,4 +1,4 @@
-@import "../shared/styles/colors.scss";
+@use "../shared/styles/colors.scss";
 
 // Обнуление стилей
 *,
@@ -14,14 +14,103 @@ button,
 textarea,
 select {
   font: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+ul,
+ol {
+  list-style: none;
 }
 
 body {
   font-family: "Inter", sans-serif;
   background-color: var(--dark-700);
+
+  // regular_text_16
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--light-100);
+
+  // bold_text
+  strong,
+  b {
+    font-weight: 700;
+    color: inherit;
+  }
 }
 
 a {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.71429;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
   color: var(--accent-300);
+}
+
+// Typography
+.largeHeading {
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.38462;
+  color: var(--light-100);
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.8;
+  color: var(--light-100);
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.33333;
+  color: var(--light-100);
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--light-100);
+}
+
+.regular-14 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.71429;
+  color: var(--light-100);
+}
+
+.medium-14 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.71429;
+  color: var(--light-100);
+}
+
+.bold-14 {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.71429;
+  color: var(--light-100);
+}
+
+.small-text {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: var(--light-100);
+}
+
+.small-semibold {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: var(--light-100);
 }
