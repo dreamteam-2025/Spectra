@@ -1,13 +1,13 @@
 import s from "./Terms.module.scss";
 
-import { Header } from "@/widgets";
+// import { Header } from "@/widgets";
 import { DocumentLayout } from "@/entities/documentLayout/DocumentLayout";
 import { BackToSignUp } from "@/features/navigation/BackToSignUp";
 
 export const Terms = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main className={s.wrapper}>
         <BackToSignUp />
         <DocumentLayout
