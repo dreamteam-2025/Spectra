@@ -18,10 +18,25 @@
 
 .logo {
   height: 36px;
+  font-size: 26px;
+  line-height: 36px;
+  font-weight: 600;
+  color: var(--light-100);
+  font-weight: 600;
 }
 
 .right {
   display: flex;
   align-items: center;
   gap: 36px;
+}
+
+.link {
+  color: #ccc;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--light-100);
+  }
 }
