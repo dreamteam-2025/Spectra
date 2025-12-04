@@ -1,3 +1,4 @@
+import { Header } from "@/widgets";
 import type { Metadata } from "next";
 import "./globals.scss";
 import Script from "next/script";
