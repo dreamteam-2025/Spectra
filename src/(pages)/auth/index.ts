@@ -1,1 +1,2 @@
-export { CreateNewPassword } from "@/(pages)/auth/createNewPassword";
+export { CreateNewPassword } from "./createNewPassword/ui/CreateNewPassword";
+export { EmailVerified } from "./signupEmailVerified/ui/EmailVerified";

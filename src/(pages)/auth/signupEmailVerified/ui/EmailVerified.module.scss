@@ -1,0 +1,24 @@
+.heading {
+  margin-top: 35px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmationText {
+  width: 100%;
+  max-width: 294px;
+}
+
+.signinBtn {
+  margin-top: 54px;
+  margin-bottom: 72px;
+  width: 100%;
+  max-width: 182px;
+}
