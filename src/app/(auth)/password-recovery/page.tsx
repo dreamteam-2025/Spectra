@@ -1,5 +1,5 @@
-import { EmailVerifiedPage } from "@/(pages)/auth/";
+import { PasswordRecovery } from "@/(pages)/auth";
 
-export default function PasswordRecovery() {
-  return <EmailVerifiedPage />;
+export default function PasswordRecoveryPage() {
+  return <PasswordRecovery />;
 }

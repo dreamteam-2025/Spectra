@@ -14,7 +14,6 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs"],
 } satisfies Meta<typeof EmailVerified>;
 
 export default meta;
