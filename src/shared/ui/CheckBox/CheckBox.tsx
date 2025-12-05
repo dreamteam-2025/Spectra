@@ -3,7 +3,21 @@
 import React, { useId } from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import s from "./CheckBox.module.scss";
-import { Props } from "./CheckBox.types";
+import { Root } from "@radix-ui/react-checkbox";
+import { ComponentPropsWithRef } from "react";
+
+type RadixRootProps = ComponentPropsWithRef<typeof Root>;
+
+export type Props = Omit<RadixRootProps, "onCheckedChange"> & {
+  checked?: boolean | "indeterminate";
+  onChange?: (checked: boolean | "indeterminate") => void;
+  disabled?: boolean;
+  required?: boolean;
+  name?: string;
+  value?: string;
+  className?: string;
+  children?: React.ReactNode;
+};
 
 export const CheckBox = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const { checked, onChange, disabled, required, name, value, className, children, ...rest } = props;
