@@ -11,67 +11,6 @@
   }
 }
 
-.input {
-  box-sizing: border-box;
-  border: 1px solid var(--dark-100);
-  padding: 6px 12px;
-  color: var(--light-100);
-  width: 100%;
-  height: 36px;
-  border-radius: 2px;
-  background-color: transparent;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0;
-  transition: border-color 0.2s ease;
-  outline: none;
-
-  &::placeholder {
-    color: var(--light-900);
-  }
-
-  // Порядок состояний: hover -> focus -> active -> error -> disabled
-  &:hover:not(:disabled, .errorInput) {
-    border-color: var(--light-900);
-  }
-
-  &:focus:not(.errorInput) {
-    border-color: var(--accent-500);
-  }
-
-  &:active:not(:disabled, .errorInput) {
-    border-color: var(--light-100);
-  }
-
-  &.errorInput {
-    border-color: var(--danger-500);
-
-    &:focus {
-      border-color: var(--danger-500);
-    }
-  }
-
-  &:disabled {
-    border-color: var(--dark-100);
-    color: var(--dark-100);
-    cursor: not-allowed;
-
-    &::placeholder {
-      color: var(--dark-100);
-    }
-  }
-
-
-  &.withIcon:not(.searchInput) {
-    padding-right: 36px;
-  }
-
-  &.searchInput {
-    padding-left: 36px;
-  }
-}
-
 .label {
   font-weight: 400;
   font-size: 14px;
@@ -125,4 +64,110 @@
   transform: translateY(-50%);
   pointer-events: none;
   color: var(--light-900);
+}
+
+.input {
+  box-sizing: border-box;
+  border: 1px solid var(--dark-100);
+  padding: 6px 12px;
+  color: var(--light-100);
+  width: 100%;
+  height: 36px;
+  border-radius: 2px;
+  background-color: transparent;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  transition: border-color 0.2s ease;
+  outline: none;
+
+  // Убираем стандартную браузерную валидацию (красное подчеркивание)
+  &:-webkit-autofill:invalid,
+  &:-webkit-autofill:valid {
+    // Убираем красное подчеркивание/тень
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+  }
+
+  // Стили для автозаполнения
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    // Используем кастомные цвета вместо браузерных
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+    -webkit-text-fill-color: var(--light-100) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    background-color: transparent !important;
+    color: var(--light-100) !important;
+    transition:
+      background-color 5000s ease-in-out 0s,
+      color 5000s ease-in-out 0s;
+  }
+
+  // Для Firefox
+  &:-moz-autofill,
+  &:-moz-autofill:hover,
+  &:-moz-autofill:focus,
+  &:-moz-autofill:active {
+    background-color: transparent !important;
+    color: var(--light-100) !important;
+    text-shadow: 0 0 0 var(--light-100) !important;
+    filter: none !important;
+  }
+
+  // Для стандартных браузеров
+  &:autofill,
+  &:autofill:hover,
+  &:autofill:focus,
+  &:autofill:active {
+    background-color: transparent !important;
+    color: var(--light-100) !important;
+  }
+
+  &::placeholder {
+    color: var(--light-900);
+  }
+
+  // Порядок состояний: hover -> focus -> active -> error -> disabled
+  &:hover:not(:disabled, .errorInput) {
+    border-color: var(--light-900);
+  }
+
+  &:focus:not(.errorInput) {
+    border-color: var(--accent-500);
+  }
+
+  &:active:not(:disabled, .errorInput) {
+    border-color: var(--light-100);
+  }
+
+  &.errorInput {
+    border-color: var(--danger-500);
+
+    &:focus {
+      border-color: var(--danger-500);
+    }
+  }
+
+  &:disabled {
+    border-color: var(--dark-100);
+    color: var(--dark-100);
+    cursor: not-allowed;
+
+    &::placeholder {
+      color: var(--dark-100);
+    }
+  }
+
+  &.withIcon:not(.searchInput) {
+    padding-right: 36px;
+  }
+
+  &.searchInput {
+    padding-left: 36px;
+  }
 }
