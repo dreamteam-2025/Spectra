@@ -47,26 +47,13 @@ export default function SignIn() {
 
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={s.inputs}>
-            <Input
-              label="Email"
-              fullWidth
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
-              error={errors.email?.message}
-            />
+            <Input label="Email" fullWidth {...register("email")} error={errors.email?.message} />
 
             <Input
               label="Password"
               fullWidth
               type="password"
-              {...register("password", {
-                required: "Password is required",
-              })}
+              {...register("password")}
               error={errors.password?.message}
             />
           </div>
@@ -88,8 +75,3 @@ export default function SignIn() {
     </main>
   );
 }
-
-
-
-
-
