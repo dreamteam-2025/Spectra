@@ -4,7 +4,6 @@ import { Button, Input } from "@/shared";
 import Image from "next/image";
 import s from "./VerifictaionExpired.module.scss";
 import { useEmailVerificationForm } from "../model/hooks/useEmailVerificationExpired";
-import { handleResendVerificationLink } from "../model/handlers";
 
 export const VerificationExpired = () => {
   const { register, handleSubmit, onSubmit, errors, isValid } = useEmailVerificationForm();
@@ -29,13 +28,7 @@ export const VerificationExpired = () => {
             error={errors.email?.message}
             {...register("email")}
           />
-          <Button
-            type="submit"
-            variant={"primary"}
-            className={s.resendBtn}
-            onClick={handleResendVerificationLink}
-            disabled={!isValid}
-          >
+          <Button type="submit" variant={"primary"} className={s.resendBtn} disabled={!isValid}>
             Resend verification link
           </Button>
         </form>

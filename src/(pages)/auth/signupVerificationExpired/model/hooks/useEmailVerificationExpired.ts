@@ -16,6 +16,7 @@ export const useEmailVerificationForm = () => {
 
   const onSubmit = async (data: TEmailVerificationForm) => {
     console.log("Resend verification link form: ", data);
+    alert("Отправил ссылку с данными - см.console");
     reset();
   };
 
