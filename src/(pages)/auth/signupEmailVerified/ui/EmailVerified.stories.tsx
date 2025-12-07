@@ -5,7 +5,9 @@ import { ROUTES } from "@/shared";
 const meta = {
   title: "Page/EmailVerified",
   component: EmailVerified,
+  tags: ["autodocs"],
   parameters: {
+    layout: "fullscreen",
     nextjs: {
       appDirectory: true, // мы используем app router
       navigation: {
@@ -18,8 +20,9 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof EmailVerified>;
+type Story = StoryObj<typeof meta>;
 
+/** Default variant. */
 export const EmailVerifiedPage: Story = {
   args: {},
 };
