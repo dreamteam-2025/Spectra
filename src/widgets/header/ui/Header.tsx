@@ -19,7 +19,9 @@ export const Header = () => {
           </div>
 
           <div className={s.right}>
-            {isLoggedIn && <NotificationBell count={5} clickHandler={() => alert("click the bell")}></NotificationBell>}
+            {isLoggedIn && (
+              <NotificationBell count={5} clickHandlerAction={() => alert("click the bell")}></NotificationBell>
+            )}
 
             <LanguageSelect />
 
