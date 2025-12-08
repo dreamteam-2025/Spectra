@@ -4,6 +4,7 @@ import { Button } from "./Button";
 const meta = {
   title: "UI/Button",
   component: Button,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },
@@ -13,7 +14,7 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-/* PRIMARY */
+/** PRIMARY */
 
 export const Primary: Story = {
   args: {
@@ -50,7 +51,7 @@ export const PrimaryDisabled: Story = {
   },
 };
 
-/* SECONDARY */
+/** SECONDARY */
 
 export const Secondary: Story = {
   args: {
@@ -87,7 +88,7 @@ export const SecondaryDisabled: Story = {
   },
 };
 
-/* OUTLINED */
+/** OUTLINED */
 
 export const Outlined: Story = {
   args: {
@@ -124,7 +125,7 @@ export const OutlinedDisabled: Story = {
   },
 };
 
-/* SMALL */
+/** SMALL */
 
 export const Ghost: Story = {
   args: {
