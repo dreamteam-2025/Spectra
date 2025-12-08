@@ -27,6 +27,7 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "10.0.8",
     "@storybook/nextjs": "10.0.8",
     "@types/node": "^20",
     "@types/react": "^19",
