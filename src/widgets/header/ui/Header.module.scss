@@ -21,7 +21,7 @@
   font-size: 26px;
   line-height: 36px;
   font-weight: 600;
-  color: #fff;
+  color: var(--light-100);
   font-weight: 600;
 }
 
@@ -37,6 +37,6 @@
   cursor: pointer;
 
   &:hover {
-    color: white;
+    color: var(--light-100);
   }
 }

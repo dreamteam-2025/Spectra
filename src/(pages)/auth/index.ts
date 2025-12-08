@@ -1,3 +1,5 @@
-export { CreateNewPassword } from "@/(pages)/auth/createNewPassword";
-export { Terms } from "@/(pages)/auth/terms";
-export { Privacy } from "@/(pages)/auth/privacy";
+export { CreateNewPassword } from "./createNewPassword";
+export { Terms } from "./terms";
+export { Privacy } from "./privacy";
+export { ForgotPassword } from "./forgotPassword";
+export { PasswordRecovery } from "./passwordRecovery";

@@ -8,16 +8,20 @@ import { LanguageSelect } from "@/features";
 import { NotificationBell } from "@/entities";
 
 export const Header = () => {
-  const isLoggedIn: boolean = true;
+  const isLoggedIn = true;
 
   return (
     <header className={s.header}>
       <div className={s.inner}>
         <div className={s.row}>
-          <div className={s.logo}>Spectra</div>
+          <div className={s.logo}>
+            <span className="largeHeading">Spectra</span>
+          </div>
 
           <div className={s.right}>
-            {isLoggedIn && <NotificationBell count={5} clickHandler={() => alert("click the bell")}></NotificationBell>}
+            {isLoggedIn && (
+              <NotificationBell count={5} clickHandlerAction={() => alert("click the bell")}></NotificationBell>
+            )}
 
             <LanguageSelect />
 
