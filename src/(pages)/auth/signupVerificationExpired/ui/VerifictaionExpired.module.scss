@@ -1,0 +1,46 @@
+$header-height: 61px; // 60px - высота Header +1px
+
+.page {
+  min-height: calc(100vh - $header-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .heading {
+    margin-top: 35px;
+    text-align: center;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .description {
+    width: 100%;
+    max-width: 294px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+
+    max-width: 229px;
+    .emailInput {
+      width: 100%;
+    }
+
+    .resendBtn {
+      margin-bottom: 36px;
+      width: 100%;
+    }
+  }
+}
