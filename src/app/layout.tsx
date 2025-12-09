@@ -19,7 +19,7 @@ export default function RootLayout({
       <body>
         <Header />
         {children}
-        <Script src="https://www.google.com/recaptcha/api.js" strategy="afterInteractive" />
+        <Script src="https://www.google.com/recaptcha/api.js" strategy="beforeInteractive" />
       </body>
     </html>
   );
