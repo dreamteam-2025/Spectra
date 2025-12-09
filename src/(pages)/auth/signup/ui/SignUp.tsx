@@ -2,12 +2,12 @@
 
 import { Controller } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { SignUpInputs, signupSchema } from "../model/signup.schemas";
+import { SignUpInputs, signupSchema } from "../model/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, CheckBox, Input, ROUTES } from "@/shared";
 import s from "./SignUp.module.scss";
 import Link from "next/link";
-import clsx from "clsx";
+import Image from "next/image";
 
 export const SignUp = () => {
   const {
@@ -22,9 +22,6 @@ export const SignUp = () => {
     mode: "onChange",
   });
 
-  const googleLogoUrl = "/icons/google.svg";
-  const githubLogoUrl = "/icons/github.svg";
-
   function onSubmit(data: SignUpInputs) {
     reset();
     console.log("Submitted data:", data);
@@ -33,15 +30,15 @@ export const SignUp = () => {
 
   return (
     <Card className={s.container}>
-      <h1 className={clsx(s.title, s.center)}>Sign Up</h1>
-      <div className={clsx(s.logos, s.center)}>
-        <div onClick={() => alert("Logged in from google account")}>
-          <img src={googleLogoUrl} alt="Google Logo" />
-        </div>
-        <div onClick={() => alert("Logged in from github account")}>
-          <img src={githubLogoUrl} alt="Github Logo" />
-        </div>
-      </div>
+      <h1 className={s.title}>Sign Up</h1>
+      <section className={s.logos}>
+        <button type="button" onClick={() => alert("Logged in from google account")}>
+          <Image src="/icons/google.svg" alt="google" width={36} height={36} />
+        </button>
+        <button type="button" onClick={() => alert("Logged in from github account")}>
+          <Image src="/icons/github.svg" alt="Github Logo" width={36} height={36} />
+        </button>
+      </section>
       <form noValidate onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <Input
           fullWidth
@@ -74,7 +71,7 @@ export const SignUp = () => {
           control={control}
           name="acceptTerms"
           render={({ field }) => (
-            <CheckBox className={s.center} checked={field.value} onChange={field.onChange}>
+            <CheckBox checked={field.value} onChange={field.onChange}>
               <span className="small-text">
                 I agree to the&nbsp;
                 <Link href={ROUTES.APP.TERMS}>
@@ -92,13 +89,12 @@ export const SignUp = () => {
         <Button type="submit" variant="primary" disabled={!isValid}>
           Sign Up
         </Button>
-
-        <div className={s.center}> Do you have an account? </div>
-
-        <Link className={s.center} href={ROUTES.AUTH.LOGIN}>
-          <Button variant="ghost">Sign In</Button>
-        </Link>
       </form>
+      <p className={s.prompt}> Do you have an account? </p>
+
+      <Link className={s.loginLink} href={ROUTES.AUTH.LOGIN}>
+        Sign In
+      </Link>
     </Card>
   );
 };

@@ -25,14 +25,7 @@ export const signupSchema = z
       .refine(v => hasNumber.test(v) && hasLower.test(v) && hasUpper.test(v) && hasSpecial.test(v), {
         message: "Password must contain lowercase, uppercase, and a symbol",
       }),
-    confirmPassword: z
-      .string()
-      .trim()
-      .min(6, { error: "Minimum number of characters 6" })
-      .max(20, { error: "Maximum number of characters 20" })
-      .refine(v => hasNumber.test(v) && hasLower.test(v) && hasUpper.test(v) && hasSpecial.test(v), {
-        message: "Password must contain lowercase, uppercase, and a symbol",
-      }),
+    confirmPassword: z.string().trim(),
     acceptTerms: z.boolean().refine(val => val === true, {
       message: "You need to accept the terms to continue!",
     }),
