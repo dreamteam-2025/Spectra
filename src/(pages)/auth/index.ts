@@ -4,3 +4,4 @@ export { Privacy } from "./privacy";
 export { ForgotPassword } from "./forgotPassword";
 export { PasswordRecovery } from "./passwordRecovery";
 export { VerificationExpired } from "./signupVerificationExpired";
+export { EmailVerified } from "./signupEmailVerified";

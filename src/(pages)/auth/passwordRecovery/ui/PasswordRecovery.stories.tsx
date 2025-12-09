@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { PasswordRecovery } from "./PasswordRecovery";
 
 const meta = {
-  title: "Pages/PasswordRecovery",
+  title: "Page/PasswordRecovery",
   component: PasswordRecovery,
 } satisfies Meta<typeof PasswordRecovery>;
 
