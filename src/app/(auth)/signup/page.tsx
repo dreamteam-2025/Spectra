@@ -3,9 +3,5 @@ import { ROUTES } from "@/shared/lib/constants";
 import Link from "next/link";
 
 export default function SignUpPage() {
-  return (
-    <main>
-      <SignUp />
-    </main>
-  );
+  return <SignUp />;
 }
