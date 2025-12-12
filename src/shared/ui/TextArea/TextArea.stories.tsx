@@ -28,21 +28,30 @@ const Stateful = (args: any) => {
   return <TextArea {...args} value={value} onChange={e => setValue(e.target.value)} />;
 };
 
-/* Hover and focus states are not meaningful as standalone stories because they are triggered naturally: hover by user cursor and focus by clicking inside the textarea. */
-
 /* DEFAULT */
 export const Default: Story = {
   render: Stateful,
 };
 
-/* ACTIVE (when you are click outside textarea) */
+/* ACTIVE */
 export const Active: Story = {
   render: Stateful,
   parameters: {
     pseudo: { active: true },
   },
   args: {
-    value: "Active state", // текст проброшен
+    value: "Active state",
+  },
+};
+
+/* FOCUS */
+export const Focus: Story = {
+  render: Stateful,
+  parameters: {
+    pseudo: { focus: true },
+  },
+  args: {
+    value: "Focus state",
   },
 };
 
