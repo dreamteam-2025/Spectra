@@ -5,10 +5,12 @@ import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import s from "./CheckBox.module.scss";
 import { Root } from "@radix-ui/react-checkbox";
 import { ComponentPropsWithRef } from "react";
+import clsx from "clsx";
 
 type RadixRootProps = ComponentPropsWithRef<typeof Root>;
 
 export type Props = Omit<RadixRootProps, "onCheckedChange"> & {
+  id?: string;
   checked?: boolean | "indeterminate";
   onChange?: (checked: boolean | "indeterminate") => void;
   disabled?: boolean;
@@ -20,15 +22,18 @@ export type Props = Omit<RadixRootProps, "onCheckedChange"> & {
 };
 
 export const CheckBox = React.forwardRef<HTMLButtonElement, Props>((props, ref) => {
-  const { checked, onChange, disabled, required, name, value, className, children, ...rest } = props;
+  const { id, checked, onChange, disabled, required, name, value, className, children, ...rest } = props;
 
-  const id = useId();
+  const generatedId = useId();
+  const checkboxId = id || generatedId;
+
+  const wrapperClassName = clsx(s.checkboxWrapper, className);
 
   return (
-    <div className={`${s.checkboxWrapper} ${className || ""}`}>
+    <div className={wrapperClassName}>
       <CheckboxPrimitive.Root
         ref={ref}
-        id={id}
+        id={checkboxId}
         name={name}
         value={value}
         checked={checked}
@@ -45,11 +50,7 @@ export const CheckBox = React.forwardRef<HTMLButtonElement, Props>((props, ref) 
       </CheckboxPrimitive.Root>
 
       {/* Label для CheckBox, при наличии */}
-      {children && (
-        <label htmlFor={id} className={s.checkboxLabel}>
-          {children}
-        </label>
-      )}
+      {children && <div className={s.checkboxLabel}>{children}</div>}
     </div>
   );
 });
