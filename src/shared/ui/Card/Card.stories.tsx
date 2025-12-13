@@ -2,17 +2,15 @@ import { Meta, StoryObj } from "@storybook/nextjs";
 import { Card } from "./Card";
 
 const meta = {
-  title: "Card stories",
+  title: "UI/Card",
   component: Card,
 } satisfies Meta<typeof Card>;
 
 export default meta;
 
-type Story = StoryObj<typeof Card>;
+type Story = StoryObj<typeof meta>;
 
-// вот такой синтаксис написания историй, Default Card - это будет название
-// args = передаваемые пропсы
-export const DefaultCard: Story = {
+export const EmptyCard: Story = {
   args: {
     width: 100,
     height: 100,
@@ -23,8 +21,7 @@ export const DefaultCard: Story = {
 
 export const CardWithText: Story = {
   args: {
-    width: 100,
-    height: 100,
-    children: "Some text",
+    children: "Some text here",
+    style: { width: "fit-content" },
   },
 };

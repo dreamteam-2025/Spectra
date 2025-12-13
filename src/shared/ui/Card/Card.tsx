@@ -1,6 +1,7 @@
 "use client";
 
-import { CSSProperties, HTMLAttributes } from "react";
+import { CSSProperties, HTMLAttributes, forwardRef } from "react";
+import clsx from "clsx";
 import s from "./Card.module.scss";
 
 type Props = {
@@ -8,18 +9,23 @@ type Props = {
   height?: CSSProperties["height"];
 } & HTMLAttributes<HTMLDivElement>;
 
-export const Card = ({ width, height, className = "", style, children, ...rest }: Props) => {
-  const cardStyle: CSSProperties = {
-    width,
-    height,
-    ...style,
-  };
+export const Card = forwardRef<HTMLDivElement, Props>(
+  ({ width, height, className = "", style, children, ...rest }, ref) => {
+    const cardStyle: CSSProperties = {
+      width,
+      height,
+      ...style,
+    };
 
-  const cardClassName = `${s.card} ${className}`.trim();
+    const cardClassName = clsx(s.card, className);
 
-  return (
-    <div style={cardStyle} className={cardClassName} {...rest}>
-      {children}
-    </div>
-  );
-};
+    return (
+      <div ref={ref} style={cardStyle} className={cardClassName} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
+
+// Отображаемое имя для React DevTools (и в стектрейсах ошибок)
+Card.displayName = "Card";
