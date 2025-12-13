@@ -127,12 +127,10 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.7;
-  cursor: pointer;
-  user-select: none;
+  //user-select: none;
   color: var(--light-100);
 
   .checkboxRoot:disabled + & {
-    cursor: not-allowed;
     color: var(--light-900);
   }
 }
