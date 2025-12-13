@@ -50,7 +50,7 @@ export const CheckBox = React.forwardRef<HTMLButtonElement, Props>((props, ref) 
       </CheckboxPrimitive.Root>
 
       {/* Label для CheckBox, при наличии */}
-      {children && <span className={s.checkboxLabel}>{children}</span>}
+      {children && <div className={s.checkboxLabel}>{children}</div>}
     </div>
   );
 });
