@@ -2,7 +2,6 @@ $font-weight-regular: 400;
 $line-height-default: 24px;
 $text-transform-default: capitalize;
 $font-size-sm: 14px;
-$transition-color: color 0.3s ease;
 
 .wrapper {
   display: flex;
@@ -17,7 +16,7 @@ $transition-color: color 0.3s ease;
     color: var(--light-900);
     text-transform: $text-transform-default;
     line-height: $line-height-default;
-    transition: $transition-color;
+    transition: color 0.3s ease;
 
     &.labelDisabled {
       color: var(--textarea-disabled-color);
@@ -25,53 +24,50 @@ $transition-color: color 0.3s ease;
   }
 
   .textarea {
+    box-sizing: border-box;
     width: 100%;
+    min-height: 84px;
     resize: none;
+    padding: 6px 12px;
+    border-radius: 2px;
+    border: 1px solid var(--dark-100);
+    background: var(--dark-500);
     font-size: 16px;
     font-weight: $font-weight-regular;
-    background: var(--dark-500);
-    color: var(--light-900);
-    border: 1px solid var(--dark-100);
-    border-radius: 2px;
-    padding: 6px 12px;
-    min-height: 84px;
-    text-transform: $text-transform-default;
     line-height: $line-height-default;
-    transition: border-color 0.3s ease, color 0.3s ease;
+    text-transform: $text-transform-default;
+    color: var(--light-900);
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
+    outline: none;
 
     &::placeholder {
       color: var(--light-900);
-      transition: $transition-color;
+      transition: color 0.2s ease;
     }
 
-    &:hover:not(.disabled):not(.error):not(:focus) {
-      border-color: var(--dark-100) !important;
-      color: var(--light-900) !important;
-    }
-
-    &:active:not(.disabled):not(.error):not(:focus) {
-      border-color: var(--light-100);
-      color: var(--light-900);
-    }
-
-    &:focus-visible:not(.disabled):not(.error) {
-      border-color: transparent;
-      outline: 1px solid var(--accent-700);
-      outline-offset: -1px;
+    &:focus:not(:disabled):not(.disabled):not(.error),
+    &:focus-visible:not(:disabled):not(.disabled):not(.error) {
+      border-color: var(--accent-700);
       color: var(--light-100);
     }
 
-    &:not(:placeholder-shown):not(.disabled):not(.error):not(:focus) {
+    &:active:not(:disabled):not(.disabled):not(.error) {
       border-color: var(--light-100);
-      color: var(--light-100);
     }
 
     &.error {
       border-color: var(--danger-500);
       color: var(--light-100);
-      outline: none;
+
+      &:focus,
+      &:focus-visible {
+        border-color: var(--danger-500);
+      }
     }
 
+    &:disabled,
     &.disabled {
       cursor: not-allowed;
       border-color: var(--dark-100);
