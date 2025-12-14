@@ -48,6 +48,7 @@ export const SignUp = () => {
         ></Input>
         <Input
           fullWidth
+          wrapperClassName={s.field}
           label="Email"
           {...register("email")}
           error={touchedFields.email ? errors.email?.message : undefined}
@@ -71,7 +72,7 @@ export const SignUp = () => {
           control={control}
           name="acceptTerms"
           render={({ field }) => (
-            <CheckBox checked={field.value} onChange={field.onChange}>
+            <CheckBox ref={field.ref} checked={field.value} onChange={field.onChange}>
               <span className="small-text">
                 I agree to the&nbsp;
                 <Link href={ROUTES.APP.TERMS}>

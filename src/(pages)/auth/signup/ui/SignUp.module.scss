@@ -28,6 +28,10 @@
     flex-direction: column;
     gap: 24px;
 
+    .field {
+      width: 330px;
+    }
+
     .link {
       font-weight: 400;
       font-size: 12px;
