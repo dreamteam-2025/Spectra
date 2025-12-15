@@ -1,0 +1,51 @@
+.container {
+  width: 380px;
+  margin: 50px auto 0;
+  padding: 24px;
+  background-color: var(--dark-500);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .logos {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 24px;
+
+    img {
+      display: block;
+    }
+  }
+
+  .form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .field {
+      width: 330px;
+    }
+
+    .link {
+      font-weight: 400;
+      font-size: 12px;
+    }
+  }
+
+  .prompt {
+    margin: 12px 0 6px 0;
+  }
+
+  .loginLink {
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 0;
+  }
+}
