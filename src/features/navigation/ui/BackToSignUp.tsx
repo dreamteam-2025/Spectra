@@ -1,4 +1,4 @@
-import { ROUTES } from "@/shared/lib/constants";
+import { ROUTES } from "@/shared/";
 import Link from "next/link";
 import s from "./BackToSignUp.module.scss";
 

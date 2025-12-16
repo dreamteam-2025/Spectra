@@ -4,11 +4,12 @@ import s from "./Header.module.scss";
 import { Button } from "@/shared";
 import Link from "next/link";
 import { ROUTES } from "@/shared";
-import { LanguageSelect } from "@/features";
+import { LanguageSelect, selectIsLoggedIn } from "@/features";
 import { NotificationBell } from "@/entities";
+import { useAppSelector } from "@/app/providers/store/hooks";
 
 export const Header = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   return (
     <header className={s.header}>

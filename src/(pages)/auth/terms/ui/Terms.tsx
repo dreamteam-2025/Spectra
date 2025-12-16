@@ -2,7 +2,7 @@ import s from "./Terms.module.scss";
 
 // import { Header } from "@/widgets";
 import { DocumentLayout } from "@/entities/documentLayout/ui/DocumentLayout";
-import { BackToSignUp } from "@/features/navigation/BackToSignUp";
+import { BackToSignUp } from "@/features/navigation/ui/BackToSignUp";
 
 export const Terms = () => {
   return (
