@@ -10,8 +10,8 @@ export const ROUTES = {
     SIGNUP: "/signup",
     FORGOT_PASSWORD: "/forgot-password",
     PASSWORD_RECOVERY: "/password-recovery",
-    CREATE_NEW_PASSWORD: (token: string) => `/create-new-password/${token}`,
-    EMAIL_VERIFIED: "/email-verified",
-    VERIFICATION_EXPIRED: "/verification-expired",
+    CREATE_NEW_PASSWORD: "/create-new-password",
+    EMAIL_VERIFIED: "/signup-email-verified",
+    VERIFICATION_EXPIRED: "/signup-verification-expired",
   },
 } as const;

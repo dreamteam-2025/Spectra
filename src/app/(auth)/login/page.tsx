@@ -1,4 +1,4 @@
-import SignIn from "@/(pages)/auth/login/ui/SignIn";
+import { SignIn } from "@/(pages)/auth/";
 
 export default function SignInPage() {
   return <SignIn />;
