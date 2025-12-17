@@ -4,11 +4,13 @@ import s from "./Header.module.scss";
 import { Button } from "@/shared";
 import Link from "next/link";
 import { ROUTES } from "@/shared";
-import { LanguageSelect } from "@/features";
+import { LanguageSelect, useMeQuery } from "@/features";
 import { NotificationBell } from "@/entities";
 
 export const Header = () => {
-  const isLoggedIn = true;
+  // вызываем хук, он выполняет GET-запрос
+  // для получения информации о статусе авторизации тебя в приложении
+  const { data: meResponse } = useMeQuery();
 
   return (
     <header className={s.header}>
@@ -19,13 +21,13 @@ export const Header = () => {
           </div>
 
           <div className={s.right}>
-            {isLoggedIn && (
+            {meResponse?.userName && (
               <NotificationBell count={5} clickHandlerAction={() => alert("click the bell")}></NotificationBell>
             )}
 
             <LanguageSelect />
 
-            {!isLoggedIn && (
+            {!meResponse?.userName && (
               <>
                 <Link href={ROUTES.AUTH.LOGIN}>
                   <Button variant="ghost">Log In</Button>

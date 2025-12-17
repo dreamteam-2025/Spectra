@@ -29,73 +29,75 @@ export const SignUp = () => {
   }
 
   return (
-    <Card className={s.container}>
-      <h1 className={s.title}>Sign Up</h1>
-      <section className={s.logos}>
-        <button type="button" onClick={() => alert("Logged in from google account")}>
-          <Image src="/icons/google.svg" alt="google" width={36} height={36} />
-        </button>
-        <button type="button" onClick={() => alert("Logged in from github account")}>
-          <Image src="/icons/github.svg" alt="Github Logo" width={36} height={36} />
-        </button>
-      </section>
-      <form noValidate onSubmit={handleSubmit(onSubmit)} className={s.form}>
-        <Input
-          fullWidth
-          label="Username"
-          {...register("username")}
-          error={touchedFields.username ? errors.username?.message : undefined}
-        ></Input>
-        <Input
-          fullWidth
-          wrapperClassName={s.field}
-          label="Email"
-          {...register("email")}
-          error={touchedFields.email ? errors.email?.message : undefined}
-        ></Input>
-        <Input
-          fullWidth
-          type="password"
-          label="Password"
-          {...register("password")}
-          error={touchedFields.password ? errors.password?.message : undefined}
-        ></Input>
-        <Input
-          fullWidth
-          type="password"
-          label="Password confirmation"
-          {...register("confirmPassword")}
-          error={touchedFields.confirmPassword ? errors.confirmPassword?.message : undefined}
-        ></Input>
+    <main>
+      <Card className={s.container}>
+        <h1 className={s.title}>Sign Up</h1>
+        <section className={s.logos}>
+          <button type="button" onClick={() => alert("Logged in from google account")}>
+            <Image src="/icons/google.svg" alt="google" width={36} height={36} />
+          </button>
+          <button type="button" onClick={() => alert("Logged in from github account")}>
+            <Image src="/icons/github.svg" alt="Github Logo" width={36} height={36} />
+          </button>
+        </section>
+        <form noValidate onSubmit={handleSubmit(onSubmit)} className={s.form}>
+          <Input
+            fullWidth
+            label="Username"
+            {...register("username")}
+            error={touchedFields.username ? errors.username?.message : undefined}
+          ></Input>
+          <Input
+            fullWidth
+            wrapperClassName={s.field}
+            label="Email"
+            {...register("email")}
+            error={touchedFields.email ? errors.email?.message : undefined}
+          ></Input>
+          <Input
+            fullWidth
+            type="password"
+            label="Password"
+            {...register("password")}
+            error={touchedFields.password ? errors.password?.message : undefined}
+          ></Input>
+          <Input
+            fullWidth
+            type="password"
+            label="Password confirmation"
+            {...register("confirmPassword")}
+            error={touchedFields.confirmPassword ? errors.confirmPassword?.message : undefined}
+          ></Input>
 
-        <Controller
-          control={control}
-          name="acceptTerms"
-          render={({ field }) => (
-            <CheckBox ref={field.ref} checked={field.value} onChange={field.onChange}>
-              <span className="small-text">
-                I agree to the&nbsp;
-                <Link href={ROUTES.APP.TERMS}>
-                  <span className={s.link}>Terms of Service</span>
-                </Link>
-                &nbsp;and&nbsp;
-                <Link href={ROUTES.APP.PRIVACY}>
-                  <span className={s.link}>Privacy Policy</span>
-                </Link>
-              </span>
-            </CheckBox>
-          )}
-        />
+          <Controller
+            control={control}
+            name="acceptTerms"
+            render={({ field }) => (
+              <CheckBox ref={field.ref} checked={field.value} onChange={field.onChange}>
+                <span className="small-text">
+                  I agree to the&nbsp;
+                  <Link href={ROUTES.APP.TERMS}>
+                    <span className={s.link}>Terms of Service</span>
+                  </Link>
+                  &nbsp;and&nbsp;
+                  <Link href={ROUTES.APP.PRIVACY}>
+                    <span className={s.link}>Privacy Policy</span>
+                  </Link>
+                </span>
+              </CheckBox>
+            )}
+          />
 
-        <Button type="submit" variant="primary" disabled={!isValid}>
-          Sign Up
-        </Button>
-      </form>
-      <p className={s.prompt}> Do you have an account? </p>
+          <Button type="submit" variant="primary" disabled={!isValid}>
+            Sign Up
+          </Button>
+        </form>
+        <p className={s.prompt}> Do you have an account? </p>
 
-      <Link className={s.loginLink} href={ROUTES.AUTH.LOGIN}>
-        Sign In
-      </Link>
-    </Card>
+        <Link className={s.loginLink} href={ROUTES.AUTH.LOGIN}>
+          Sign In
+        </Link>
+      </Card>
+    </main>
   );
 };

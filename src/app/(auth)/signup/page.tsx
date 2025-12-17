@@ -1,6 +1,4 @@
-import { SignUp } from "@/(pages)/auth/signup";
-import { ROUTES } from "@/shared/lib/constants";
-import Link from "next/link";
+import { SignUp } from "@/(pages)";
 
 export default function SignUpPage() {
   return <SignUp />;
