@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useId } from "react";
+import React, { useState, useId, forwardRef } from "react";
 import { Primitive } from "@radix-ui/react-primitive";
 import s from "./Input.module.scss";
 
@@ -13,24 +13,19 @@ type Props = {
   fullWidth?: boolean;
 } & React.ComponentPropsWithoutRef<typeof Primitive.input>;
 
-/**
- * Универсальный компонент Input с поддержкой различных типов и состояний
- * - Поддерживает типы: text, password, search
- * - Отображает иконки для password (переключение видимости) и search
- * - Валидация с отображением ошибок
- * - Полная доступность (ARIA-атрибуты)
- */
-export const Input = ({
-  label,
-  error,
-  className = "",
-  wrapperClassName = "",
-  id,
-  type = "text",
-  disabled,
-  fullWidth = false,
-  ...rest
-}: Props) => {
+export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const {
+    label,
+    error,
+    className = "",
+    wrapperClassName = "",
+    id,
+    type = "text",
+    disabled,
+    fullWidth = false,
+    ...rest
+  } = props;
+
   // Генерация уникального ID для связки label-input и сообщения об ошибке
   const generatedId = useId();
   const inputId = id || `input-${generatedId}`;
@@ -105,6 +100,7 @@ export const Input = ({
       {/* Обертка для позиционирования иконок относительно input'а */}
       <div className={s.inputWrapper}>
         <Primitive.input
+          ref={ref}
           id={inputId}
           type={inputType}
           className={`
@@ -130,4 +126,7 @@ export const Input = ({
       )}
     </div>
   );
-};
+});
+
+// Отображаемое имя для React DevTools (и в стектрейсах ошибок)
+Input.displayName = "Input";
