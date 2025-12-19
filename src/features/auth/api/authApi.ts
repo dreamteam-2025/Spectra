@@ -1,5 +1,6 @@
 import { baseApi } from "@/shared";
 import type { MeResponse } from "./authApi.types";
+import { SignInForm } from "@/(pages)/auth/login/ui/SignIn";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -8,9 +9,18 @@ export const authApi = baseApi.injectEndpoints({
       //...withZodCatch(meResponseSchema)
       providesTags: ["Auth"],
     }),
-    // login: builder.mutation({...}),
+    login: build.mutation<{ accessToken: string }, SignInForm>({
+      query: payload => {
+        return {
+          method: "POST",
+          url: "auth/login",
+          body: payload,
+        };
+      },
+    }),
+
     // logout: builder.mutation({...}),
   }),
 });
 
-export const { useMeQuery } = authApi;
+export const { useMeQuery, useLoginMutation } = authApi;
