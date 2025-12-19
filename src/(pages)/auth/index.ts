@@ -3,7 +3,7 @@ export { Terms } from "./terms";
 export { Privacy } from "./privacy";
 export { ForgotPassword } from "./forgotPassword";
 export { PasswordRecovery } from "./passwordRecovery";
-export { VerificationExpired } from "./signupVerificationExpired";
+export { VerificationExpired } from "./verificationExpired";
 export { EmailVerified } from "./signupEmailVerified";
 export { SignIn } from "./login";
 export { SignUp } from "./signup";
