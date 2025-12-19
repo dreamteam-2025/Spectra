@@ -1,26 +1,26 @@
-import SignIn from './SignIn';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signInSchema } from '../model/validation';
-import { Card } from '@/shared/ui/Card/Card';
-import { Input } from '@/shared/ui/Input/Input';
-import { Button } from '@/shared/ui/Button/Button';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ROUTES } from '@/shared/lib/constants';
-import s from './SignIn.module.scss';
-import z from 'zod';
-import { Meta, StoryObj } from '@storybook/nextjs';
+import { SignIn } from "./SignIn";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInSchema } from "../model/validation";
+import { Card } from "@/shared/ui/Card/Card";
+import { Input } from "@/shared/ui/Input/Input";
+import { Button } from "@/shared/ui/Button/Button";
+import Image from "next/image";
+import Link from "next/link";
+import s from "./SignIn.module.scss";
+import z from "zod";
+import { Meta, StoryObj } from "@storybook/nextjs";
+import { ROUTES } from "@/shared";
 
 type SignInForm = z.infer<typeof signInSchema>;
 
 const meta: Meta<typeof SignIn> = {
-  title: 'Auth/SignIn',
+  title: "Auth/SignIn",
   component: SignIn,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -38,8 +38,8 @@ const SignInWithErrors = () => {
   } = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: 'invalid-email',
-      password: '123',
+      email: "invalid-email",
+      password: "123",
     },
   });
 
@@ -49,8 +49,8 @@ const SignInWithErrors = () => {
 
   // Ручная установка ошибок для демонстрации
   const demoErrors = {
-    email: { message: 'Invalid email address' },
-    password: { message: 'Password must be at least 8 characters' },
+    email: { message: "Invalid email address" },
+    password: { message: "Password must be at least 8 characters" },
   };
 
   return (
@@ -71,7 +71,7 @@ const SignInWithErrors = () => {
             <Input
               label="Email"
               fullWidth
-              {...register('email')}
+              {...register("email")}
               error={demoErrors.email.message}
               defaultValue="invalid-email"
             />
@@ -80,7 +80,7 @@ const SignInWithErrors = () => {
               label="Password"
               fullWidth
               type="password"
-              {...register('password')}
+              {...register("password")}
               error={demoErrors.password.message}
               defaultValue="123"
             />
@@ -107,12 +107,3 @@ const SignInWithErrors = () => {
 export const WithErrors: Story = {
   render: () => <SignInWithErrors />,
 };
-
-
-
-
-
-
-
-
-
