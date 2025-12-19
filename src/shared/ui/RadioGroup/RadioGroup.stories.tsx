@@ -1,145 +1,40 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import { Radio, RadioGroup } from "./RadioGroup";
+import { RadioGroup, Radio } from "./RadioGroup";
 import { useState } from "react";
 
 const meta = {
-  title: "UI/Radio",
-  component: Radio,
-  decorators: [
-    (Story) => (
-      <RadioGroup defaultValue="option1">
-        <Story />
-      </RadioGroup>
-    ),
-  ],
-} satisfies Meta<typeof Radio>;
+  title: "UI/RadioGroup",
+  component: RadioGroup,
+} satisfies Meta<typeof RadioGroup>;
 
 export default meta;
+type Story = StoryObj<typeof RadioGroup>;
 
-type Story = StoryObj<typeof Radio>;
-
-// Default поведение
 export const Default: Story = {
-  args: {
-    value: "option1",
-  },
-  decorators: [
-    (Story) => (
-      <RadioGroup defaultValue="option1">
-        <Story />
-      </RadioGroup>
-    ),
-  ],
-};
-
-export const DefaultWithLabel: Story = {
-  args: {
-    value: "option1",
-    children: "Radio option",
-  },
-  decorators: [
-    (Story) => (
-      <RadioGroup defaultValue="option1">
-        <Story />
-      </RadioGroup>
-    ),
-  ],
-};
-
-// Active поведение (нужно состояние)
-export const ActiveWithLabel: Story = {
-  args: {
-    value: "option1",
-    children: "Radio option",
-  },
-  decorators: [
-    (Story) => (
-      <RadioGroup defaultValue="option1">
-        <Story />
-      </RadioGroup>
-    ),
-  ],
-};
-
-// Hover поведение
-export const HoverWithLabel: Story = {
-  args: {
-    value: "option1",
-    children: "Radio option",
-  },
-  parameters: {
-    pseudo: { hover: true },
-  },
-  decorators: [
-    (Story) => (
-      <RadioGroup defaultValue="option1">
-        <Story />
-      </RadioGroup>
-    ),
-  ],
-};
-
-// Focus-visible поведение
-export const FocusWithLabel: Story = {
-  args: {
-    value: "option1",
-    children: "Radio option",
-  },
-  parameters: {
-    pseudo: { focusVisible: true },
-  },
-  decorators: [
-    (Story) => (
-      <RadioGroup defaultValue="option1">
-        <Story />
-      </RadioGroup>
-    ),
-  ],
-};
-
-// Disabled поведение
-export const DisabledWithLabel: Story = {
-  args: {
-    value: "option1",
-    children: "Radio option",
-    disabled: true,
-  },
-  decorators: [
-    (Story) => (
-      <RadioGroup defaultValue="option1">
-        <Story />
-      </RadioGroup>
-    ),
-  ],
-};
-
-// Пример группы Radio
-export const RadioGroupExample: StoryObj<typeof RadioGroup> = {
   render: () => (
-    <RadioGroup defaultValue="option2" onChange={(value) => console.log(value)}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <Radio value="option1">First option</Radio>
-        <Radio value="option2">Second option</Radio>
-        <Radio value="option3">Third option</Radio>
-        <Radio value="option4" disabled>
-          Disabled option
-        </Radio>
-      </div>
+    <RadioGroup defaultValue="option2">
+      <Radio value="option1">First option</Radio>
+      <Radio value="option2">Second option</Radio>
+      <Radio value="option3">Third option</Radio>
     </RadioGroup>
   ),
 };
 
-// Пример горизонтальной группы
-export const HorizontalRadioGroup: StoryObj<typeof RadioGroup> = {
+export const WithDisabledOption: Story = {
+  render: () => (
+    <RadioGroup defaultValue="option1">
+      <Radio value="option1">Enabled</Radio>
+      <Radio value="option2" disabled>
+        Disabled
+      </Radio>
+    </RadioGroup>
+  ),
+};
+
+export const Horizontal: Story = {
   render: () => (
     <RadioGroup defaultValue="monthly">
-      <div
-        style={{
-          display: "flex",
-          gap: "24px",
-          alignItems: "center",
-        }}
-      >
+      <div style={{ display: "flex", gap: 24 }}>
         <Radio value="monthly">Monthly</Radio>
         <Radio value="yearly">Yearly</Radio>
         <Radio value="lifetime">Lifetime</Radio>
@@ -148,53 +43,19 @@ export const HorizontalRadioGroup: StoryObj<typeof RadioGroup> = {
   ),
 };
 
-// Контролируемый пример с useState
-export const ControlledExample: StoryObj<typeof RadioGroup> = {
+export const Controlled: Story = {
   render: () => {
     const [value, setValue] = useState("option1");
-    
+
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      <>
         <p>Selected: {value}</p>
-        <RadioGroup value={value} onValueChange={setValue}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <Radio value="option1">Option 1</Radio>
-            <Radio value="option2">Option 2</Radio>
-            <Radio value="option3">Option 3</Radio>
-          </div>
+        <RadioGroup value={value} onChange={setValue}>
+          <Radio value="option1">Option 1</Radio>
+          <Radio value="option2">Option 2</Radio>
+          <Radio value="option3">Option 3</Radio>
         </RadioGroup>
-      </div>
+      </>
     );
   },
-};
-
-// Все состояния в одном примере
-export const AllStates: StoryObj<typeof RadioGroup> = {
-  render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-      <div style={{ marginBottom: "16px" }}>
-        <h3>Individual Radio Buttons in separate RadioGroups:</h3>
-      </div>
-      
-      <RadioGroup defaultValue="unchecked1">
-        <Radio value="unchecked1">Unchecked</Radio>
-      </RadioGroup>
-      
-      <RadioGroup defaultValue="checked1">
-        <Radio value="checked1">Checked</Radio>
-      </RadioGroup>
-      
-      <RadioGroup defaultValue="unchecked2">
-        <Radio value="unchecked2" disabled>
-          Disabled
-        </Radio>
-      </RadioGroup>
-      
-      <RadioGroup defaultValue="checked2">
-        <Radio value="checked2" disabled>
-          Checked + Disabled
-        </Radio>
-      </RadioGroup>
-    </div>
-  ),
 };
