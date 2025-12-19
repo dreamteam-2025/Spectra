@@ -1,7 +1,7 @@
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { Mutex } from "async-mutex";
 import { baseQuery } from "./baseQuery";
-import { AUTH_KEYS, isToken } from "../lib";
+import { AUTH_KEYS, handleErrors, isToken } from "../lib";
 import { baseApi } from "./baseApi";
 
 // создаем объект мьютекса
@@ -60,9 +60,8 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
   // если ошибка не 401, обработчик общий
   if (result.error && result.error.status !== 401) {
-    // здесь будет утилитная функция обработчик ошибок
-    //handleErrors(result.error)
-    console.log(result.error);
+    // обработчик ошибок
+    handleErrors(result.error);
   }
 
   return result;
