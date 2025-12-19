@@ -1,7 +1,7 @@
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { isErrorWithProperty } from "./isErrorWithProperty";
 import { trimToMaxLength } from "../trimToMaxLength";
 import { errorToast } from "../toasts/errorToast";
+import { isErrorWithMessagesArray } from "./isErrorWithMessagesArray";
 
 export const handleErrors = (error: FetchBaseQueryError) => {
   debugger;
@@ -14,22 +14,24 @@ export const handleErrors = (error: FetchBaseQueryError) => {
         errorToast(error.error);
         break;
 
+      // Статус-коды 4xx: ошибка на стороне клиента
       case 400:
-      case 401:
       case 403:
       case 404:
       case 429:
-        if (isErrorWithProperty(error.data, "error")) {
-          errorToast(error.data.error);
+        if (isErrorWithMessagesArray(error.data)) {
+          errorToast(trimToMaxLength(error.data.messages[0].message));
         } else {
           errorToast(JSON.stringify(error.data));
         }
         break;
 
+      // Статус-коды 5xx: ошибка на стороне сервера
       default:
         if (error.status >= 500 && error.status < 600) {
           errorToast("Server error occurred. Please try again later.", error);
         } else {
+          // остальные ошибки
           errorToast("Some error occurred");
         }
     }

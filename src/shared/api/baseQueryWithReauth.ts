@@ -19,8 +19,6 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
   // если есть ошибка и это именно 401 ошибка
   if (result.error && result.error.status === 401) {
-    debugger;
-    handleErrors(result.error);
     // проверка залочен ли мьютекс
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
