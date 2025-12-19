@@ -1,6 +1,6 @@
 "use client";
 
-import { ROUTES } from "@/shared/lib/constants";
+import { ROUTES } from "@/shared";
 import Link from "next/link";
 import s from "./SignIn.module.scss";
 import Image from "next/image";
@@ -14,7 +14,7 @@ import { signInSchema } from "../model/validation";
 
 export type SignInForm = z.infer<typeof signInSchema>;
 
-export default function SignIn() {
+export const SignIn = () => {
   const {
     register,
     handleSubmit,
@@ -65,13 +65,13 @@ export default function SignIn() {
           <Button type="submit" className={s.signInBtn} variant="primary">
             Sign In
           </Button>
-
-          <p className={s.text}>Don't have an account?</p>
-          <Link className={s.signUpLink} href={ROUTES.AUTH.SIGNUP}>
-            Sign Up
-          </Link>
         </form>
+
+        <p className={s.text}>Don't have an account?</p>
+        <Link className={s.signUpLink} href={ROUTES.AUTH.SIGNUP}>
+          Sign Up
+        </Link>
       </Card>
     </main>
   );
-}
+};

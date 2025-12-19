@@ -1,14 +1,16 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { CheckBox } from "./CheckBox";
+import { Card } from "@/shared/";
 
 const meta = {
   title: "UI/CheckBox",
   component: CheckBox,
+  tags: ["autodocs"],
 } satisfies Meta<typeof CheckBox>;
 
 export default meta;
 
-type Story = StoryObj<typeof CheckBox>;
+type Story = StoryObj<typeof meta>;
 
 // Default поведение
 export const Default: Story = {
@@ -104,5 +106,17 @@ export const AllStates: Story = {
         Checked + Disabled
       </CheckBox>
     </div>
+  ),
+};
+
+export const CheckboxInContext: Story = {
+  render: () => (
+    <Card style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      <form>
+        <CheckBox>
+          I agree to the <a href="">Terms of Service</a> and Privacy Policy
+        </CheckBox>
+      </form>
+    </Card>
   ),
 };
