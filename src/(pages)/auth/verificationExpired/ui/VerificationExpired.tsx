@@ -7,10 +7,10 @@ import { useEmailVerificationForm } from "../model/hooks/useEmailVerificationExp
 
 type Props = {
   isInput?: boolean;
-  children: React.ReactNode;
+  btnTitle: string;
 };
 
-export const VerificationExpired = ({ isInput = true, children }: Props) => {
+export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
   const { register, handleSubmit, onSubmit, errors, isValid } = useEmailVerificationForm();
 
   return (
@@ -36,7 +36,7 @@ export const VerificationExpired = ({ isInput = true, children }: Props) => {
             />
           )}
           <Button type="submit" variant={"primary"} className={s.resendBtn} disabled={!isValid}>
-            {children}
+            {btnTitle}
           </Button>
         </form>
 
