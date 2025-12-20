@@ -1,5 +1,5 @@
 import { VerificationExpired } from "@/(pages)/auth";
 
 export default function VerificationExpiredPage() {
-  return <VerificationExpired title="Resend verification link" />;
+  return <VerificationExpired btnTitle="Resend verification link" />;
 }
