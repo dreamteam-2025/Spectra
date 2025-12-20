@@ -5,7 +5,12 @@ import Image from "next/image";
 import s from "./VerifictaionExpired.module.scss";
 import { useEmailVerificationForm } from "../model/hooks/useEmailVerificationExpired";
 
-export const VerificationExpired = () => {
+type Props = {
+  isInput?: boolean;
+  btnTitle: string;
+};
+
+export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
   const { register, handleSubmit, onSubmit, errors, isValid } = useEmailVerificationForm();
 
   return (
@@ -19,17 +24,19 @@ export const VerificationExpired = () => {
 
         {/* Форма с полями ввода email и кнопкой resend link */}
         <form onSubmit={handleSubmit(onSubmit)} noValidate className={s.form}>
-          <Input
-            type="email"
-            label="Email"
-            className={s.emailInput}
-            placeholder="Epam@epam.com"
-            fullWidth
-            error={errors.email?.message}
-            {...register("email")}
-          />
+          {isInput && (
+            <Input
+              type="email"
+              label="Email"
+              className={s.emailInput}
+              placeholder="Epam@epam.com"
+              fullWidth
+              error={errors.email?.message}
+              {...register("email")}
+            />
+          )}
           <Button type="submit" variant={"primary"} className={s.resendBtn} disabled={!isValid}>
-            Resend verification link
+            {btnTitle}
           </Button>
         </form>
 
