@@ -1,5 +1,5 @@
-import { SignIn } from "@/(pages)/auth/";
+import { SignIn, SignUp } from "@/(pages)/auth/";
 
 export default function SignInPage() {
-  return <SignIn />;
+  return <SignUp />;
 }

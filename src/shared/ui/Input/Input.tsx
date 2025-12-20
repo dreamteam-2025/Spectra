@@ -119,13 +119,11 @@ export const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
       </div>
 
       {/* Отображение ошибки с ролью alert для скринридеров */}
-      <div className={s.errorSlot}>
-        {error && (
-          <div id={`${inputId}-error`} className={s.error} role="alert">
-            {error}
-          </div>
-        )}
-      </div>
+      {error && (
+        <div id={`${inputId}-error`} className={s.error} role="alert">
+          {error}
+        </div>
+      )}
     </div>
   );
 });
