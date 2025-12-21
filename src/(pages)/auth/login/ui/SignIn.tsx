@@ -11,6 +11,8 @@ import { Card } from "@/shared/ui/Card/Card";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "../model/validation";
+import { useLoginMutation } from "@/features/auth/api/authApi";
+import { useRouter } from "next/navigation";
 
 export type SignInForm = z.infer<typeof signInSchema>;
 
@@ -21,15 +23,30 @@ export const SignIn = () => {
     formState: { errors },
   } = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
+    mode: "onBlur", // ⬅️ валидация при blur
+    reValidateMode: "onBlur", // ⬅️ повторная валидация тоже при blur
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: SignInForm) => {
-    console.log(data);
-    // Здесь будет логика авторизации
+  const [login] = useLoginMutation();
+
+  const router = useRouter();
+
+  const onSubmit = async (data: SignInForm) => {
+    try {
+      const result = await login(data).unwrap();
+
+      // сохранить токен
+      sessionStorage.setItem("accessToken", result.accessToken);
+
+      // редирект
+      router.push(ROUTES.APP.PROFILE);
+    } catch (e) {
+      console.error("Login error", e);
+    }
   };
 
   return (
