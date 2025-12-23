@@ -27,7 +27,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
         // (а refreshToken прилетает нам в куках)
         const refreshResult = await baseQuery(
           {
-            url: "auth/update",
+            url: "auth/update2", // временно сломал url, чтобы не обновлялся accessToken по refreshToken'у, который летит в куках
             method: "post",
             body: {}, // пустое "тело" запроса, т.к. refreshToken в куках
           },

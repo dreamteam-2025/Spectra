@@ -1,2 +1,2 @@
 export { authApi, useMeQuery } from "./api/authApi";
-export { OauthCallback } from "./ui/OauthCallback";
+export { GithubOauthCallback } from "./ui/OauthCallback/GithubOauthCallback";

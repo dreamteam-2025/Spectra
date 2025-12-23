@@ -13,5 +13,6 @@ export const ROUTES = {
     CREATE_NEW_PASSWORD: "/create-new-password",
     EMAIL_VERIFIED: "/signup-email-verified",
     VERIFICATION_EXPIRED: "/signup-verification-expired",
+    GITHUB_OAUTH: "/github-login",
   },
 } as const;

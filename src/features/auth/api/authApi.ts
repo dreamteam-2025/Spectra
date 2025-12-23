@@ -1,5 +1,5 @@
-import { baseApi } from "@/shared";
-import type { MeResponse } from "./authApi.types";
+import { AUTH_KEYS, baseApi } from "@/shared";
+import type { LoginOauthGithubArgs, MeResponse } from "./authApi.types";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -8,9 +8,15 @@ export const authApi = baseApi.injectEndpoints({
       //...withZodCatch(meResponseSchema)
       providesTags: ["Auth"],
     }),
-    // login: builder.mutation({...}),
+    loginGithub: build.mutation<void, LoginOauthGithubArgs>({
+      query: ({ redirectUrl }) => ({
+        method: "get",
+        url: "auth/github/login",
+        params: { redirect_url: redirectUrl },
+      }),
+    }),
     // logout: builder.mutation({...}),
   }),
 });
 
-export const { useMeQuery } = authApi;
+export const { useMeQuery, useLoginGithubMutation } = authApi;

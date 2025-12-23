@@ -11,6 +11,7 @@ import { Card } from "@/shared/ui/Card/Card";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "../model/validation";
+import { useGithubOauthLogin } from "@/features/auth/model/hooks/useGithubOauthLogin";
 
 export type SignInForm = z.infer<typeof signInSchema>;
 
@@ -32,6 +33,8 @@ export const SignIn = () => {
     // Здесь будет логика авторизации
   };
 
+  const { openOauthPopup } = useGithubOauthLogin();
+
   return (
     <main>
       <Card className={s.main}>
@@ -40,7 +43,7 @@ export const SignIn = () => {
           <button type="button">
             <Image src="/icons/google.svg" alt="google" width={36} height={36} />
           </button>
-          <button type="button">
+          <button type="button" onClick={openOauthPopup}>
             <Image src="/icons/github.svg" alt="github" width={36} height={36} />
           </button>
         </div>
