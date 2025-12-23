@@ -19,8 +19,8 @@ export function Dialog({ open, onOpenChange, title, description, children, class
       <RadixDialog.Portal>
         <RadixDialog.Overlay className={s.overlay} />
 
-        <Card>
-          <RadixDialog.Content className={clsx(s.content, className)}>
+        <RadixDialog.Content className={clsx(s.content, className)} asChild>
+          <Card>
             {title && (
               <>
                 <div className={s.header}>
@@ -45,8 +45,8 @@ export function Dialog({ open, onOpenChange, title, description, children, class
                 </RadixDialog.Close>
               )}
             </div>
-          </RadixDialog.Content>
-        </Card>
+          </Card>
+        </RadixDialog.Content>
       </RadixDialog.Portal>
     </RadixDialog.Root>
   );
