@@ -1,6 +1,6 @@
-import { baseApi } from "@/shared";
+import { AUTH_KEYS, baseApi } from "@/shared";
 import type { MeResponse } from "./authApi.types";
-import { SignInForm } from "@/(pages)/auth/login/ui/SignIn";
+import { SignInForm } from "@/(pages)/auth/login/model";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -16,6 +16,12 @@ export const authApi = baseApi.injectEndpoints({
           url: "auth/login",
           body: payload,
         };
+      },
+      onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
+        const { data } = await queryFulfilled;
+        sessionStorage.setItem(AUTH_KEYS.accessToken, data.accessToken);
+        // инвалидация после КАЖДОГО сохранения токенов
+        dispatch(authApi.util.invalidateTags(["Auth"]));
       },
     }),
 
