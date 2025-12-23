@@ -1,9 +1,10 @@
 "use client";
 
-import { Button, Input } from "@/shared";
+import { Button, Dialog, Input, ROUTES } from "@/shared";
 import Image from "next/image";
 import s from "./VerifictaionExpired.module.scss";
 import { useEmailVerificationForm } from "../model/hooks/useEmailVerificationExpired";
+import { useRouter } from "next/navigation";
 
 type Props = {
   isInput?: boolean;
@@ -11,7 +12,18 @@ type Props = {
 };
 
 export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
-  const { register, handleSubmit, onSubmit, errors, isValid } = useEmailVerificationForm();
+  const { register, handleSubmit, onSubmit, errors, isValid, setIsDialogOpen, submitEmail, isDialogOpen } =
+    useEmailVerificationForm();
+
+  const router = useRouter();
+
+  const handleDialogOpen = (open: boolean) => {
+    setIsDialogOpen(open);
+
+    if (!open) {
+      router.push(ROUTES.AUTH.LOGIN);
+    }
+  };
 
   return (
     <main className={s.page}>
@@ -42,6 +54,12 @@ export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
 
         <Image src="/images/time-management_rafiki.svg" alt="resend verification link" width={473} height={352} />
       </div>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={handleDialogOpen}
+        title="Email sent"
+        description={`We have sent a link to confirm your email to ${submitEmail}`}
+      />
     </main>
   );
 };

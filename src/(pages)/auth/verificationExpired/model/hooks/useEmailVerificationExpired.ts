@@ -7,9 +7,12 @@ import { emailVerificationSchema } from "../validation";
 import { useResendRegistrationEmailMutation } from "@/features/auth/api/authApi";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { handleErrors } from "@/shared";
+import { useState } from "react";
 
 export const useEmailVerificationForm = () => {
   const [resendEmail] = useResendRegistrationEmailMutation();
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [submitEmail, setSubmitEmail] = useState<string>("");
 
   const {
     register,
@@ -28,7 +31,9 @@ export const useEmailVerificationForm = () => {
         baseUrl: window.location.origin,
       }).unwrap();
 
+      setSubmitEmail(data.email);
       reset();
+      setIsDialogOpen(true);
     } catch (err) {
       handleErrors(err as FetchBaseQueryError);
     }
@@ -38,7 +43,10 @@ export const useEmailVerificationForm = () => {
     register,
     handleSubmit,
     onSubmit,
+    setIsDialogOpen,
     errors,
     isValid,
+    submitEmail,
+    isDialogOpen,
   };
 };
