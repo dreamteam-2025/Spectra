@@ -12,9 +12,10 @@ import { useSignUpMutation } from "@/features/auth/api/authApi";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 export const SignUp = () => {
-  const [signUp] = useSignUpMutation();
+  const [signUp, { isLoading }] = useSignUpMutation();
 
   const router = useRouter();
 
@@ -60,6 +61,7 @@ export const SignUp = () => {
 
   return (
     <main>
+      {isLoading && <Loader />}
       <Card className={s.container}>
         <h1 className={s.title}>Sign Up</h1>
         <section className={s.logos}>
