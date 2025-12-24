@@ -1,23 +1,22 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+type Props = {
+  searchParams: Promise<{
+    code?: string;
+    email?: string;
+  }>;
+};
 
-export default function Home() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const code = searchParams.get("code");
-  const email = searchParams.get("email");
+export default async function Home({ searchParams }: Props) {
+  const { code, email } = await searchParams;
 
-  useEffect(() => {
-    if (!code) return;
-
+  if (code) {
     const qs = new URLSearchParams();
     qs.set("code", code);
     if (email) qs.set("email", email);
 
-    router.replace(`/confirm-email?${qs.toString()}`);
-  }, [code, email]);
+    redirect(`/confirm-email?${qs.toString()}`);
+  }
 
   return (
     <main>
