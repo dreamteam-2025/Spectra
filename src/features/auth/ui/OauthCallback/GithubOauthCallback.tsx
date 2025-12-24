@@ -14,7 +14,7 @@ export const GithubOauthCallback = () => {
     // Если в query-параметрах URL есть accessToken
     // и window.opener - ссылка на основное окно (откуда открылось новое)
     if (accessToken && window.opener) {
-      window.opener.postMessage({ accessToken }, process.env.NEXT_PUBLIC_DOMAIN_ADDRESS);
+      window.opener.postMessage({ accessToken }, window.location.origin);
     }
 
     // Очищаем URL от токена

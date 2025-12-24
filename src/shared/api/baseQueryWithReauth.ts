@@ -27,9 +27,9 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
         // (а refreshToken прилетает нам в куках)
         const refreshResult = await baseQuery(
           {
-            url: "auth/update2", // временно сломал url, чтобы не обновлялся accessToken по refreshToken'у, который летит в куках
+            url: "auth/update",
             method: "post",
-            body: {}, // пустое "тело" запроса, т.к. refreshToken в куках
+            body: {},
           },
           api,
           extraOptions
@@ -37,14 +37,15 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
         // проверка прилетели ли данные и соответствие
         if (refreshResult.data && isToken(refreshResult.data)) {
-          // если ок, кладем в sessionStorage новый accessToken
+          // удалить, если была запись о том, что токен полученный ранее для гитхаб
+          sessionStorage.removeItem(AUTH_KEYS.authProvider);
+          // кладем в sessionStorage новый accessToken
           sessionStorage.setItem(AUTH_KEYS.accessToken, refreshResult.data.accessToken);
           // повтор первоначального запроса
           result = await baseQuery(args, api, extraOptions);
         } else {
-          // тут не трогать пока что, это необходимо для initiate logout-запроса
-          // // @ts-expect-error
-          // api.dispatch(baseApi.endpoints.logout.initiate());
+          /*// @ts-expect-error
+          api.dispatch(baseApi.endpoints.logout.initiate());*/
         }
       } finally {
         // вызывается только когда необходимо "освободить" мьютекс
