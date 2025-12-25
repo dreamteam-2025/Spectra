@@ -6,6 +6,8 @@
 // };
 
 import * as z from "zod";
-import { type meResponseSchema } from "./../model/validation";
+import type { passwordRecoverySchema, passwordRecoveryResendingSchema, meResponseSchema } from "./../model/validation";
 
 export type MeResponse = z.infer<typeof meResponseSchema>;
+export type PasswordRecovery = z.infer<typeof passwordRecoverySchema>;
+export type PasswordRecoveryResending = z.infer<typeof passwordRecoveryResendingSchema>;
