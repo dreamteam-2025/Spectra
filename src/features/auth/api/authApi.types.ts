@@ -6,7 +6,7 @@
 // };
 
 import * as z from "zod";
-import { type meResponseSchema } from "./../model/validation";
+import { signInSchema, type meResponseSchema } from "./../model/validation";
 
 export type MeResponse = z.infer<typeof meResponseSchema>;
-
+export type SignInFormType = z.infer<typeof signInSchema>;

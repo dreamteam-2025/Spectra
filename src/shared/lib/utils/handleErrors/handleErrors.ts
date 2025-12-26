@@ -32,7 +32,8 @@ export const handleErrors = (error: FetchBaseQueryError) => {
               errorToast(trimToMaxLength(error.data.error));
             } else {
               // если вообще ничего из вышепроверенного нет в объекте ошибки
-              errorToast(JSON.stringify(error.data));
+              console.log(JSON.stringify(error.data)); // для разрабов
+              errorToast("Some error occurred"); // видит пользователь
             }
           }
         }
