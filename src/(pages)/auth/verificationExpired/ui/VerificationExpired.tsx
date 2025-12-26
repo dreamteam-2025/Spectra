@@ -5,6 +5,7 @@ import Image from "next/image";
 import s from "./VerifictaionExpired.module.scss";
 import { useEmailVerificationForm } from "../model/hooks/useEmailVerificationExpired";
 import { useRouter } from "next/navigation";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 type Props = {
   isInput?: boolean;
@@ -12,8 +13,18 @@ type Props = {
 };
 
 export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
-  const { register, handleSubmit, onSubmit, errors, isValid, setIsDialogOpen, submitEmail, isDialogOpen } =
-    useEmailVerificationForm();
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    errors,
+    isValid,
+    setIsDialogOpen,
+    submitEmail,
+    isDialogOpen,
+    touchedFields,
+    isLoading,
+  } = useEmailVerificationForm();
 
   const router = useRouter();
 
@@ -27,6 +38,7 @@ export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
 
   return (
     <main className={s.page}>
+      {isLoading && <Loader />}
       <h1 className={s.heading}>Email verification link expired!</h1>
       <div className={s.wrapper}>
         {/* Пояснительный текст перед формой ввода */}
@@ -43,11 +55,11 @@ export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
               className={s.emailInput}
               placeholder="Epam@epam.com"
               fullWidth
-              error={errors.email?.message}
+              error={touchedFields?.email ? errors.email?.message : undefined}
               {...register("email")}
             />
           )}
-          <Button type="submit" variant={"primary"} className={s.resendBtn} disabled={!isValid}>
+          <Button type="submit" variant={"primary"} className={s.resendBtn} disabled={!isValid || isLoading}>
             {btnTitle}
           </Button>
         </form>

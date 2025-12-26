@@ -10,7 +10,7 @@ import { handleErrors } from "@/shared";
 import { useState } from "react";
 
 export const useEmailVerificationForm = () => {
-  const [resendEmail] = useResendRegistrationEmailMutation();
+  const [resendEmail, { isLoading }] = useResendRegistrationEmailMutation();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [submitEmail, setSubmitEmail] = useState<string>("");
 
@@ -18,7 +18,7 @@ export const useEmailVerificationForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, touchedFields },
   } = useForm<TEmailVerificationForm>({
     resolver: zodResolver(emailVerificationSchema),
     mode: "onChange",
@@ -48,5 +48,7 @@ export const useEmailVerificationForm = () => {
     isValid,
     submitEmail,
     isDialogOpen,
+    touchedFields,
+    isLoading,
   };
 };

@@ -120,7 +120,7 @@ export const SignUp = () => {
             )}
           />
 
-          <Button type="submit" variant="primary" disabled={!isValid}>
+          <Button type="submit" variant="primary" disabled={!isValid || isLoading}>
             Sign Up
           </Button>
         </form>
