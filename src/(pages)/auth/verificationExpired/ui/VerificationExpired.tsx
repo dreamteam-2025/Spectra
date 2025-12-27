@@ -1,9 +1,11 @@
 "use client";
 
-import { Button, Input } from "@/shared";
+import { Button, Dialog, Input, ROUTES } from "@/shared";
 import Image from "next/image";
 import s from "./VerifictaionExpired.module.scss";
 import { useEmailVerificationForm } from "../model/hooks/useEmailVerificationExpired";
+import { useRouter } from "next/navigation";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 type Props = {
   isInput?: boolean;
@@ -11,10 +13,32 @@ type Props = {
 };
 
 export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
-  const { register, handleSubmit, onSubmit, errors, isValid } = useEmailVerificationForm();
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    errors,
+    isValid,
+    setIsDialogOpen,
+    submitEmail,
+    isDialogOpen,
+    touchedFields,
+    isLoading,
+  } = useEmailVerificationForm();
+
+  const router = useRouter();
+
+  const handleDialogOpen = (open: boolean) => {
+    setIsDialogOpen(open);
+
+    if (!open) {
+      router.push(ROUTES.AUTH.LOGIN);
+    }
+  };
 
   return (
     <main className={s.page}>
+      {isLoading && <Loader />}
       <h1 className={s.heading}>Email verification link expired!</h1>
       <div className={s.wrapper}>
         {/* Пояснительный текст перед формой ввода */}
@@ -31,17 +55,23 @@ export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
               className={s.emailInput}
               placeholder="Epam@epam.com"
               fullWidth
-              error={errors.email?.message}
+              error={touchedFields?.email ? errors.email?.message : undefined}
               {...register("email")}
             />
           )}
-          <Button type="submit" variant={"primary"} className={s.resendBtn} disabled={!isValid}>
+          <Button type="submit" variant={"primary"} className={s.resendBtn} disabled={!isValid || isLoading}>
             {btnTitle}
           </Button>
         </form>
 
         <Image src="/images/time-management_rafiki.svg" alt="resend verification link" width={473} height={352} />
       </div>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={handleDialogOpen}
+        title="Email sent"
+        description={`We have sent a link to confirm your email to ${submitEmail}`}
+      />
     </main>
   );
 };
