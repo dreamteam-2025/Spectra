@@ -4,12 +4,24 @@ import { Controller } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { SignUpInputs, signupSchema } from "../model/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Card, CheckBox, Input, ROUTES } from "@/shared";
+import { Button, Card, CheckBox, Dialog, handleErrors, Input, ROUTES } from "@/shared";
 import s from "./SignUp.module.scss";
 import Link from "next/link";
 import Image from "next/image";
+import { useSignUpMutation } from "@/features/auth/api/authApi";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader } from "@/shared/ui/Loader/Loader";
 
 export const SignUp = () => {
+  const [signUp, { isLoading }] = useSignUpMutation();
+
+  const router = useRouter();
+
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [submitEmail, setSubmitEmail] = useState<string>("");
+
   const {
     register,
     handleSubmit,
@@ -22,14 +34,34 @@ export const SignUp = () => {
     mode: "onChange",
   });
 
-  function onSubmit(data: SignUpInputs) {
-    reset();
-    console.log("Submitted data:", data);
-    alert("Form submitted!");
+  async function onSubmit(data: SignUpInputs) {
+    try {
+      await signUp({
+        userName: data.username,
+        email: data.email,
+        password: data.password,
+        baseUrl: window.location.origin,
+      }).unwrap();
+
+      setSubmitEmail(data.email);
+      reset();
+      setIsDialogOpen(true);
+    } catch (err) {
+      handleErrors(err as FetchBaseQueryError);
+    }
   }
+
+  const handleDialogOpen = (open: boolean) => {
+    setIsDialogOpen(open);
+
+    if (!open) {
+      router.push(ROUTES.AUTH.LOGIN);
+    }
+  };
 
   return (
     <main>
+      {isLoading && <Loader />}
       <Card className={s.container}>
         <h1 className={s.title}>Sign Up</h1>
         <section className={s.logos}>
@@ -88,7 +120,7 @@ export const SignUp = () => {
             )}
           />
 
-          <Button type="submit" variant="primary" disabled={!isValid}>
+          <Button type="submit" variant="primary" disabled={!isValid || isLoading}>
             Sign Up
           </Button>
         </form>
@@ -98,6 +130,13 @@ export const SignUp = () => {
           Sign In
         </Link>
       </Card>
+
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={handleDialogOpen}
+        title="Email sent"
+        description={`We have sent a link to confirm your email to ${submitEmail}`}
+      />
     </main>
   );
 };

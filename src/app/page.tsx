@@ -1,6 +1,23 @@
-// import styles from "./page.module.scss";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+type Props = {
+  searchParams: Promise<{
+    code?: string;
+    email?: string;
+  }>;
+};
+
+export default async function Home({ searchParams }: Props) {
+  const { code, email } = await searchParams;
+
+  if (code) {
+    const qs = new URLSearchParams();
+    qs.set("code", code);
+    if (email) qs.set("email", email);
+
+    redirect(`/confirm-email?${qs.toString()}`);
+  }
+
   return (
     <main>
       <h1>Main Page</h1>
