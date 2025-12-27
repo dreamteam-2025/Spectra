@@ -4,6 +4,7 @@ export const ROUTES = {
     TERMS: "/terms",
     PRIVACY: "/privacy",
     ERROR404: "/error404",
+    PROFILE: "/profile", // 👈 новый защищённый роут
   },
   AUTH: {
     LOGIN: "/login",
