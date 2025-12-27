@@ -10,7 +10,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
   if (isLoading) return <div>Загрузка...</div>; // временный лоадер
 
   if (error && isFetchError(error) && error.status === 401) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   return <>{children}</>;
