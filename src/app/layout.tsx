@@ -2,7 +2,8 @@ import { Header } from "@/widgets";
 import type { Metadata } from "next";
 import "./globals.scss";
 import Script from "next/script";
-import { Providers } from "./providers/store";
+import { Providers } from "./providers";
+import { ToastsProvider } from "./providers";
 
 export const metadata: Metadata = {
   title: "Spectra",
@@ -21,6 +22,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           {children}
+          <ToastsProvider />
           <Script src="https://www.google.com/recaptcha/api.js" strategy="beforeInteractive" />
         </Providers>
       </body>

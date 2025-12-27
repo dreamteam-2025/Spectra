@@ -6,3 +6,4 @@ export { Card } from "./Card/Card";
 export { SelectBox } from "./SelectBox/SelectBox";
 export { Recaptcha } from "./Recaptcha/Recaptcha";
 export type { SelectOption } from "./SelectBox/SelectBox.types";
+export { Dialog } from "@/shared/ui/Dialog/Dialog";
