@@ -1,4 +1,5 @@
 // Реэкспорт содержимого на уровне UI
+export { LinearProgress } from "./LinearProgress/LinearProgress";
 export { Button } from "./Button/Button";
 export { CheckBox } from "./CheckBox/CheckBox";
 export { Input } from "./Input/Input";
