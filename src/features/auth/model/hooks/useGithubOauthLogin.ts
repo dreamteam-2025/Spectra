@@ -4,9 +4,12 @@ import { useCallback } from "react";
 import { AUTH_KEYS, ROUTES } from "@/shared";
 import { errorToast } from "@/shared/lib/utils/toasts/errorToast";
 import { useUpdateGithubTokensMutation } from "../../api/authApi";
+import { useRouter } from "next/navigation";
 
 export const useGithubOauthLogin = () => {
   const [updateTokens] = useUpdateGithubTokensMutation();
+
+  const router = useRouter();
 
   const openOauthPopup = useCallback(() => {
     const redirectUrl = process.env.NEXT_PUBLIC_DOMAIN_ADDRESS + ROUTES.AUTH.GITHUB_OAUTH;
@@ -25,41 +28,43 @@ export const useGithubOauthLogin = () => {
       // раннее прерывание, если popup был открыт не на нашем доменном адресе
       if (event.origin !== process.env.NEXT_PUBLIC_DOMAIN_ADDRESS) return;
 
-      const { accessToken } = event.data;
+      const { accessToken, email } = event.data;
+      // если accessToken не пришел - раннее прерывание
+      if (!accessToken) {
+        console.error("No access token received");
+        return;
+      }
 
+      // если initial accessToken прилетел, то запишем в sessionStorage
+      // указываем также, что токен установлен именно при oauth via github (важно при первом обновлении токена)
+      sessionStorage.setItem(AUTH_KEYS.accessToken, accessToken);
+      sessionStorage.setItem(AUTH_KEYS.authProvider, "github");
+      //console.log("accessToken before update: ", accessToken);
       try {
-        // если accessToken не пришел - раннее прерывание
-        if (!accessToken) {
-          console.log("No access token received");
-          return;
-        }
-
-        // если initial accessToken прилетел, то запишем в sessionStorage
-        // указываем также, что токен установлен именно при oauth via github (важно при первом обновлении токена)
-        sessionStorage.setItem(AUTH_KEYS.accessToken, accessToken);
-        sessionStorage.setItem(AUTH_KEYS.authProvider, "github");
-
-        console.log("accessToken before update: ", accessToken);
-
         // затем сразу же инициируем первоначальный запрос на обновление токена
         // (это нужно после получения initial токена, только в первый раз, для github)
         const updateTokensResult = await updateTokens().unwrap();
 
-        /*// затем в случае успеха перезапишем новым токеном и удалим запись о гитхаб в sessionStorage
+        // затем в случае успеха перезапишем новым токеном
+        // (и удалим запись о гитхаб в sessionStorage) - ?
         sessionStorage.setItem(AUTH_KEYS.accessToken, updateTokensResult.accessToken);
-        sessionStorage.removeItem(AUTH_KEYS.authProvider);
+        //sessionStorage.removeItem(AUTH_KEYS.authProvider);
 
-        console.log("accessToken after update: ", updateTokensResult.accessToken);*/
+        // и редиректим на страницу user profile
+        router.push(ROUTES.APP.PROFILE);
+
+        //console.log("accessToken after update: ", updateTokensResult.accessToken);
       } catch (error) {
-        console.log("Error with update-tokens: ", error);
+        console.error("Error with update-tokens: ", error);
       } finally {
+        debugger;
         // удаляем обработчик
         window.removeEventListener("message", recieveMessage);
       }
     };
 
     window.addEventListener("message", recieveMessage);
-  }, [updateTokens]);
+  }, [updateTokens, router]);
 
   return { openOauthPopup };
 };

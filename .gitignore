@@ -47,4 +47,4 @@ storybook-static
 .idea
 
 # tests
-**/__test__/
+**/__test__

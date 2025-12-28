@@ -10,11 +10,12 @@ export const GithubOauthCallback = () => {
     const url = new URL(window.location.href);
     // Извлекаем accessToken из параметров запроса
     const accessToken = url.searchParams.get("accessToken");
+    const email = url.searchParams.get("email");
 
     // Если в query-параметрах URL есть accessToken
     // и window.opener - ссылка на основное окно (откуда открылось новое)
     if (accessToken && window.opener) {
-      window.opener.postMessage({ accessToken }, window.location.origin);
+      window.opener.postMessage({ accessToken, email }, window.location.origin);
     }
 
     // Очищаем URL от токена
