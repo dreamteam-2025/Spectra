@@ -13,6 +13,6 @@ export const ROUTES = {
     PASSWORD_RECOVERY: "/password-recovery",
     CREATE_NEW_PASSWORD: "/create-new-password",
     EMAIL_VERIFIED: "/signup-email-verified",
-    VERIFICATION_EXPIRED: "/signup-verification-expired",
+    VERIFICATION_EXPIRED: "/verification-expired",
   },
 } as const;
