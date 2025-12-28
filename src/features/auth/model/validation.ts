@@ -19,7 +19,8 @@ export const signInSchema = z.object({
   password: z
     .string()
     .min(1, { message: "Password is required" })
-    .min(8, { message: "Password must be at least 8 characters" }),
+    .min(6, { error: "Minimum number of characters 6" })
+    .max(20, { error: "Maximum number of characters 20" }),
 });
 
 export const signUpRequestSchema = z.object({
