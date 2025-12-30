@@ -38,7 +38,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
         // проверка прилетели ли данные и соответствие
         if (refreshResult.data && isToken(refreshResult.data)) {
           // удалить, если была запись о том, что токен полученный ранее для гитхаб
-          sessionStorage.removeItem(AUTH_KEYS.authProvider);
+          //sessionStorage.removeItem(AUTH_KEYS.authProvider);
           // кладем в sessionStorage новый accessToken
           sessionStorage.setItem(AUTH_KEYS.accessToken, refreshResult.data.accessToken);
           // повтор первоначального запроса

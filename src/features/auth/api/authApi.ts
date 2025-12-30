@@ -68,7 +68,7 @@ export const authApi = baseApi.injectEndpoints({
       onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
         const { data } = await queryFulfilled;
         sessionStorage.setItem(AUTH_KEYS.accessToken, data.accessToken);
-        sessionStorage.removeItem(AUTH_KEYS.authProvider);
+        //sessionStorage.removeItem(AUTH_KEYS.authProvider);
         // инвалидация после КАЖДОГО сохранения токенов
         dispatch(authApi.util.invalidateTags(["Auth"]));
       },

@@ -4,3 +4,4 @@ export { isFetchError } from "./utils/handleErrors/isFetchError";
 export { isErrorWithMessagesArray } from "./utils/handleErrors/isErrorWithMessagesArray";
 export { AUTH_KEYS } from "./constants/auth";
 export { isToken } from "./utils/isToken";
+export { isOauthData } from "./utils/isOauthData";
