@@ -45,3 +45,6 @@ storybook-static
 
 # webshtorm
 .idea
+
+# tests
+**/__test__
