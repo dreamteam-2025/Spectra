@@ -1,0 +1,33 @@
+.sideBar {
+  height: calc(100vh - 61px);
+  width: 220px;
+  position: sticky;
+  border-right: 1px solid var(--dark-100);
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  .wrapperUlCenterWidth {
+    width: 110px;
+    ul li {
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &:hover {
+        color: var(--light-700);
+      }
+      img {
+        margin-right: 10px;
+      }
+    }
+    .mainUlSideBar {
+      height: calc(100% - 80px);
+      .Ul1 {
+        padding-top: 80px;
+      }
+      .Ul2 {
+        padding-top: 25px;
+      }
+    }
+  }
+}
