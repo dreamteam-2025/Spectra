@@ -1,2 +1,2 @@
 // реэкспорт только SideBar компонента
-export { SideBar } from "./ui/SideBar";
+export { MockSideBar } from "./ui/MockSidebar";
