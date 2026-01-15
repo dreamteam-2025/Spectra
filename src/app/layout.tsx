@@ -14,8 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  sidebar,
 }: Readonly<{
   children: React.ReactNode;
+  sidebar?: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -23,7 +25,13 @@ export default function RootLayout({
         <Providers>
           <Header />
           <RootLoader />
-          {children}
+
+          {/* Контейнер с параллельными роутами */}
+          <div className="appContainer">
+            {sidebar || <div className="sidebarPlaceholder" />}
+            <main className="mainContent">{children}</main>
+          </div>
+
           <ToastsProvider />
           <Script src="https://www.google.com/recaptcha/api.js" strategy="beforeInteractive" />
         </Providers>

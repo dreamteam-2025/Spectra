@@ -1,5 +1,11 @@
 @forward "../shared/styles/colors.scss";
 
+:root {
+  --header-height: 60px;
+  --sidebar-width: 220px;
+  --content-padding: 24px;
+}
+
 // Обнуление стилей
 *,
 *::before,
@@ -41,6 +47,49 @@ body {
     color: inherit;
   }
 }
+
+// ====================================================
+.appContainer {
+  display: grid;
+  margin: 0 auto;
+
+  grid-template-areas: "main";
+  grid-template-columns: 1fr;
+}
+
+.appContainer:has(aside:not(.sidebarPlaceholder)) {
+  grid-template-areas: "sidebar main";
+  grid-template-columns: var(--sidebar-width) 1fr;
+}
+
+.sidebarPlaceholder {
+  grid-area: sidebar;
+  width: 0;
+  visibility: hidden;
+}
+
+// SideBar занимает свою область
+.appContainer > aside {
+  grid-area: sidebar;
+  width: 100%;
+  max-width: var(--sidebar-width);
+  box-sizing: border-box;
+}
+
+// Основной контент (main) занимает свою область
+.appContainer > main {
+  grid-area: main;
+  min-width: 200px;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--content-padding);
+  min-width: 0;
+}
+// ====================================================
 
 a {
   font-weight: 400;
