@@ -13,9 +13,33 @@
       display: flex;
       align-items: center;
       cursor: pointer;
+      color: var(--light-100);
+      transition: color 0.3s ease;
+
       &:hover {
-        color: var(--light-700);
+        color: var(--accent-100);
+
+        .iconSvg {
+          fill: var(--accent-100);
+        }
       }
+
+      &:active {
+        color: var(--accent-500);
+        font-weight: 600;
+
+        .iconSvg {
+          fill: var(--accent-500);
+        }
+      }
+
+      .iconSvg {
+        margin-right: 10px;
+        fill: currentColor;
+        color: inherit;
+        transition: fill 0.3s ease;
+      }
+
       img {
         margin-right: 10px;
       }
