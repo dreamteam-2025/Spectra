@@ -6,6 +6,7 @@ import type {
   SignUpArgs,
   PasswordRecovery,
   PasswordRecoveryResending,
+  NewPassword,
 } from "./authApi.types";
 import { SignInForm } from "@/(pages)/auth/login/model";
 
@@ -69,6 +70,14 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
+
+    newPassword: build.mutation<void, NewPassword>({
+      query: payload => ({
+        method: "POST",
+        url: "auth/new-password",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -80,4 +89,5 @@ export const {
   useResendRegistrationEmailMutation,
   usePasswordRecoveryMutation,
   usePasswordRecoveryResendingMutation,
+  useNewPasswordMutation,
 } = authApi;

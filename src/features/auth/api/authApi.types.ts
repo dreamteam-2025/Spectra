@@ -7,6 +7,7 @@ import {
   signUpRequestSchema,
   passwordRecoverySchema,
   passwordRecoveryResendingSchema,
+  newPasswordSchema,
 } from "./../model/validation";
 
 export type MeResponse = z.infer<typeof meResponseSchema>;
@@ -16,3 +17,4 @@ export type RegistrationConfirmationArgs = z.infer<typeof registrationConfirmati
 export type RegistrationEmailResendingArgs = z.infer<typeof registrationEmailResendingSchema>;
 export type PasswordRecovery = z.infer<typeof passwordRecoverySchema>;
 export type PasswordRecoveryResending = z.infer<typeof passwordRecoveryResendingSchema>;
+export type NewPassword = z.infer<typeof newPasswordSchema>;
