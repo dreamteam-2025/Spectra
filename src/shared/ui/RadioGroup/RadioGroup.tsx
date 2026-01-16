@@ -24,17 +24,16 @@ export const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((pro
   const { value, onChange, disabled, required, name, className, children, ...rest } = props;
 
   return (
-   <RadioGroupPrimitive.Root
-  ref={ref}
-  value={value}
-  onValueChange={onChange}
-  disabled={disabled}
-  required={required}
-  name={name}
-  className={clsx(s.radioGroup, className)}
-  {...rest}
->
-
+    <RadioGroupPrimitive.Root
+      ref={ref}
+      value={value}
+      onValueChange={onChange}
+      disabled={disabled}
+      required={required}
+      name={name}
+      className={clsx(s.radioGroup, className)}
+      {...rest}
+    >
       {children}
     </RadioGroupPrimitive.Root>
   );
@@ -49,7 +48,6 @@ export type RadioProps = Omit<RadixItemProps, "onCheckedChange"> & {
   children?: string | React.ReactNode;
 };
 
-
 export const Radio = React.forwardRef<HTMLButtonElement, RadioProps>((props, ref) => {
   const { value, className, children, ...rest } = props;
 
@@ -57,7 +55,7 @@ export const Radio = React.forwardRef<HTMLButtonElement, RadioProps>((props, ref
   const itemId = `radio-${value}-${id}`;
 
   return (
-    <div className={`${s.radioWrapper} ${className || ""}`}>
+    <div className={clsx(s.radioWrapper, className)}>
       <RadioGroupPrimitive.Item ref={ref} id={itemId} value={value} className={s.radioItem} {...rest}>
         <RadioGroupPrimitive.Indicator className={s.radioIndicator} />
       </RadioGroupPrimitive.Item>
@@ -73,4 +71,3 @@ export const Radio = React.forwardRef<HTMLButtonElement, RadioProps>((props, ref
 
 // Отображаемое имя для React DevTools
 Radio.displayName = "Radio";
-
