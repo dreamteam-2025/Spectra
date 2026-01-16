@@ -4,6 +4,7 @@ import React, { useId } from "react";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import s from "./RadioGroup.module.scss";
 import { ComponentPropsWithRef } from "react";
+import clsx from "clsx";
 
 type RadixRootProps = ComponentPropsWithRef<typeof RadioGroupPrimitive.Root>;
 type RadixItemProps = ComponentPropsWithRef<typeof RadioGroupPrimitive.Item>;
@@ -23,16 +24,17 @@ export const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>((pro
   const { value, onChange, disabled, required, name, className, children, ...rest } = props;
 
   return (
-    <RadioGroupPrimitive.Root
-      ref={ref}
-      value={value}
-      onValueChange={onChange}
-      disabled={disabled}
-      required={required}
-      name={name}
-      className={`${s.radioGroup} ${className || ""}`}
-      {...rest}
-    >
+   <RadioGroupPrimitive.Root
+  ref={ref}
+  value={value}
+  onValueChange={onChange}
+  disabled={disabled}
+  required={required}
+  name={name}
+  className={clsx(s.radioGroup, className)}
+  {...rest}
+>
+
       {children}
     </RadioGroupPrimitive.Root>
   );
@@ -44,8 +46,9 @@ RadioGroup.displayName = "RadioGroup";
 export type RadioProps = Omit<RadixItemProps, "onCheckedChange"> & {
   value: string;
   className?: string;
-  children?: React.ReactNode;
+  children?: string | React.ReactNode;
 };
+
 
 export const Radio = React.forwardRef<HTMLButtonElement, RadioProps>((props, ref) => {
   const { value, className, children, ...rest } = props;
@@ -70,3 +73,4 @@ export const Radio = React.forwardRef<HTMLButtonElement, RadioProps>((props, ref
 
 // Отображаемое имя для React DevTools
 Radio.displayName = "Radio";
+
