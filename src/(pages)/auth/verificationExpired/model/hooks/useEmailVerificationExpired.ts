@@ -5,8 +5,6 @@ import { TEmailVerificationForm } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { emailVerificationSchema } from "../validation";
 import { useResendRegistrationEmailMutation } from "@/features/auth/api/authApi";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { handleErrors } from "@/shared";
 import { useState } from "react";
 
 export const useEmailVerificationForm = () => {
@@ -35,7 +33,7 @@ export const useEmailVerificationForm = () => {
       reset();
       setIsDialogOpen(true);
     } catch (err) {
-      handleErrors(err as FetchBaseQueryError);
+      console.error(err);
     }
   };
 

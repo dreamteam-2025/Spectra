@@ -23,7 +23,7 @@ export default function ConfirmEmailPage() {
         await confirmRegistration({ confirmationCode: code }).unwrap();
         router.replace(ROUTES.AUTH.EMAIL_VERIFIED);
       } catch (err) {
-        console.log("Email confirmation failed", err);
+        console.error("Email confirmation failed", err);
         router.replace(ROUTES.AUTH.VERIFICATION_EXPIRED);
       }
     };

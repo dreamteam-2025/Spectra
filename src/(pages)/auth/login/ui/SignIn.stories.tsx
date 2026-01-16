@@ -1,7 +1,7 @@
 import { SignIn } from "./SignIn";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema } from "../model/validation";
+import { signInSchema } from "@/features/auth/model/validation";
 import { Card } from "@/shared/ui/Card/Card";
 import { Input } from "@/shared/ui/Input/Input";
 import { Button } from "@/shared/ui/Button/Button";

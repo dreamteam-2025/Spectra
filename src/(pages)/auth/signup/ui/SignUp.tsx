@@ -9,10 +9,8 @@ import s from "./SignUp.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import { useSignUpMutation } from "@/features/auth/api/authApi";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader } from "@/shared/ui/Loader/Loader";
 
 export const SignUp = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
@@ -47,7 +45,7 @@ export const SignUp = () => {
       reset();
       setIsDialogOpen(true);
     } catch (err) {
-      handleErrors(err as FetchBaseQueryError);
+      console.error(err);
     }
   }
 
@@ -61,7 +59,7 @@ export const SignUp = () => {
 
   return (
     <main>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <Card className={s.container}>
         <h1 className={s.title}>Sign Up</h1>
         <section className={s.logos}>

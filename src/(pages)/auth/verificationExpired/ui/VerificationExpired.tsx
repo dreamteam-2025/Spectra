@@ -5,7 +5,6 @@ import Image from "next/image";
 import s from "./VerifictaionExpired.module.scss";
 import { useEmailVerificationForm } from "../model/hooks/useEmailVerificationExpired";
 import { useRouter } from "next/navigation";
-import { Loader } from "@/shared/ui/Loader/Loader";
 
 type Props = {
   isInput?: boolean;
@@ -38,7 +37,7 @@ export const VerificationExpired = ({ isInput = true, btnTitle }: Props) => {
 
   return (
     <main className={s.page}>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <h1 className={s.heading}>Email verification link expired!</h1>
       <div className={s.wrapper}>
         {/* Пояснительный текст перед формой ввода */}

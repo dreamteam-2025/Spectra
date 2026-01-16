@@ -1,7 +1,3 @@
 export const Loader = () => {
-  return (
-    <>
-      <p>Загрузка...</p>
-    </>
-  );
+  return <p>Загрузка...</p>;
 };
