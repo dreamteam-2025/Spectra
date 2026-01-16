@@ -1,0 +1,72 @@
+.card {
+  width: 100%;
+  max-width: 234px;
+  cursor: pointer;
+
+  .media {
+    width: 100%;
+    height: 240px;
+    margin-bottom: 12px;
+
+    .postImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .userName {
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--light-100);
+    }
+  }
+
+  .time {
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--light-900);
+  }
+
+  .textWrapper {
+    position: relative;
+  }
+
+  .text {
+    font-size: 14px;
+    line-height: 24px;
+    color: var(--light-100);
+  }
+
+  .collapsed {
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-right: 61px;
+  }
+
+  .showMoreOverlay {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    color: var(--accent-500);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
