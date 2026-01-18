@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const SideBar = () => {
   return (
-    <div className={s.sideBar}>
+    <aside className={s.sideBar}>
       <div className={s.wrapperUlCenterWidth}>
         <div className={s.mainUlSideBar}>
           <ul className={s.Ul1}>
@@ -134,6 +134,6 @@ export const SideBar = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </aside>
   );
 };
