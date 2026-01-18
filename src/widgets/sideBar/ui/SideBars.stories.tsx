@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { SideBar } from "./SideBar";
 
 const meta = {
-  title: "/SideBar",
+  title: "UI/SideBar",
   component: SideBar,
   parameters: {
     layout: "centered",
