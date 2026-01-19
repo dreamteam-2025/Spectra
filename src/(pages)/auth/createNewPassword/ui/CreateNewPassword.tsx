@@ -5,14 +5,11 @@ import s from "./CreateNewPassword.module.scss";
 import { Input } from "@/shared/ui/Input/Input";
 import { Button } from "@/shared/ui/Button/Button";
 import { useCreateNewPasswordForm } from "../model/hooks/useCreateNewPasswordForm";
-// import { Header } from "@/widgets";
 
 export const CreateNewPassword = () => {
   const { register, handleSubmit, onSubmit, errors, isValid } = useCreateNewPasswordForm();
 
   return (
-    // <div className={s.wrapperContainer}>
-    // <Header />
     <main className={s.container}>
       <Card width={378} height={432} className={s.wrapper}>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
@@ -48,6 +45,5 @@ export const CreateNewPassword = () => {
         </form>
       </Card>
     </main>
-    // </div>
   );
 };
