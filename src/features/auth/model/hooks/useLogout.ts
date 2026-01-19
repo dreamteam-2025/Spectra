@@ -18,9 +18,7 @@ export const useLogout = () => {
       // Обновляем данные на странице
       router.refresh();
     } catch (error) {
-      console.error("Logout failed:", error);
-      //   // Даже при ошибке делаем редирект
-      //   router.push("/login");
+      console.error("Logout failed: ", error);
     }
   };
 

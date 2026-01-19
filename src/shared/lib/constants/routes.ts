@@ -14,6 +14,6 @@ export const ROUTES = {
     CREATE_NEW_PASSWORD: "/create-new-password",
     EMAIL_VERIFIED: "/signup-email-verified",
     VERIFICATION_EXPIRED: "/verification-expired",
-    GITHUB_OAUTH: "/github-login",
+    GITHUB_OAUTH: "/auth/github",
   },
 } as const;
