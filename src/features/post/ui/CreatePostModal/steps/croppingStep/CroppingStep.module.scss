@@ -1,0 +1,274 @@
+// .root {
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+
+//   /* 🔴 страховка: даже если родитель не режет — мы режем */
+//   overflow: hidden;
+// }
+
+// /* зона под фото — как в макете, фикс по высоте */
+// .stage {
+//   /* высота изображения в Figma визуально ограничена */
+//   height: 420px;           /* ✅ ключевой фикс, подгоняется 400–440 */
+//   margin: 12px 12px 0;
+//   border-radius: 2px;
+
+//   background: #111;
+//   overflow: hidden;        /* ✅ ничего не вылезет */
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// /* картинка никогда не выходит за stage */
+// .image {
+//   display: block;
+
+//   max-width: 100%;
+//   max-height: 100%;
+
+//   /* ⚠️ важно: НЕ width/height 100% вместе, иначе бывают "выпады" */
+//   width: auto;
+//   height: auto;
+
+//   object-fit: contain;     /* ✅ как в макете: помещаем целиком */
+// }
+
+// .toolbar {
+//   height: 56px;
+//   flex: 0 0 56px;
+
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+
+//   padding: 0 12px;
+//   margin-top: 12px;
+
+//   border-top: 1px solid rgba(255, 255, 255, 0.08);
+// }
+
+// .toolBtn {
+//   width: 32px;
+//   height: 32px;
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.15);
+//   background: transparent;
+//   color: #fff;
+//   cursor: pointer;
+// }
+
+// .spacer {
+//   flex: 1;
+// }
+
+
+
+
+
+
+
+
+
+// .root {
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   overflow: hidden;
+// }
+
+// .stage {
+//   position: relative; /* ✅ обязательно для react-easy-crop */
+//   height: 420px;
+//   margin: 12px 12px 0;
+//   border-radius: 2px;
+//   background: #111;
+//   overflow: hidden;
+// }
+
+// .toolbar {
+//   height: 56px;
+//   flex: 0 0 56px;
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+//   padding: 0 12px;
+//   margin-top: 12px;
+//   border-top: 1px solid rgba(255, 255, 255, 0.08);
+// }
+
+// .left {
+//   display: flex;
+//   gap: 6px;
+// }
+
+// .toolBtn {
+//   height: 32px;
+//   padding: 0 10px;
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.15);
+//   background: transparent;
+//   color: #fff;
+//   cursor: pointer;
+
+//   &[aria-pressed="true"] {
+//     border-color: rgba(57, 125, 246, 0.9);
+//   }
+// }
+
+// .zoom {
+//   width: 140px;
+// }
+
+// .spacer {
+//   flex: 1;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .root {
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   overflow: hidden;
+// }
+
+// /* ✅ фото на максимум по ширине модалки */
+// .stage {
+//   position: relative;
+//   height: 420px;
+
+//   margin: 0;               /* ✅ было 12px — убираем */
+//   border-radius: 0;
+//   background: transparent; /* ✅ убрать черный фон */
+//   overflow: hidden;
+
+//   /* если хочешь разделители как в макете */
+//   border-top: 1px solid rgba(255, 255, 255, 0.08);
+//   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+// }
+
+// .toolbar {
+//   height: 56px;
+//   flex: 0 0 56px;
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+
+//   padding: 0 12px;
+//   margin-top: 12px;
+// }
+
+// .left {
+//   display: flex;
+//   gap: 6px;
+// }
+
+// .toolBtn {
+//   height: 32px;
+//   padding: 0 10px;
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.15);
+//   background: transparent;
+//   color: #fff;
+//   cursor: pointer;
+
+//   &[aria-pressed="true"] {
+//     border-color: rgba(57, 125, 246, 0.9);
+//   }
+// }
+
+// .zoom {
+//   width: 140px;
+// }
+
+// .spacer {
+//   flex: 1;
+// }
+
+
+
+
+
+
+
+
+
+
+.root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ✅ единая зона: фото заполняет всё, контролы поверх */
+.canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0; /* важно для flex-контейнеров */
+  overflow: hidden;
+}
+
+/* controls поверх картинки */
+.controls {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.ratios {
+  display: flex;
+  gap: 6px;
+}
+
+.ratioBtn {
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 2px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  cursor: pointer;
+
+  &[aria-pressed="true"] {
+    border-color: rgba(57, 125, 246, 0.95);
+    background: rgba(57, 125, 246, 0.25);
+  }
+}
+
+.zoom {
+  width: 160px;
+}
+
+
+
+
+
+
+
+

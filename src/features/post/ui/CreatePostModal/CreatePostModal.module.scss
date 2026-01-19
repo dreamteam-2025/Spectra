@@ -1,0 +1,259 @@
+// .modal {
+//   width: 492px;
+//   height: 564px;
+//   max-width: 92vw;
+// }
+
+// .headerRow {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+// .iconBtn {
+//   all: unset;
+//   cursor: pointer;
+//   width: 36px;
+//   height: 36px;
+//   display: grid;
+//   place-items: center;
+// }
+
+// .headerTitle {
+//   font-size: 18px;
+//   font-weight: 600;
+// }
+
+// .headerRight {
+//   width: 36px;
+//   height: 36px;
+// }
+
+
+
+
+
+
+
+
+
+
+
+// .modal {
+//   width: 492px;
+//   height: 564px;
+//   max-width: 92vw;
+//   padding: 0 24px; /* оставь как у Dialog */
+// }
+
+// .header {
+//   display: grid;
+//   grid-template-columns: 40px 1fr auto;
+//   align-items: center;
+//   gap: 12px;
+// }
+
+// .headerTitle {
+//   text-align: center;
+//   font-size: 18px;
+//   font-weight: 600;
+// }
+
+// .iconBtn {
+//   all: unset;
+//   cursor: pointer;
+//   width: 40px;
+//   height: 36px;
+//   display: grid;
+//   place-items: center;
+//   color: var(--light-100);
+// }
+
+// .iconSpacer {
+//   width: 40px;
+//   height: 36px;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .modal {
+//   width: 492px;
+//   height: 564px;
+//   max-width: 92vw;
+// }
+
+// /* ✅ Step 1 header: title слева, крестик справа */
+// .headerSelect {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+// .titleLeft {
+//   font-size: 18px;
+//   font-weight: 600;
+//   padding-left: 2px;
+// }
+
+// /* ✅ Step 2 header: back | centered title | next */
+// .headerCropping {
+//   display: grid;
+//   grid-template-columns: 40px 1fr auto;
+//   align-items: center;
+//   gap: 12px;
+// }
+
+// .titleCenter {
+//   text-align: center;
+//   font-size: 18px;
+//   font-weight: 600;
+// }
+
+// .iconBtn {
+//   all: unset;
+//   cursor: pointer;
+//   width: 40px;
+//   height: 36px;
+//   display: grid;
+//   place-items: center;
+//   color: var(--light-100);
+// }
+
+
+
+
+
+
+
+
+
+// .modal {
+//   width: 492px;
+//   height: 564px;
+//   max-width: 92vw;
+// }
+
+// /* Step 1 header: title слева, X справа */
+// .headerSelect {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+// .titleLeft {
+//   font-size: 18px;
+//   font-weight: 600;
+//   padding-left: 2px;
+// }
+
+// /* Step 2 header: back | centered title | next */
+// .headerCropping {
+//   display: grid;
+//   grid-template-columns: 40px 1fr auto;
+//   align-items: center;
+//   gap: 12px;
+// }
+
+// .titleCenter {
+//   text-align: center;
+//   font-size: 18px;
+//   font-weight: 600;
+// }
+
+// .iconBtn {
+//   all: unset;
+//   cursor: pointer;
+//   width: 40px;
+//   height: 36px;
+//   display: grid;
+//   place-items: center;
+//   color: var(--light-100);
+// }
+
+// /* делаем Next компактнее (у тебя нет small-variant, поэтому через className) */
+// .nextBtn {
+//   height: 36px;
+//   padding: 0 16px;
+//   font-weight: 600;
+// }
+
+
+
+
+
+
+
+
+
+.modal {
+  width: 492px;
+  height: 564px;
+  max-width: 92vw;
+
+  /* ✅ чтобы внутренности не вылезали и кроп занимал пространство */
+  overflow: hidden;
+}
+
+/* Step 1 header: title слева, X справа */
+.headerSelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleLeft {
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 2px;
+}
+
+/* Step 2 header: back | centered title | next */
+.headerCropping {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.titleCenter {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.iconBtn {
+  all: unset;
+  cursor: pointer;
+  width: 40px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--light-100);
+}
+
+.nextBtn {
+  height: 36px;
+  padding: 0 12px;      /* размер как в макете */
+  font-weight: 600;
+
+  /* на всякий случай убираем фон, если где-то переопределится */
+  background: transparent !important;
+}
+
+
+
+
+
+
+
+
