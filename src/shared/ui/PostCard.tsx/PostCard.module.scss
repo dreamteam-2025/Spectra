@@ -1,7 +1,11 @@
+$font-size: 14px;
+$line-height: 24px;
+$margin-bottom: 8px;
+$color: var(--light-100);
+
 .card {
-  width: 100%;
   max-width: 234px;
-  cursor: pointer;
+  color: var(--light-100);
 
   .media {
     width: 100%;
@@ -19,7 +23,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 
     .avatar {
       width: 36px;
@@ -30,24 +34,26 @@
     .userName {
       font-size: 16px;
       line-height: 24px;
-      color: var(--light-100);
     }
   }
 
   .time {
+    display: block;
     font-size: 12px;
     line-height: 16px;
     color: var(--light-900);
+    margin-bottom: 8px;
   }
 
   .textWrapper {
     position: relative;
+    font-size: $font-size;
+    line-height: $line-height;
+    color: $color;
   }
 
   .text {
-    font-size: 14px;
-    line-height: 24px;
-    color: var(--light-100);
+    word-break: break-word;
   }
 
   .collapsed {
@@ -56,17 +62,27 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    padding-right: 61px;
+
+    padding-right: 65px;
   }
 
-  .showMoreOverlay {
+  .toggle {
+    cursor: pointer;
+    font-size: $font-size;
+    line-height: $line-height;
+    text-decoration: underline;
+    color: var(--accent-500);
+  }
+
+  .toggleAbsolute {
     position: absolute;
     right: 0;
     bottom: 0;
+  }
 
-    color: var(--accent-500);
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 24px;
+  .toggleInline {
+    position: static;
+    white-space: nowrap;
+    padding-left: 5px;
   }
 }

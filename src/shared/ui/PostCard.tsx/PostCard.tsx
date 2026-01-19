@@ -19,7 +19,7 @@ export const PostCard = ({ postImage, avatarImage, userName, createdAt, text, cl
   const [expanded, setExpanded] = React.useState<boolean>(false);
 
   const expandedHandler = () => {
-    setExpanded(true);
+    setExpanded(prev => !prev);
   };
 
   return (
@@ -35,12 +35,23 @@ export const PostCard = ({ postImage, avatarImage, userName, createdAt, text, cl
         {formatPostDate(createdAt)}
       </time>
       <div className={s.textWrapper}>
-        <p className={clsx(s.text, { [s.collapsed]: !expanded })}>{text}</p>
-
         {!expanded && (
-          <button type="button" className={s.showMoreOverlay} onClick={expandedHandler}>
-            Show more
-          </button>
+          <>
+            <p className={clsx(s.text, s.collapsed)}>{text}</p>
+
+            <button type="button" className={clsx(s.toggle, s.toggleAbsolute)} onClick={expandedHandler}>
+              Show more
+            </button>
+          </>
+        )}
+
+        {expanded && (
+          <p className={s.text}>
+            {text}{" "}
+            <button type="button" className={clsx(s.toggle, s.toggleInline)} onClick={expandedHandler}>
+              Hide
+            </button>
+          </p>
         )}
       </div>
     </article>
