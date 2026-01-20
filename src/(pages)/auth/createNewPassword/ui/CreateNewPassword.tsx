@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useNewPasswordMutation } from "@/features/auth/api/authApi";
 import { ROUTES } from "@/shared";
+import { useCreateNewPasswordForm } from "../model/hooks/useCreateNewPasswordForm";
 
 export const CreateNewPassword = () => {
   const {
