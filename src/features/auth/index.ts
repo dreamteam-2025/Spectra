@@ -9,3 +9,4 @@ export {
   useUpdateGithubTokensMutation,
 } from "./api/authApi";
 export { GithubOauthCallback } from "./ui/OauthCallback/GithubOauthCallback";
+export { useGithubOauthLogin } from "./model/hooks/useGithubOauthLogin";

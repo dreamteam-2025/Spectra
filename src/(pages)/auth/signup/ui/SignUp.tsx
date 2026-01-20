@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useSignUpMutation } from "@/features/auth/api/authApi";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useGithubOauthLogin } from "@/features";
 
 export const SignUp = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
@@ -19,6 +20,8 @@ export const SignUp = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [submitEmail, setSubmitEmail] = useState<string>("");
+
+  const { openOauthPopup } = useGithubOauthLogin();
 
   const {
     register,
@@ -66,8 +69,8 @@ export const SignUp = () => {
           <button type="button" onClick={() => alert("Logged in from google account")}>
             <Image src="/icons/google.svg" alt="google" width={36} height={36} />
           </button>
-          <button type="button" onClick={() => alert("Logged in from github account")}>
-            <Image src="/icons/github.svg" alt="Github Logo" width={36} height={36} />
+          <button type="button" onClick={openOauthPopup}>
+            <Image src="/icons/github.svg" alt="github" width={36} height={36} />
           </button>
         </section>
         <form noValidate onSubmit={handleSubmit(onSubmit)} className={s.form}>

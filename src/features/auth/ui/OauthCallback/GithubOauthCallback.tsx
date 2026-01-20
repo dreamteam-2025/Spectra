@@ -20,6 +20,7 @@ export const GithubOauthCallback = () => {
       console.log("error:", error);
       window.opener.postMessage({ error, errorDescription }, window.location.origin);
       window.close();
+      return;
     }
 
     if (accessToken && window.opener) {
