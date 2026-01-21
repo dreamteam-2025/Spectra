@@ -1,6 +1,8 @@
 export { ROUTES } from "./constants/routes";
+export { isOauthError } from "./utils/handleErrors/isOauthError";
 export { handleErrors } from "./utils/handleErrors/handleErrors";
 export { isFetchError } from "./utils/handleErrors/isFetchError";
 export { isErrorWithMessagesArray } from "./utils/handleErrors/isErrorWithMessagesArray";
 export { AUTH_KEYS } from "./constants/auth";
 export { isToken } from "./utils/isToken";
+export { isOauthData } from "./utils/isOauthData";

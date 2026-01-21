@@ -4,7 +4,7 @@ export const ROUTES = {
     TERMS: "/terms",
     PRIVACY: "/privacy",
     ERROR404: "/error404",
-    PROFILE: "/profile", // 👈 новый защищённый роут
+    PROFILE: "/profile",
   },
   AUTH: {
     LOGIN: "/login",
@@ -14,5 +14,6 @@ export const ROUTES = {
     CREATE_NEW_PASSWORD: "/create-new-password",
     EMAIL_VERIFIED: "/signup-email-verified",
     VERIFICATION_EXPIRED: "/verification-expired",
+    GITHUB_OAUTH: "/auth/github",
   },
 } as const;

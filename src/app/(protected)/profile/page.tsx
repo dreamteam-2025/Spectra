@@ -1,10 +1,11 @@
-import { SideBar } from "@/widgets/sideBar/ui/SideBar";
+"use client";
+
+import { Profile } from "@/(pages)";
 
 export default function ProfilePage() {
   return (
-    <div>
-      {/* Profile page */}
-      <SideBar />
-    </div>
+    <>
+      <Profile />
+    </>
   );
 }

@@ -11,7 +11,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
   if (isLoading) return <Loader />;
 
   if (error && isFetchError(error) && error.status === 401) {
-    redirect(ROUTES.APP.PROFILE);
+    redirect(ROUTES.AUTH.LOGIN);
   }
 
   return <>{children}</>;
