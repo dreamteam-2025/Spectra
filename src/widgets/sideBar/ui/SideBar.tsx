@@ -4,15 +4,18 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { menuItems, logoutItem } from "./menuConfig";
 import * as Icons from "./icons/Icons";
+import { useLogout } from "@/features/auth/model/hooks/useLogout";
+import { Dialog, Button } from "@/shared";
 
 export const SideBar = () => {
+  const { logout, isLoading } = useLogout();
   const router = useRouter();
   const pathname = usePathname();
   const [activeItem, setActiveItem] = useState("feed");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Синхронизация активного элемента с текущим путем
   useEffect(() => {
-    // Находим элемент меню, соответствующий текущему пути
     const currentMenuItem = menuItems.find(item => item.path === pathname);
     if (currentMenuItem) {
       setActiveItem(currentMenuItem.id);
@@ -29,7 +32,6 @@ export const SideBar = () => {
       return Icons[iconKey];
     }
 
-    // Если иконка не найдена, вернем заглушку
     console.warn(`Иконка "${iconName}" не найдена в модуле Icons`);
     return () => <div style={{ width: 20, height: 20, backgroundColor: "#ccc", marginRight: 10 }} />;
   };
@@ -42,67 +44,98 @@ export const SideBar = () => {
     }
   };
 
-  // Обработчик выхода из системы
-  const handleLogout = async () => {
+  // Обработчик выхода из системы (после подтверждения)
+  const handleLogoutConfirm = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
-
-      // Очищаем состояние
+      await logout();
       setActiveItem("feed");
-
-      // Перенаправляем на страницу логина
-      router.push("/login");
-      router.refresh(); // Обновляем данные на странице
+      setIsDialogOpen(false);
     } catch (error) {
       console.error("Ошибка при выходе:", error);
     }
   };
 
+  // Открытие диалога при клике на Log Out
+  const handleLogoutClick = () => {
+    if (!isLoading) {
+      setIsDialogOpen(true);
+    }
+  };
+
   return (
-    <aside className={s.sideBar}>
-      <div className={s.wrapperUlCenterWidth}>
-        <div className={s.mainUlSideBar}>
-          <ul className={s.Ul1}>
-            {group1Items.map(item => {
-              const IconComponent = getIconComponent(item.component);
-              const isActive = activeItem === item.id;
+    <>
+      <aside className={s.sideBar}>
+        <div className={s.wrapperUlCenterWidth}>
+          <div className={s.mainUlSideBar}>
+            <ul className={s.Ul1}>
+              {group1Items.map(item => {
+                const IconComponent = getIconComponent(item.component);
+                const isActive = activeItem === item.id;
 
-              return (
-                <li key={item.id} className={isActive ? s.active : ""} onClick={() => handleMenuItemClick(item)}>
-                  <IconComponent isActive={isActive} />
-                  {item.label}
-                </li>
-              );
-            })}
-          </ul>
+                return (
+                  <li key={item.id} className={isActive ? s.active : ""} onClick={() => handleMenuItemClick(item)}>
+                    <IconComponent isActive={isActive} />
+                    {item.label}
+                  </li>
+                );
+              })}
+            </ul>
 
-          <ul className={s.Ul2}>
-            {group2Items.map(item => {
-              const IconComponent = getIconComponent(item.component);
-              const isActive = activeItem === item.id;
+            <ul className={s.Ul2}>
+              {group2Items.map(item => {
+                const IconComponent = getIconComponent(item.component);
+                const isActive = activeItem === item.id;
 
-              return (
-                <li key={item.id} className={isActive ? s.active : ""} onClick={() => handleMenuItemClick(item)}>
-                  <IconComponent isActive={isActive} />
-                  {item.label}
-                </li>
-              );
-            })}
+                return (
+                  <li key={item.id} className={isActive ? s.active : ""} onClick={() => handleMenuItemClick(item)}>
+                    <IconComponent isActive={isActive} />
+                    {item.label}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          <ul className={s.Ul3}>
+            <li
+              onClick={handleLogoutClick}
+              className={s.logoutItem}
+              style={isLoading ? { opacity: 0.6, cursor: "not-allowed" } : {}}
+            >
+              {Icons.LogoutIcon ? (
+                <Icons.LogoutIcon isActive={false} />
+              ) : (
+                <div style={{ width: 20, height: 20, backgroundColor: "#ccc", marginRight: 10 }} />
+              )}
+              {logoutItem.label}
+              {isLoading && " (Выход...)"}
+            </li>
           </ul>
         </div>
+      </aside>
 
-        <ul className={s.Ul3}>
-          <li onClick={handleLogout} className={s.logoutItem}>
-            {/* Проверяем наличие LogoutIcon */}
-            {Icons.LogoutIcon ? (
-              <Icons.LogoutIcon isActive={false} />
-            ) : (
-              <div style={{ width: 20, height: 20, backgroundColor: "#ccc", marginRight: 10 }} />
-            )}
-            {logoutItem.label}
-          </li>
-        </ul>
-      </div>
-    </aside>
+      {/* Диалоговое окно подтверждения выхода */}
+      <Dialog
+        open={isDialogOpen}
+        className={s.dialogWrap}
+        onOpenChange={setIsDialogOpen}
+        title="Log Out"
+        description="Are you really want to log out of your account Epam@epam.com?"
+      >
+        <div className={s.dialogButtons}>
+          <Button variant="outlined" onClick={handleLogoutConfirm} disabled={isLoading} className={s.confirmButton}>
+            Yes
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => setIsDialogOpen(false)}
+            disabled={isLoading}
+            className={s.cancelButton}
+          >
+            No
+          </Button>
+        </div>
+      </Dialog>
+    </>
   );
 };

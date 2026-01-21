@@ -3,20 +3,31 @@
 import { useRouter } from "next/navigation";
 import { useLogoutMutation } from "@/features/auth";
 import { ROUTES } from "@/shared";
+import { useEffect } from "react";
 
 export const useLogout = () => {
   const router = useRouter();
-  const [logoutMutation, { isLoading }] = useLogoutMutation();
+  const [logoutMutation, { isLoading, isSuccess, isError }] = useLogoutMutation();
+
+  // Обрабатываем успешный выход
+  useEffect(() => {
+    if (isSuccess) {
+      sessionStorage.removeItem("accessToken");
+      router.push(ROUTES.AUTH.LOGIN);
+      router.refresh();
+    }
+  }, [isSuccess, router]);
+
+  // Обрабатываем ошибку
+  useEffect(() => {
+    if (isError) {
+      console.error("Logout failed");
+    }
+  }, [isError]);
 
   const logout = async () => {
     try {
-      // Выполняем logout на сервере через RTK Query
       await logoutMutation().unwrap();
-
-      // Редирект на страницу login
-      router.push(ROUTES.AUTH.LOGIN);
-      // Обновляем данные на странице
-      router.refresh();
     } catch (error) {
       console.error("Logout failed: ", error);
     }
