@@ -63,7 +63,7 @@ $color: var(--light-100);
     -webkit-box-orient: vertical;
     overflow: hidden;
 
-    padding-right: 65px;
+    padding-right: 70px;
   }
 
   .toggle {
@@ -83,6 +83,5 @@ $color: var(--light-100);
   .toggleInline {
     position: static;
     white-space: nowrap;
-    padding-left: 5px;
   }
 }

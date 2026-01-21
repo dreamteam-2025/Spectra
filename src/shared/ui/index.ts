@@ -9,6 +9,7 @@ export { SelectBox } from "./SelectBox/SelectBox";
 export { Recaptcha } from "./Recaptcha/Recaptcha";
 export type { SelectOption } from "./SelectBox/SelectBox.types";
 export { Dialog } from "@/shared/ui/Dialog/Dialog";
+export { PostCard } from "./PostCard.tsx/PostCard";
 export * from "./RadioGroup/RadioGroup";
 
 // также реэкспорт ImageSlider
