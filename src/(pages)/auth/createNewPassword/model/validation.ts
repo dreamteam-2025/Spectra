@@ -1,19 +1,22 @@
 import { z } from "zod";
 
+const hasNumber = /[0-9]/;
+const hasLower = /[a-z]/;
+const hasUpper = /[A-Z]/;
+const hasSpecial = /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+
 export const passwordSchema = z
   .object({
     password: z
       .string()
-      .min(6, "Password must be at least 6 characters")
-      .max(20, "Password must be no more than 20 characters")
-      .refine(value => /[0-9]/.test(value), "Password must contain at least one digit")
-      .refine(value => /[a-z]/.test(value), "Password must contain at least one lowercase letter")
-      .refine(value => /[A-Z]/.test(value), "Password must contain at least one uppercase letter")
-      .refine(
-        value => /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/.test(value),
-        "Password must contain at least one special character"
-      ),
-    confirmPassword: z.string(),
+      .trim()
+      .min(1, "Password is required")
+      .min(6, { error: "Minimum number of characters 6" })
+      .max(20, { error: "Maximum number of characters 20" })
+      .refine(v => hasNumber.test(v) && hasLower.test(v) && hasUpper.test(v) && hasSpecial.test(v), {
+        message: "Password must contain lowercase, uppercase, and a symbol",
+      }),
+    confirmPassword: z.string().trim().min(1, "Password is required"),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: "The passwords must match",

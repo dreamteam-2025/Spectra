@@ -78,6 +78,13 @@ export const authApi = baseApi.injectEndpoints({
         url: "auth/new-password",
         body: payload,
       }),
+      onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
+        await queryFulfilled;
+        sessionStorage.removeItem(AUTH_KEYS.accessToken);
+        sessionStorage.removeItem(AUTH_KEYS.authProvider);
+        // инвалидация после КАЖДОГО удаления токенов
+        dispatch(baseApi.util.resetApiState());
+      },
     }),
 
     loginGithub: build.query<void, LoginOauthGithubArgs>({

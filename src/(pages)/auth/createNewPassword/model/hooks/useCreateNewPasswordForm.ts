@@ -1,42 +1,42 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { passwordSchema, PasswordFormData } from "../validation";
-import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { PasswordFormData, passwordSchema } from "../validation";
+import { useNewPasswordMutation } from "@/features/auth/api/authApi";
+import { ROUTES } from "@/shared";
 
 export const useCreateNewPasswordForm = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    trigger,
-    formState: { errors, isValid },
-  } = useForm<PasswordFormData>({
+  const form = useForm<PasswordFormData>({
     resolver: zodResolver(passwordSchema),
     mode: "onChange",
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
   });
 
-  const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
 
-  useEffect(() => {
-    if (password || confirmPassword) {
-      trigger();
+  const [newPassword, { isLoading }] = useNewPasswordMutation();
+
+  const onSubmit = async (data: PasswordFormData) => {
+    if (!code) return;
+
+    try {
+      await newPassword({
+        newPassword: data.password,
+        recoveryCode: code,
+      }).unwrap();
+
+      form.reset();
+      router.push(ROUTES.AUTH.LOGIN);
+    } catch (err) {
+      form.reset();
+      console.error(err);
     }
-  }, [password, confirmPassword, trigger]);
-
-  const onSubmit = (data: PasswordFormData) => {
-    console.log("Password created:", data);
   };
 
   return {
-    register,
-    handleSubmit,
+    ...form,
     onSubmit,
-    errors,
-    isValid,
+    isLoading,
   };
 };

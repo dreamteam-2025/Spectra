@@ -1,6 +1,19 @@
 import { z } from "zod";
 
-export const forgotPasswordSchema = z.object({
-  email: z.string().min(1, { message: "Email is required" }).email({ message: "Invalid email format" }),
-  captcha: z.string().min(1, { message: "Captcha is required" }).optional(),
-});
+export const forgotPasswordSchema = z
+  .object({
+    submitType: z.enum(["withCaptcha", "withoutCaptcha"]),
+
+    email: z.string().email(),
+
+    recaptcha: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.submitType === "withCaptcha" && !data.recaptcha) {
+      ctx.addIssue({
+        path: ["recaptcha"],
+        message: "Recaptcha is required",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+  });
