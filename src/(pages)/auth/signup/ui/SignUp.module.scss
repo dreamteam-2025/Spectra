@@ -19,6 +19,24 @@
     img {
       display: block;
     }
+
+    button {
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
   }
 
   .form {

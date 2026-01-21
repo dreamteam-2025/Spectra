@@ -18,3 +18,7 @@ export type RegistrationEmailResendingArgs = z.infer<typeof registrationEmailRes
 export type PasswordRecovery = z.infer<typeof passwordRecoverySchema>;
 export type PasswordRecoveryResending = z.infer<typeof passwordRecoveryResendingSchema>;
 export type NewPassword = z.infer<typeof newPasswordSchema>;
+
+export type LoginOauthGithubArgs = {
+  redirectUrl: string;
+};

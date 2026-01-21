@@ -8,6 +8,7 @@ import { Input } from "@/shared/ui/Input/Input";
 import { Button } from "@/shared/ui/Button/Button";
 import { Card } from "@/shared/ui/Card/Card";
 import { useSignIn } from "../model/hooks";
+import { useGithubOauthLogin } from "@/features/auth/model/hooks/useGithubOauthLogin";
 
 export const SignIn = () => {
   const {
@@ -20,6 +21,8 @@ export const SignIn = () => {
     isLoading,
   } = useSignIn();
 
+  const { openOauthPopup } = useGithubOauthLogin();
+
   return (
     <main>
       <Card className={s.main}>
@@ -29,7 +32,7 @@ export const SignIn = () => {
           <button type="button">
             <Image src="/icons/google.svg" alt="google" width={36} height={36} />
           </button>
-          <button type="button">
+          <button type="button" onClick={openOauthPopup}>
             <Image src="/icons/github.svg" alt="github" width={36} height={36} />
           </button>
         </div>
