@@ -1,8 +1,11 @@
+"use client";
+
+import { Profile } from "@/(pages)";
+
 export default function ProfilePage() {
   return (
-    <div>
-      {/* Profile page */}
-      Profile page
-    </div>
+    <>
+      <Profile />
+    </>
   );
 }
