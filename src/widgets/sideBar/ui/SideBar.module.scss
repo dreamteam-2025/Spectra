@@ -9,6 +9,10 @@
 
   .wrapperUlCenterWidth {
     width: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 
     ul li {
       margin-bottom: 24px;
@@ -17,6 +21,7 @@
       cursor: pointer;
       color: var(--light-100);
       transition: color 0.3s ease;
+      user-select: none;
 
       &:hover {
         color: var(--accent-100);
@@ -28,7 +33,8 @@
         font-weight: 600;
       }
 
-      img {
+      img,
+      svg {
         margin-right: 10px;
       }
     }
@@ -42,6 +48,38 @@
 
       .Ul2 {
         padding-top: 25px;
+      }
+    }
+
+    // Стили для третьего списка (logout)
+    .Ul3 {
+      padding-bottom: 40px;
+
+      li {
+        // Убираем активное состояние для logout
+        &:active,
+        &.active {
+          color: var(--light-100);
+          font-weight: normal;
+        }
+
+        &:hover {
+          color: #ff6b6b; // Красный цвет при наведении на logout
+        }
+      }
+    }
+
+    // Специальный класс для logout item
+    .logoutItem {
+      &:hover {
+        color: #ff6b6b !important;
+      }
+
+      // Убираем стандартное активное состояние
+      &:active,
+      &.active {
+        color: var(--light-100) !important;
+        font-weight: normal !important;
       }
     }
   }
