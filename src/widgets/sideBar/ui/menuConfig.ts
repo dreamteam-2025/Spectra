@@ -1,7 +1,7 @@
 export const menuItems = [
   {
     id: "feed",
-    label: "feed",
+    label: "Feed",
     component: "FeedIcon",
     path: "/",
     group: 1,
