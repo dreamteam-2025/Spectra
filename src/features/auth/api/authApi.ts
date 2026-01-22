@@ -5,6 +5,9 @@ import type {
   RegistrationConfirmationArgs,
   RegistrationEmailResendingArgs,
   SignUpArgs,
+  PasswordRecovery,
+  PasswordRecoveryResending,
+  NewPassword,
 } from "./authApi.types";
 import { SignInForm } from "@/(pages)/auth/login/model";
 
@@ -52,6 +55,38 @@ export const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
+
+    passwordRecovery: build.mutation<void, PasswordRecovery>({
+      query: payload => ({
+        method: "post",
+        url: "auth/password-recovery",
+        body: payload,
+      }),
+    }),
+
+    passwordRecoveryResending: build.mutation<void, PasswordRecoveryResending>({
+      query: payload => ({
+        method: "post",
+        url: "auth/password-recovery-resending",
+        body: payload,
+      }),
+    }),
+
+    newPassword: build.mutation<void, NewPassword>({
+      query: payload => ({
+        method: "POST",
+        url: "auth/new-password",
+        body: payload,
+      }),
+      onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
+        await queryFulfilled;
+        sessionStorage.removeItem(AUTH_KEYS.accessToken);
+        sessionStorage.removeItem(AUTH_KEYS.authProvider);
+        // инвалидация после КАЖДОГО удаления токенов
+        dispatch(baseApi.util.resetApiState());
+      },
+    }),
+
     loginGithub: build.query<void, LoginOauthGithubArgs>({
       query: ({ redirectUrl }) => ({
         method: "get",
@@ -100,4 +135,7 @@ export const {
   useSignUpMutation,
   useConfirmRegistrationMutation,
   useResendRegistrationEmailMutation,
+  usePasswordRecoveryMutation,
+  usePasswordRecoveryResendingMutation,
+  useNewPasswordMutation,
 } = authApi;
