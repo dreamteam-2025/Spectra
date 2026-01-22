@@ -16,7 +16,7 @@ export const useLogout = () => {
       // Редирект на страницу login
       router.push(ROUTES.AUTH.LOGIN);
       // Обновляем данные на странице
-      router.refresh();
+      //router.refresh();
     } catch (error) {
       console.error("Logout failed: ", error);
     }
