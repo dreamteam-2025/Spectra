@@ -3,21 +3,49 @@
 import { useState } from "react";
 import s from "./ImageSlider.module.scss";
 import clsx from "clsx";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
+//import { MockPost } from "@/widgets/post/postList/model/mock";
 
-type Props = {
-  slides: Record<"url", string>[];
+// type MockPostImages = Array<
+//   Pick<MockPost, "id" | "postImage"> & {
+//     postImage: string | StaticImageData;
+//   }
+// >;
+
+type MockPostImages = {
+  id: number;
+  postImage: string | StaticImageData;
 };
 
-export const ImageSlider = ({ slides = [] }: Props) => {
+type Props = {
+  slides: MockPostImages[];
+};
+
+export const ImageSlider = ({ slides }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasError, setHasError] = useState(false);
 
   // Полная валидация слайдов
   const validSlides = slides.filter(slide => {
     if (!slide || typeof slide !== "object") return false;
-    if (!slide.url || typeof slide.url !== "string") return false;
-    return slide.url.trim() !== "";
+    if (!slide.postImage) return false;
+
+    //Если postImage - строка (URL)
+    if (typeof slide.postImage === "string") {
+      return slide.postImage.trim() !== "";
+    }
+
+    const hasSrc = "src" in slide.postImage && slide.postImage.src;
+    const hasWidth = "width" in slide.postImage;
+    const hasHeight = "height" in slide.postImage;
+
+    // Проверяем основные свойства StaticImageData
+    if (hasSrc && hasWidth && hasHeight) {
+      // Дополнительная проверка типа src
+      return typeof slide.postImage.src === "string" && slide.postImage.src.trim() !== "";
+    }
+
+    return false;
   });
 
   // Если нет валидных слайдов или ошибка загрузки
@@ -31,23 +59,23 @@ export const ImageSlider = ({ slides = [] }: Props) => {
   }
 
   // Если больше 1 фото
-  const hasMultipleImages = slides.length > 1;
+  const hasMultipleImages = validSlides.length > 1;
 
-  const goToPreviousHandler = () => setCurrentIndex(prev => (prev === 0 ? slides.length - 1 : prev - 1));
-  const goToNextHandler = () => setCurrentIndex(prev => (prev === slides.length - 1 ? 0 : prev + 1));
+  const goToPreviousHandler = () => setCurrentIndex(prev => (prev === 0 ? validSlides.length - 1 : prev - 1));
+  const goToNextHandler = () => setCurrentIndex(prev => (prev === validSlides.length - 1 ? 0 : prev + 1));
 
-  const goToSlideHandler = (slideIndex: number) => {
-    setCurrentIndex(slideIndex);
-  };
+  const goToSlideHandler = (slideIndex: number) => setCurrentIndex(slideIndex);
 
   return (
     <div className={s.imageContainer}>
       <div className={s.slider}>
         {/* Непосредственно изображение */}
-        <div
+        <Image
+          fill
+          sizes="240px"
           className={s.slide}
-          style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-          role="img"
+          src={validSlides[currentIndex].postImage}
+          alt={`Slide ${currentIndex + 1}`}
           aria-label={`Slide ${currentIndex + 1} of ${validSlides.length}`}
         />
 
@@ -63,9 +91,9 @@ export const ImageSlider = ({ slides = [] }: Props) => {
             </button>
             {/* "Точки" для переключения на конкретное изображение из серии */}
             <div className={s.dotsContainer}>
-              {validSlides.map((_, slideIndex) => (
+              {validSlides.map((slide, slideIndex) => (
                 <button
-                  key={slideIndex}
+                  key={slide.id}
                   className={clsx(s.dot, slideIndex === currentIndex && s.active)}
                   onClick={() => goToSlideHandler(slideIndex)}
                   aria-label={`Go to slide ${slideIndex + 1}`}
