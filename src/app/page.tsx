@@ -1,3 +1,4 @@
+import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -9,6 +10,15 @@ type Props = {
 
 export default async function Home({ searchParams }: Props) {
   const { code, email } = await searchParams;
+
+  const imageSlides = [
+    { url: "/images/post-image-mock.png" },
+    { url: "/images/post-image-mock2.png" },
+    { url: "/images/post-image-mock3.png" },
+    { url: "/images/post-image-mock4.png" },
+    // { url: "/images/post-image-mock3.png" },
+    // { url: "/images/post-image-mock3.png" },
+  ];
 
   if (code) {
     const qs = new URLSearchParams();
@@ -31,7 +41,7 @@ export default async function Home({ searchParams }: Props) {
   return (
     <>
       <h1>Main Page</h1>
-      <p>Some text here. Some text here. Some text here.</p>
+      <ImageSlider slides={imageSlides} />
     </>
   );
 }
