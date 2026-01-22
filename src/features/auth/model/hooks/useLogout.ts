@@ -13,10 +13,10 @@ export const useLogout = () => {
       // Выполняем logout на сервере через RTK Query
       await logoutMutation().unwrap();
 
-      // Редирект на страницу login
-      router.push(ROUTES.AUTH.LOGIN);
+      // Редирект на страницу login 
+      // (replace чтобы не сохранять в истории браузера, предпочтительно при logout)
+      router.replace(ROUTES.AUTH.LOGIN);
       // Обновляем данные на странице
-      //router.refresh();
     } catch (error) {
       console.error("Logout failed: ", error);
     }
