@@ -14,8 +14,8 @@ export default async function Home({ searchParams }: Props) {
   const imageSlides = [
     { url: "/images/post-image-mock.png" },
     { url: "/images/post-image-mock2.png" },
-    { url: "/images/post-image-mock3.png" },
-    { url: "/images/post-image-mock4.png" },
+    // { url: "/images/post-image-mock3.png" },
+    // { url: "/images/post-image-mock4.png" },
     // { url: "/images/post-image-mock3.png" },
     // { url: "/images/post-image-mock3.png" },
   ];

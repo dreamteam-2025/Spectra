@@ -4,6 +4,15 @@
   margin: 0 auto;
 }
 
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--dark-100);
+}
+
 .slider {
   height: 100%;
   position: relative;
@@ -53,6 +62,7 @@
   height: 12px;
   background-color: color-mix(in srgb, var(--dark-300) 50%, transparent);
   border-radius: 2px;
+  z-index: 1;
 
   .dot {
     width: 6px;
