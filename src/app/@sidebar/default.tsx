@@ -1,7 +1,7 @@
 "use client";
 
 import { useMeQuery } from "@/features";
-import { MockSideBar } from "@/widgets";
+import { SideBar } from "@/widgets";
 
 export default function SidebarSlot() {
   const { data: meResponse, isLoading } = useMeQuery();
@@ -16,5 +16,5 @@ export default function SidebarSlot() {
   }
 
   //return <Sidebar />;
-  return <MockSideBar />;
+  return <SideBar />;
 }
