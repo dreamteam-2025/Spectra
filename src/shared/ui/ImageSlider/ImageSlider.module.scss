@@ -2,6 +2,16 @@
   width: 240px;
   height: 240px;
   margin: 0 auto;
+
+  // Показываем навигацию при наведении на контейнер
+  &:hover {
+    .left,
+    .right,
+    .dotsContainer {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
 
 .empty {
@@ -46,6 +56,13 @@
   &.right {
     right: 8px;
   }
+
+  // Скрываем по умолчанию
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 }
 
 .dotsContainer {
@@ -62,6 +79,13 @@
   background-color: color-mix(in srgb, var(--dark-300) 50%, transparent);
   border-radius: 2px;
   z-index: 1;
+
+  // Скрываем по умолчанию
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 
   .dot {
     width: 6px;
