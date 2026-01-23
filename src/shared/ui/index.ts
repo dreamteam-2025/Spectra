@@ -1,4 +1,5 @@
 // Реэкспорт содержимого на уровне UI
+export { ImageSlider } from "./ImageSlider/ImageSlider";
 export { Loader } from "@/shared/ui/Loader/Loader";
 export { LinearProgress } from "./LinearProgress/LinearProgress";
 export { Button } from "./Button/Button";
@@ -11,5 +12,3 @@ export type { SelectOption } from "./SelectBox/SelectBox.types";
 export { Dialog } from "@/shared/ui/Dialog/Dialog";
 export { PostCard } from "./PostCard.tsx/PostCard";
 export * from "./RadioGroup/RadioGroup";
-
-// также реэкспорт ImageSlider
