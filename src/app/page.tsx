@@ -1,3 +1,4 @@
+import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -31,7 +32,6 @@ export default async function Home({ searchParams }: Props) {
   return (
     <>
       <h1>Main Page</h1>
-      <p>Some text here. Some text here. Some text here.</p>
     </>
   );
 }
