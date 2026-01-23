@@ -15,7 +15,17 @@ export default async function Home({ searchParams }: Props) {
     qs.set("code", code);
     if (email) qs.set("email", email);
 
-    redirect(`/confirm-email?${qs.toString()}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/check-recovery-code`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ recoveryCode: code }),
+      cache: "no-store",
+    });
+
+    if (res.ok) redirect(`/create-new-password?${qs.toString()}`);
+    else redirect(`/confirm-email?${qs.toString()}`);
   }
 
   return (

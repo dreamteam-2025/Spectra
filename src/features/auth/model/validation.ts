@@ -38,3 +38,23 @@ export const registrationEmailResendingSchema = z.object({
   email: z.email(),
   baseUrl: z.url(),
 });
+
+export const passwordRecoverySchema = z.object({
+  email: z.email("User with this email doesn't exist"),
+  recaptcha: z.string(),
+  baseUrl: z.url(),
+});
+
+export const passwordRecoveryResendingSchema = z.object({
+  email: z.email("User with this email doesn't exist"),
+  baseUrl: z.url(),
+});
+
+export const newPasswordSchema = z.object({
+  newPassword: z
+    .string()
+    .min(1, { message: "Password is required" })
+    .min(6, { error: "Minimum number of characters 6" })
+    .max(20, { error: "Maximum number of characters 20" }),
+  recoveryCode: z.string(),
+});

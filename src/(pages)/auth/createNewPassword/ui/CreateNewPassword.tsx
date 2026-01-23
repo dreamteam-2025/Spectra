@@ -1,13 +1,51 @@
 "use client";
 
-import { Card } from "@/shared/ui/Card/Card";
-import s from "./CreateNewPassword.module.scss";
-import { Input } from "@/shared/ui/Input/Input";
 import { Button } from "@/shared/ui/Button/Button";
+import { Card } from "@/shared/ui/Card/Card";
+import { Input } from "@/shared/ui/Input/Input";
 import { useCreateNewPasswordForm } from "../model/hooks/useCreateNewPasswordForm";
+import s from "./CreateNewPassword.module.scss";
 
 export const CreateNewPassword = () => {
-  const { register, handleSubmit, onSubmit, errors, isValid } = useCreateNewPasswordForm();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   reset,
+  //   formState: { errors, isValid },
+  // } = useForm<PasswordFormData>({
+  //   resolver: zodResolver(passwordSchema),
+  //   mode: "onChange",
+  // });
+
+  // const router = useRouter();
+  // const searchParams = useSearchParams();
+
+  // const [newPassword, { isLoading }] = useNewPasswordMutation();
+  // const code = searchParams.get("code");
+
+  // async function onSubmit(data: PasswordFormData) {
+  //   if (code) {
+  //     try {
+  //       await newPassword({
+  //         newPassword: data.password,
+  //         recoveryCode: code,
+  //       }).unwrap();
+  //       reset();
+  //       router.push(ROUTES.AUTH.LOGIN);
+  //     } catch (err) {
+  //       reset();
+  //       console.log(err);
+  //     }
+  //   }
+  // }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    onSubmit,
+    isLoading,
+  } = useCreateNewPasswordForm();
 
   return (
     <main className={s.container}>
@@ -39,7 +77,7 @@ export const CreateNewPassword = () => {
             <label className={s.labelPassword}>Your password must be between 6 and 20 characters</label>
           </div>
 
-          <Button type="submit" variant="primary" className={s.button} disabled={!isValid}>
+          <Button type="submit" variant="primary" className={s.button} disabled={!isValid || isLoading}>
             Create new password
           </Button>
         </form>

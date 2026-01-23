@@ -5,6 +5,9 @@ import {
   registrationConfirmationSchema,
   registrationEmailResendingSchema,
   signUpRequestSchema,
+  passwordRecoverySchema,
+  passwordRecoveryResendingSchema,
+  newPasswordSchema,
 } from "./../model/validation";
 
 export type MeResponse = z.infer<typeof meResponseSchema>;
@@ -12,8 +15,10 @@ export type SignInFormType = z.infer<typeof signInSchema>;
 export type SignUpArgs = z.infer<typeof signUpRequestSchema>;
 export type RegistrationConfirmationArgs = z.infer<typeof registrationConfirmationSchema>;
 export type RegistrationEmailResendingArgs = z.infer<typeof registrationEmailResendingSchema>;
+export type PasswordRecovery = z.infer<typeof passwordRecoverySchema>;
+export type PasswordRecoveryResending = z.infer<typeof passwordRecoveryResendingSchema>;
+export type NewPassword = z.infer<typeof newPasswordSchema>;
 
-//
 export type LoginOauthGithubArgs = {
   redirectUrl: string;
 };
