@@ -18,7 +18,7 @@ type DialogProps = {
   showClose?: boolean;
 };
 
-export function Dialog({
+export const Dialog = ({
   open,
   onOpenChange,
   title,
@@ -28,7 +28,7 @@ export function Dialog({
   headerSlot,
   showDivider = true,
   showClose = true,
-}: DialogProps) {
+}: DialogProps) => {
   return (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
       <RadixDialog.Portal>
@@ -57,15 +57,8 @@ export function Dialog({
                     </RadixDialog.Close>
                   )}
                   <RadixDialog.Title className={s.title}>{title}</RadixDialog.Title>
-
-                  {showClose && (
-                    <RadixDialog.Close className={s.close} aria-label="Close dialog">
-                      ✕
-                    </RadixDialog.Close>
-                  )}
                 </div>
 
-                {showDivider && <hr className={s.divider} />}
                 {showDivider && <hr className={s.divider} />}
               </>
             ) : null}
@@ -78,7 +71,6 @@ export function Dialog({
               {!children && (
                 <RadixDialog.Close asChild>
                   <Button variant="primary" className={s.okButton} type="button">
-                  <Button variant="primary" className={s.okButton} type="button">
                     OK
                   </Button>
                 </RadixDialog.Close>
@@ -89,4 +81,4 @@ export function Dialog({
       </RadixDialog.Portal>
     </RadixDialog.Root>
   );
-}
+};
