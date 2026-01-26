@@ -1,0 +1,72 @@
+.root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// от линии под заголовком до квадрата = 72px
+.placeholder {
+  margin-top: 72px;
+
+  width: 222px;
+  height: 228px;
+  border-radius: 2px;
+  background: var(--dark-500);
+
+  display: grid;
+  place-items: center;
+
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+// блок кнопок
+.actions {
+  margin-top: 60px; // от квадрата до первой кнопки
+
+  width: 219px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+// input скрыт
+.fileInput {
+  display: none;
+}
+
+// первая кнопка
+.selectBtn {
+  width: 100%;
+  height: 36px;
+  border-radius: 2px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  user-select: none;
+
+  background: var(--accent-500);
+  color: #fff;
+}
+
+// расстояние между кнопками = 24px
+.openDraft {
+  margin-top: 24px;
+
+  width: 100%;
+  height: 36px;
+  padding: 0;
+}
+
+// ошибка
+.error {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #ff6b6b;
+  text-align: center;
+}
