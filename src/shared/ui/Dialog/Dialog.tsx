@@ -56,8 +56,16 @@ export function Dialog({
                       ✕
                     </RadixDialog.Close>
                   )}
+                  <RadixDialog.Title className={s.title}>{title}</RadixDialog.Title>
+
+                  {showClose && (
+                    <RadixDialog.Close className={s.close} aria-label="Close dialog">
+                      ✕
+                    </RadixDialog.Close>
+                  )}
                 </div>
 
+                {showDivider && <hr className={s.divider} />}
                 {showDivider && <hr className={s.divider} />}
               </>
             ) : null}
@@ -69,6 +77,7 @@ export function Dialog({
             <div className={s.footer}>
               {!children && (
                 <RadixDialog.Close asChild>
+                  <Button variant="primary" className={s.okButton} type="button">
                   <Button variant="primary" className={s.okButton} type="button">
                     OK
                   </Button>

@@ -1,3 +1,200 @@
+// .overlay {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.6);
+// }
+
+// .content {
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+
+//   width: 378px;
+//   background: var(--dark-300);
+//   color: var(--light-100);
+//   padding: 0 24px;
+
+//   border: 1px solid var(--dark-100);
+//   border-radius: 2px;
+
+//   .header {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 12px 0;
+
+//     .title {
+//       font-size: 18px;
+//       font-weight: 600;
+//       padding: 5px 0;
+//     }
+
+//     .close {
+//       all: unset;
+//       cursor: pointer;
+//       font-size: 18px;
+//       font-weight: 700;
+//       color: var(--light-100);
+//     }
+//   }
+
+//   .divider {
+//     border: none;
+//     height: 1px;
+//     background: var(--dark-100);
+//     margin: 0 -24px;
+//   }
+
+//   .description {
+//     font-size: 14px;
+//     line-height: 1.5;
+//     color: #d1d1d1;
+//     margin-top: 30px;
+//   }
+
+//   .children {
+//     margin-bottom: 18px;
+//   }
+
+//   .footer {
+//     display: flex;
+//     justify-content: flex-end;
+//     margin-bottom: 36px;
+
+//     .okButton {
+//       width: 96px;
+//     }
+//   }
+// }
+
+// .headerRow {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   gap: 12px;
+// }
+
+// .headerSlot {
+//   padding: 12px 0; /* как у дефолтного header */
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+// .overlay {
+//   position: fixed;
+//   inset: 0;
+//   background: rgba(0, 0, 0, 0.6);
+// }
+
+// .content {
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+
+//   width: 378px;
+//   background: var(--dark-300);
+//   color: var(--light-100);
+//   padding: 0 24px;
+
+//   border: 1px solid var(--dark-100);
+//   border-radius: 2px;
+
+//   /* ✅ ВАЖНО: чтобы шаги могли растягиваться по высоте */
+//   display: flex;
+//   flex-direction: column;
+//   overflow: hidden;
+// }
+
+// /* Дефолтная шапка */
+// .header {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding: 12px 0;
+//   flex: 0 0 auto;
+// }
+
+// .title {
+//   font-size: 18px;
+//   font-weight: 600;
+//   padding: 5px 0;
+// }
+
+// .close {
+//   all: unset;
+//   cursor: pointer;
+//   font-size: 18px;
+//   font-weight: 700;
+//   color: var(--light-100);
+// }
+
+// /* Кастомная шапка */
+// .headerSlot {
+//   padding: 12px 0;
+//   flex: 0 0 auto;
+// }
+
+// .divider {
+//   border: none;
+//   height: 1px;
+//   background: var(--dark-100);
+//   margin: 0 -24px;
+//   flex: 0 0 auto;
+// }
+
+// .description {
+//   font-size: 14px;
+//   line-height: 1.5;
+//   color: #d1d1d1;
+//   margin-top: 30px;
+//   flex: 0 0 auto;
+// }
+
+// /* ✅ ВАЖНО: это “тело” модалки — оно должно занимать всё оставшееся место */
+// .children {
+//   flex: 1 1 auto;
+//   min-height: 0; /* критично для вложенного flex + absolute */
+//   margin: 0;
+// }
+
+// /* footer у тебя почти не используется в CreatePost, но оставим */
+// .footer {
+//   display: flex;
+//   justify-content: flex-end;
+//   margin-bottom: 36px;
+//   flex: 0 0 auto;
+// }
+
+// .okButton {
+//   width: 96px;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -23,6 +220,18 @@
   overflow: hidden;
 }
 
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  flex: 0 0 auto;
+}
 .header {
   display: flex;
   align-items: center;
@@ -36,7 +245,24 @@
   font-weight: 600;
   padding: 5px 0;
 }
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 5px 0;
+}
 
+.close {
+  all: unset;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--light-100);
+}
+
+.headerSlot {
+  padding: 12px 0;
+  flex: 0 0 auto;
+}
 .close {
   all: unset;
   cursor: pointer;
@@ -57,7 +283,21 @@
   margin: 0 -24px;
   flex: 0 0 auto;
 }
+.divider {
+  border: none;
+  height: 1px;
+  background: var(--dark-100);
+  margin: 0 -24px;
+  flex: 0 0 auto;
+}
 
+.description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #d1d1d1;
+  margin-top: 30px;
+  flex: 0 0 auto;
+}
 .description {
   font-size: 14px;
   line-height: 1.5;
@@ -71,7 +311,18 @@
   min-height: 0;
   margin: 0;
 }
+.children {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+}
 
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 36px;
+  flex: 0 0 auto;
+}
 .footer {
   display: flex;
   justify-content: flex-end;

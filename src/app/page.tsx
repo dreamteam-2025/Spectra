@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { CreatePostPage } from "@/(pages)";
 
 type Props = {
   searchParams: Promise<{
