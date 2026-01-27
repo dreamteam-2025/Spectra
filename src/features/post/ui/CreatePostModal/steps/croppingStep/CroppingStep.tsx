@@ -3,12 +3,6 @@ import Cropper, { Area } from "react-easy-crop";
 import s from "./CroppingStep.module.scss";
 import { getCroppedBlob } from "@/features/post/model/cropImage";
 
-type Props = {
-  previewUrl: string;
-  onBack: () => void;
-  onNext: (payload: { blob: Blob; previewUrl: string; aspect: number }) => void;
-};
-
 type Ratio = "1:1" | "4:5" | "16:9";
 
 const ratioToAspect: Record<Ratio, number> = {
@@ -17,7 +11,20 @@ const ratioToAspect: Record<Ratio, number> = {
   "16:9": 16 / 9,
 };
 
-export function CroppingStep({ previewUrl, onBack, onNext }: Props) {
+export type CropPayload = {
+  blob: Blob;
+  previewUrl: string;
+  aspect: number;
+};
+
+type Props = {
+  previewUrl: string;
+  onBack: () => void;
+  onNext: (payload: CropPayload) => void;
+  submitRef: React.MutableRefObject<null | (() => void)>;
+};
+
+export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
   const [ratio, setRatio] = useState<Ratio>("1:1");
   const aspect = useMemo(() => ratioToAspect[ratio], [ratio]);
 
@@ -50,7 +57,9 @@ export function CroppingStep({ previewUrl, onBack, onNext }: Props) {
       const blob = await getCroppedBlob(previewUrl, croppedAreaPixels);
       const nextPreviewUrl = URL.createObjectURL(blob);
 
-      if (lastGeneratedPreviewRef.current) URL.revokeObjectURL(lastGeneratedPreviewRef.current);
+      if (lastGeneratedPreviewRef.current) {
+        URL.revokeObjectURL(lastGeneratedPreviewRef.current);
+      }
       lastGeneratedPreviewRef.current = nextPreviewUrl;
 
       onNext({ blob, previewUrl: nextPreviewUrl, aspect });
@@ -61,9 +70,16 @@ export function CroppingStep({ previewUrl, onBack, onNext }: Props) {
     }
   }, [aspect, croppedAreaPixels, loading, onNext, previewUrl]);
 
+
+  useEffect(() => {
+    submitRef.current = handleNext;
+    return () => {
+      submitRef.current = null;
+    };
+  }, [handleNext, submitRef]);
+
   return (
     <div className={s.root}>
-      {/* canvas на всю высоту под шапкой */}
       <div className={s.canvas}>
         <Cropper
           image={previewUrl}
@@ -77,7 +93,7 @@ export function CroppingStep({ previewUrl, onBack, onNext }: Props) {
           objectFit="cover"
         />
 
-        {/* controls поверх картинки (как в макете) */}
+        
         <div className={s.controls}>
           <div className={s.ratios}>
             <button className={s.ratioBtn} type="button" onClick={() => setRatio("1:1")} aria-pressed={ratio === "1:1"}>
@@ -108,18 +124,6 @@ export function CroppingStep({ previewUrl, onBack, onNext }: Props) {
           />
         </div>
       </div>
-
-      {/* Next из шапки кликает сюда */}
-      <button
-        id="crop-next"
-        type="button"
-        onClick={handleNext}
-        disabled={loading || !croppedAreaPixels}
-        style={{ display: "none" }}
-      />
-
-      {/* если вдруг захочешь горячую клавишу назад */}
-      <button id="crop-back" type="button" onClick={onBack} style={{ display: "none" }} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Dialog } from "@/shared/ui/Dialog/Dialog";
 import s from "./CreatePostModal.module.scss";
 import { SelectPhotoStep } from "./steps/selectPhotoStep/SelectPhotoStep";
-import { CroppingStep } from "./steps/croppingStep/CroppingStep";
+import { CroppingStep, CropPayload } from "./steps/croppingStep/CroppingStep";
 import { Button } from "@/shared";
 
 type Props = {
@@ -15,6 +15,9 @@ type Step = "select" | "cropping";
 export function CreatePostModal({ open, onOpenChange }: Props) {
   const [step, setStep] = useState<Step>("select");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+
+  const cropNextRef = useRef<null | (() => void)>(null);
 
   const reset = () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -30,7 +33,6 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
   const headerSelect = (
     <div className={s.headerSelect}>
       <div className={s.titleLeft}>Add Photo</div>
-
       <button className={s.iconBtn} type="button" aria-label="Close" onClick={() => handleClose(false)}>
         ✕
       </button>
@@ -45,15 +47,8 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
 
       <div className={s.titleCenter}>Cropping</div>
 
-      <Button
-        variant="ghost"
-        type="button"
-        className={s.nextBtn}
-        onClick={() => {
-          const el = document.getElementById("crop-next") as HTMLButtonElement | null;
-          el?.click();
-        }}
-      >
+      
+      <Button variant="ghost" type="button" className={s.nextBtn} onClick={() => cropNextRef.current?.()}>
         Next
       </Button>
     </div>
@@ -81,8 +76,9 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
         <CroppingStep
           previewUrl={previewUrl}
           onBack={() => setStep("select")}
-          onNext={() => {
-            // дальше будет filters/description
+          submitRef={cropNextRef}
+          onNext={(payload: CropPayload) => {
+            console.log("Cropped:", payload);
             handleClose(false);
           }}
         />
