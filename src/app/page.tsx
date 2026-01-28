@@ -1,4 +1,3 @@
-import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
 import { RegisteredUsersCounter } from "@/widgets/registeredUsersCounter/ui/RegisteredUsersCounter";
 import { redirect } from "next/navigation";
 
@@ -32,7 +31,7 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <>
-      <RegisteredUsersCounter />
+      <h1>Main page</h1>
     </>
   );
 }

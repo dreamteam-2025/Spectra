@@ -79,7 +79,7 @@
 
 //Добавила скролл в случае если будет больще 3-х option-ов()
 .viewport {
-  max-height: calc(var(--select-height, 36px) * 3);
+  max-height: calc(var(--select-height, 40px) * 3);
   overflow-y: scroll;
 }
 

@@ -1,3 +1,5 @@
+import { CreatePostPage } from "@/(pages)";
+
 export default function createPage() {
-  return <div>Create page</div>;
+  return <CreatePostPage />;
 }
