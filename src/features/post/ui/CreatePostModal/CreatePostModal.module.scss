@@ -1,0 +1,54 @@
+.modal {
+  width: 492px;
+  height: 564px;
+  max-width: 92vw;
+
+  // чтобы внутренности не вылезали и кроп занимал пространство
+  overflow: hidden;
+}
+
+/* Step 1 header: title слева, X справа */
+.headerSelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleLeft {
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 2px;
+}
+
+/* Step 2 header: back | centered title | next */
+.headerCropping {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.titleCenter {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.iconBtn {
+  all: unset;
+  cursor: pointer;
+  width: 40px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--light-100);
+}
+
+.nextBtn {
+  height: 36px;
+  padding: 0 12px; // размер как в макете
+  font-weight: 600;
+
+  // на всякий случай убираем фон, если где-то переопределится
+  background: transparent !important;
+}

@@ -1,5 +1,5 @@
-import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
 import { redirect } from "next/navigation";
+import { HomeClient } from "./HomeClient";
 
 type Props = {
   searchParams: Promise<{
@@ -31,7 +31,7 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <>
-      <h1>Main Page</h1>
+      <h1>Main page</h1>
     </>
   );
 }
