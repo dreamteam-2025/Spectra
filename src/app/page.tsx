@@ -32,6 +32,7 @@ export default async function Home({ searchParams }: Props) {
   return (
     <>
       <h1>Main page</h1>
+      <HomeClient/>
     </>
   );
 }

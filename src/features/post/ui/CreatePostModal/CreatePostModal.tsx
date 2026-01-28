@@ -10,7 +10,8 @@ type Props = {
   onOpenChange: (open: boolean) => void;
 };
 
-type Step = "select" | "cropping";
+type Step = "select" | "cropping" | "filters" | "publish";
+
 
 export function CreatePostModal({ open, onOpenChange }: Props) {
   const [step, setStep] = useState<Step>("select");
