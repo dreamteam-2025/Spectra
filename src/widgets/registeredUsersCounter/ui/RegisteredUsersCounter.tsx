@@ -1,6 +1,6 @@
 "use client";
 import cx from "clsx";
-import s from "./registeredUsersCounter.module.scss";
+import s from "./RegisteredUsersCounter.module.scss";
 import { useGetPublicUsersCountQuery } from "@/shared/api";
 
 export const RegisteredUsersCounter = () => {

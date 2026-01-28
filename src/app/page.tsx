@@ -1,5 +1,5 @@
 import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
-import { RegisteredUsersCounter } from "@/widgets/registeredUsersCounter/ui/registeredUsersCounter";
+import { RegisteredUsersCounter } from "@/widgets/registeredUsersCounter/ui/RegisteredUsersCounter";
 import { redirect } from "next/navigation";
 
 type Props = {

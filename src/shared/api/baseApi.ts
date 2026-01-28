@@ -1,19 +1,9 @@
-// store/api/baseApi.ts
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./baseQueryWithReauth";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  tagTypes: ["Auth"],
+  tagTypes: ["Auth", "Posts", "User"],
   baseQuery: baseQueryWithReauth,
-  endpoints: builder => ({
-    getPublicUsersCount: builder.query<{ totalCount: number }, void>({
-      query: () => ({
-        url: "public-user",
-        method: "GET",
-      }),
-    }),
-  }),
+  endpoints: () => ({}),
 });
-
-export const { useGetPublicUsersCountQuery } = baseApi;
