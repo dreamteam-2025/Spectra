@@ -56,7 +56,6 @@ export const Dialog = ({
                       ✕
                     </RadixDialog.Close>
                   )}
-                  <RadixDialog.Title className={s.title}>{title}</RadixDialog.Title>
                 </div>
 
                 {showDivider && <hr className={s.divider} />}

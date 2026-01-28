@@ -1,4 +1,4 @@
-import { RegisteredUsersCounter } from "@/widgets/registeredUsersCounter/ui/RegisteredUsersCounter";
+import { RegisteredUsersCounter } from "@/widgets";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -29,9 +29,5 @@ export default async function Home({ searchParams }: Props) {
     else redirect(`/confirm-email?${qs.toString()}`);
   }
 
-  return (
-    <>
-      <h1>Main page</h1>
-    </>
-  );
+  return <RegisteredUsersCounter />;
 }
