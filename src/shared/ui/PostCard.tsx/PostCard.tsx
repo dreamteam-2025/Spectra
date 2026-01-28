@@ -2,21 +2,29 @@
 
 import React, { ComponentProps } from "react";
 import s from "./PostCard.module.scss";
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
 import clsx from "clsx";
 import { formatPostDate } from "@/shared/lib/utils/formatPostDate/formatPostDate";
+import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
+
+type Slide = {
+  id: number;
+  postImage: string | StaticImageData;
+};
 
 type Props = {
-  postImage: StaticImageData;
-  avatarImage: StaticImageData;
+  slides: Slide[];
+  avatarImage?: string;
   userName: string;
   createdAt: string;
   text: string;
   className?: string;
 } & ComponentProps<"article">;
 
-export const PostCard = ({ postImage, avatarImage, userName, createdAt, text, className }: Props) => {
-  const [expanded, setExpanded] = React.useState<boolean>(false);
+export const PostCard = ({ slides, avatarImage, userName, createdAt, text, className }: Props) => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const hasText = Boolean(text?.trim());
 
   const expandedHandler = () => {
     setExpanded(prev => !prev);
@@ -25,35 +33,40 @@ export const PostCard = ({ postImage, avatarImage, userName, createdAt, text, cl
   return (
     <article className={clsx(s.card, className)}>
       <div className={s.media}>
-        <Image className={s.postImage} src={postImage} alt="post-image" />
+        <ImageSlider slides={slides} />
       </div>
+
       <div className={s.content}>
-        <Image className={s.avatar} src={avatarImage} alt="avatar-image" />
+        <img className={s.avatar} src={avatarImage || "/images/post-image-mock.png"} alt="avatar-image" />
         <h3 className={s.userName}>{userName}</h3>
       </div>
+
       <time className={s.time} dateTime={createdAt}>
         {formatPostDate(createdAt)}
       </time>
-      <div className={s.textWrapper}>
-        {!expanded && (
-          <>
-            <p className={clsx(s.text, s.collapsed)}>{text}</p>
 
-            <button type="button" className={clsx(s.toggle, s.toggleAbsolute)} onClick={expandedHandler}>
-              Show more
-            </button>
-          </>
-        )}
+      {hasText && (
+        <div className={s.textWrapper}>
+          {!expanded && (
+            <>
+              <p className={clsx(s.text, s.collapsed)}>{text}</p>
 
-        {expanded && (
-          <p className={s.text}>
-            {text}{" "}
-            <button type="button" className={clsx(s.toggle, s.toggleInline)} onClick={expandedHandler}>
-              Hide
-            </button>
-          </p>
-        )}
-      </div>
+              <button type="button" className={clsx(s.toggle, s.toggleAbsolute)} onClick={expandedHandler}>
+                Show more
+              </button>
+            </>
+          )}
+
+          {expanded && (
+            <p className={s.text}>
+              {text}{" "}
+              <button type="button" className={clsx(s.toggle, s.toggleInline)} onClick={expandedHandler}>
+                Hide
+              </button>
+            </p>
+          )}
+        </div>
+      )}
     </article>
   );
 };
