@@ -1,13 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { SideBar } from "./SideBar";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
-  title: "UI/SideBar",
+  title: "widgets/SideBar",
   component: SideBar,
   parameters: {
-    layout: "centered",
+    layout: "center",
   },
   tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof SideBar>;
 
 export default meta;

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { SelectBox } from "./SelectBox";
 import { useState } from "react";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
   title: "UI/SelectBox",
@@ -18,10 +19,15 @@ const meta = {
     ],
     onChange: (val: string) => console.log("Changed:", val),
   },
+  parameters: {
+    layout: "center",
+  },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof SelectBox>;
 
 export default meta;
-type Story = StoryObj<typeof SelectBox>;
+type Story = StoryObj<typeof meta>;
 
 const StatefulTemplate = (args: any) => {
   const [value, setValue] = useState(args.value ?? "");

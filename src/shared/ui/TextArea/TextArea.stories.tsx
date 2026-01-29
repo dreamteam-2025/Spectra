@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { TextArea } from "./TextArea";
 import { useState } from "react";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
   title: "UI/TextArea",
   component: TextArea,
   parameters: {
-    layout: "centered",
+    layout: "center",
   },
   args: {
     label: "Description",
@@ -15,11 +16,13 @@ const meta = {
     error: "",
     value: "",
   },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof TextArea>;
 
 export default meta;
 
-type Story = StoryObj<typeof TextArea>;
+type Story = StoryObj<typeof meta>;
 
 /* STATE COMPONENT */
 const Stateful = (args: any) => {

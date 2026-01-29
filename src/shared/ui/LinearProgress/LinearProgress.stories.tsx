@@ -1,13 +1,15 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { LinearProgress } from "./LinearProgress";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
   title: "UI/LinearProgress",
   component: LinearProgress,
-  tags: ["autodocs"],
   parameters: {
-    layout: "centered",
+    layout: "center",
   },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof LinearProgress>;
 
 export default meta;
@@ -19,6 +21,6 @@ type Story = StoryObj<typeof meta>;
 export const LinearDefault: Story = {
   args: {
     height: 4,
-    width: 200,
+    width: 500,
   },
 };

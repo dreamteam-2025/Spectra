@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import type { ComponentProps } from "react";
 import { useState } from "react";
-import { Recaptcha } from "@/shared";
+import { Recaptcha, withDarkTheme } from "@/shared";
 
 type RecaptchaProps = ComponentProps<typeof Recaptcha>;
 
@@ -115,11 +115,11 @@ const RecaptchaStoryMock = (props: RecaptchaProps) => {
 };
 
 const meta: Meta<typeof Recaptcha> = {
-  title: "UI/Recaptcha",
+  title: "shared/Recaptcha",
   component: Recaptcha,
-  tags: ["autodocs"],
+
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
   argTypes: {
     theme: {
@@ -127,11 +127,13 @@ const meta: Meta<typeof Recaptcha> = {
       options: ["light", "dark"],
     },
   },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Recaptcha>;
+type Story = StoryObj<typeof meta>;
 
 export const Light: Story = {
   args: {

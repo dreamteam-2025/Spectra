@@ -1,18 +1,20 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Button } from "./Button";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
   title: "UI/Button",
   component: Button,
-  tags: ["autodocs"],
   parameters: {
-    layout: "centered",
+    layout: "center",
   },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof Button>;
 
 export default meta;
 
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<typeof meta>;
 
 /** PRIMARY */
 

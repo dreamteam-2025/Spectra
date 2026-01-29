@@ -1,16 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { PostCard } from "./PostCard";
+import { withDarkTheme } from "@/shared";
 
+// моковые данные:
 import postImage from "../../../../public/images/post-image-mock.png";
 import avatarImage from "../../../../public/images/avatar-image-mock.png";
 
 const meta = {
-  title: "UI/PostCard",
+  title: "shared/PostCard",
   component: PostCard,
-  tags: ["autodocs"],
   parameters: {
-    layout: "centered",
+    layout: "center",
   },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof PostCard>;
 
 export default meta;

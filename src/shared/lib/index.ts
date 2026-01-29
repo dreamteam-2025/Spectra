@@ -1,4 +1,5 @@
 export { ROUTES } from "./constants/routes";
+export { withDarkTheme } from "./storybook/decorators/withDarkTheme";
 export { isOauthError } from "./utils/handleErrors/isOauthError";
 export { handleErrors } from "./utils/handleErrors/handleErrors";
 export { isFetchError } from "./utils/handleErrors/isFetchError";

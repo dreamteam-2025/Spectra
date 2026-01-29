@@ -1,11 +1,15 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { CheckBox } from "./CheckBox";
-import { Card } from "@/shared/";
+import { Card, withDarkTheme } from "@/shared/";
 
 const meta = {
   title: "UI/CheckBox",
   component: CheckBox,
+  parameters: {
+    layout: "center",
+  },
   tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof CheckBox>;
 
 export default meta;

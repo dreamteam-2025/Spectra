@@ -1,9 +1,15 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Card } from "./Card";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
   title: "UI/Card",
   component: Card,
+  parameters: {
+    layout: "center",
+  },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof Card>;
 
 export default meta;

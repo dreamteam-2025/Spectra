@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { ImageSlider } from "./ImageSlider";
+import { withDarkTheme } from "@/shared";
 
 // пока временно моковые данные:
 import postImage1 from "../../../../public/images/post-image-mock.png";
@@ -8,12 +9,13 @@ import postImage3 from "../../../../public/images/post-image-mock3.png";
 import postImage4 from "../../../../public/images/post-image-mock4.png";
 
 const meta = {
-  title: "UI/ImageSlider",
+  title: "shared/ImageSlider",
   component: ImageSlider,
-  tags: ["autodocs"],
   parameters: {
-    layout: "centered",
+    layout: "center",
   },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof ImageSlider>;
 
 export default meta;

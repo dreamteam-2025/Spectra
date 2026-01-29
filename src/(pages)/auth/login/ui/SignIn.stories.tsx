@@ -15,7 +15,7 @@ import { ROUTES } from "@/shared";
 type SignInForm = z.infer<typeof signInSchema>;
 
 const meta: Meta<typeof SignIn> = {
-  title: "Auth/SignIn",
+  title: "page/SignIn",
   component: SignIn,
   parameters: {
     layout: "centered",

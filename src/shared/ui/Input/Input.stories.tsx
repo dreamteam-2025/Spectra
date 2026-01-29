@@ -1,19 +1,12 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { Input } from "./Input";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
-  title: "Input",
+  title: "UI/Input",
   component: Input,
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark",
-      values: [
-        { name: "dark", value: "#000000" },
-        { name: "light", value: "#ffffff" },
-        { name: "gray", value: "#808080" },
-      ],
-    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -28,26 +21,12 @@ const meta = {
       control: "boolean",
     },
   },
-  decorators: [
-    Story => (
-      <div
-        style={{
-          padding: "40px",
-          backgroundColor: "#000000",
-          color: "white",
-          minHeight: "100vh",
-          width: "100%",
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof Input>;
 
 export default meta;
 
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<typeof meta>;
 
 // Основная история со всеми вариантами
 export const AllVariants: Story = {

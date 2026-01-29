@@ -1,14 +1,21 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { RadioGroup, Radio } from "./RadioGroup";
 import { useState } from "react";
+import { withDarkTheme } from "@/shared";
 
 const meta = {
   title: "UI/RadioGroup",
   component: RadioGroup,
+  parameters: {
+    layout: "center",
+  },
+  tags: ["autodocs"],
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof RadioGroup>;
 
 export default meta;
-type Story = StoryObj<typeof RadioGroup>;
+
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (

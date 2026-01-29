@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
 import { EmailVerified } from "./EmailVerified";
-import { ROUTES } from "@/shared";
+import { ROUTES, withDarkTheme } from "@/shared";
 
 const meta = {
   title: "Page/EmailVerified",
@@ -16,6 +16,7 @@ const meta = {
       },
     },
   },
+  decorators: [withDarkTheme],
 } satisfies Meta<typeof EmailVerified>;
 
 export default meta;
