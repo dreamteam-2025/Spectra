@@ -1,6 +1,12 @@
 import { baseApi } from "@/shared";
 import { createPostRequestSchema, createPostResponseSchema, uploadPostImagesResponseSchema } from "../model/validation";
-import type { CreatePostArgs, CreatePostResponse, UploadPostImagesResponse } from "./postApi.types";
+import type {
+  CreatePostArgs,
+  CreatePostResponse,
+  GetPostsArgs,
+  GetPostsResponse,
+  UploadPostImagesResponse,
+} from "./postApi.types";
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
@@ -36,7 +42,32 @@ export const postApi = baseApi.injectEndpoints({
       transformResponse: (response: unknown) => createPostResponseSchema.parse(response),
       invalidatesTags: ["Posts"],
     }),
+
+    // Get posts
+    getPosts: build.infiniteQuery<GetPostsResponse, GetPostsArgs, number>({
+      infiniteQueryOptions: {
+        initialPageParam: 0,
+        getNextPageParam: lastPage => {
+          if (lastPage.items.length === 0) return undefined;
+
+          return lastPage.items[lastPage.items.length - 1].id;
+        },
+      },
+
+      query: ({ queryArg, pageParam }) => ({
+        //pageParam like endCursorPostId. Url: posts/all/{endCursorPostId}
+
+        method: "GET",
+        url: `posts/all/${pageParam}`,
+        params: {
+          pageSize: queryArg.pageSize ?? 10,
+          sortDirection: "desc",
+        },
+      }),
+
+      providesTags: ["Posts"],
+    }),
   }),
 });
 
-export const { useUploadPostImagesMutation, useCreatePostMutation } = postApi;
+export const { useUploadPostImagesMutation, useCreatePostMutation, useGetPostsInfiniteQuery } = postApi;

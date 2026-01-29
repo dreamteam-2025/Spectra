@@ -1,10 +1,18 @@
 // widgets/posts/postList/model/mockPosts.ts
 import postImage from "../../../../../public/images/post-image-mock.png";
+import postImage2 from "../../../../../public/images/post-image-mock2.png";
+import postImage3 from "../../../../../public/images/post-image-mock3.png";
+import postImage4 from "../../../../../public/images/post-image-mock4.png";
 import avatar from "../../../../../public/images/avatar-image-mock.png";
+
+export type MockPostSlide = {
+  id: number;
+  postImage: typeof postImage | string;
+};
 
 export type MockPost = {
   id: number;
-  postImage: typeof postImage;
+  slides: MockPostSlide[];
   avatarImage: typeof avatar;
   userName: string;
   createdAt: string;
@@ -14,7 +22,11 @@ export type MockPost = {
 export const mockPosts: MockPost[] = [
   {
     id: 1,
-    postImage: postImage,
+    slides: [
+      { id: 1, postImage: postImage },
+      { id: 2, postImage: postImage2 },
+      { id: 3, postImage: postImage3 },
+    ],
     avatarImage: avatar,
     userName: "UserName",
     createdAt: "2024-01-15T12:30:00Z",
@@ -22,7 +34,10 @@ export const mockPosts: MockPost[] = [
   },
   {
     id: 2,
-    postImage: postImage,
+    slides: [
+      { id: 1, postImage: postImage4 },
+      { id: 2, postImage },
+    ],
     avatarImage: avatar,
     userName: "UserName",
     createdAt: "2024-01-14T09:15:00Z",
@@ -30,7 +45,11 @@ export const mockPosts: MockPost[] = [
   },
   {
     id: 3,
-    postImage: postImage,
+    slides: [
+      { id: 1, postImage: postImage2 },
+      { id: 2, postImage: postImage },
+      { id: 3, postImage: postImage3 },
+    ],
     avatarImage: avatar,
     userName: "UserName",
     createdAt: "2024-01-14T09:15:00Z",
@@ -38,7 +57,10 @@ export const mockPosts: MockPost[] = [
   },
   {
     id: 4,
-    postImage: postImage,
+    slides: [
+      { id: 1, postImage },
+      { id: 2, postImage },
+    ],
     avatarImage: avatar,
     userName: "UserName",
     createdAt: "2024-01-14T09:15:00Z",
@@ -46,39 +68,7 @@ export const mockPosts: MockPost[] = [
   },
   {
     id: 5,
-    postImage: postImage,
-    avatarImage: avatar,
-    userName: "UserName",
-    createdAt: "2024-01-14T09:15:00Z",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-  },
-  {
-    id: 6,
-    postImage: postImage,
-    avatarImage: avatar,
-    userName: "UserName",
-    createdAt: "2024-01-14T09:15:00Z",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-  },
-  {
-    id: 7,
-    postImage: postImage,
-    avatarImage: avatar,
-    userName: "UserName",
-    createdAt: "2024-01-14T09:15:00Z",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-  },
-  {
-    id: 8,
-    postImage: postImage,
-    avatarImage: avatar,
-    userName: "UserName",
-    createdAt: "2024-01-14T09:15:00Z",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-  },
-  {
-    id: 9,
-    postImage: postImage,
+    slides: [{ id: 1, postImage }],
     avatarImage: avatar,
     userName: "UserName",
     createdAt: "2024-01-14T09:15:00Z",
