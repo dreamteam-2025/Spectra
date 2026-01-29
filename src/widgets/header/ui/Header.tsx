@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ROUTES } from "@/shared";
 import { LanguageSelect, useMeQuery } from "@/features";
 import { NotificationBell } from "@/entities";
+import clsx from "clsx";
 
 export const Header = () => {
   // вызываем хук, он выполняет GET-запрос
@@ -17,7 +18,10 @@ export const Header = () => {
       <div className={s.inner}>
         <div className={s.row}>
           <div className={s.logo}>
-            <span className="largeHeading">Spectra</span>
+            <Link href={ROUTES.APP.HOME} className={s.largeHeading}>
+              Spectra
+            </Link>
+            {/* <span className="largeHeading">Spectra</span> */}
           </div>
 
           <div className={s.right}>
@@ -29,11 +33,11 @@ export const Header = () => {
 
             {!meResponse?.userName && (
               <>
-                <Link href={ROUTES.AUTH.LOGIN}>
-                  <Button variant="ghost">Log In</Button>
+                <Link href={ROUTES.AUTH.LOGIN} className={s.link}>
+                  Log In
                 </Link>
-                <Link href={ROUTES.AUTH.SIGNUP}>
-                  <Button variant="primary">Sign Up</Button>
+                <Link href={ROUTES.AUTH.SIGNUP} className={clsx(s.link, s.button)}>
+                  Sign Up
                 </Link>
               </>
             )}
