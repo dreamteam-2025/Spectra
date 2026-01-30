@@ -1,0 +1,144 @@
+// .root {
+//   display: flex;
+//   min-height: 420px;
+// }
+
+// .left {
+//   flex: 1;
+//   padding: 16px;
+// }
+
+// .imageWrap {
+//   width: 100%;
+//   height: 100%;
+//   min-height: 360px;
+//   border-radius: 4px;
+//   overflow: hidden;
+// }
+
+// .image {
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+//   display: block;
+// }
+
+// .right {
+//   width: 420px;
+//   padding: 16px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 12px;
+// }
+
+// .profileRow {
+//   display: flex;
+//   align-items: center;
+//   gap: 12px;
+// }
+
+// .avatar {
+//   width: 36px;
+//   height: 36px;
+//   border-radius: 50%;
+//   background: #2b2b2b;
+// }
+
+// .userName {
+//   font-weight: 600;
+// }
+
+// .fieldLabel {
+//   font-size: 12px;
+//   opacity: 0.75;
+// }
+
+// .textAreaWrap {
+//   position: relative;
+// }
+
+// .counter {
+//   position: absolute;
+//   right: 8px;
+//   bottom: 8px;
+//   font-size: 12px;
+//   opacity: 0.7;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.root {
+  display: flex;
+  height: 564px; /* как на макете 972x564 */
+}
+
+.left {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+}
+
+.imageWrap {
+  flex: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.right {
+  width: 420px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #2b2b2b;
+}
+
+.userName {
+  font-weight: 600;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.textAreaWrap {
+  position: relative;
+}
+
+.counter {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  font-size: 12px;
+  opacity: 0.7;
+}

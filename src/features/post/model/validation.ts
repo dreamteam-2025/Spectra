@@ -25,28 +25,9 @@ export const createPostRequestSchema = z.object({
 });
 
 export const postOwnerSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().nullable().optional(),
+  lastName: z.string().nullable().optional(),
 });
-
-// export const createPostResponseSchema = z.object({
-//   id: z.number(),
-//   userName: z.string(),
-//   description: z.string().nullable().optional().default(""),
-//   location: z.string().nullable().optional().default(""),
-//   images: z.array(uploadedImageSchema), // совпадает по полям
-//   createdAt: z.string(),
-//   updatedAt: z.string(),
-//   ownerId: z.number(),
-//   avatarOwner: z.string().url().nullable().optional(),
-//   owner: postOwnerSchema,
-//   likesCount: z.number(),
-//   isLiked: z.boolean(),
-//   avatarWhoLikes: z.boolean(),
-// });
-
-
-
 
 export const createPostResponseSchema = z.object({
   id: z.number(),
@@ -54,13 +35,16 @@ export const createPostResponseSchema = z.object({
   description: z.string().nullable().optional().default(""),
   location: z.string().nullable().optional().default(""),
   images: z.array(uploadedImageSchema),
+
   createdAt: z.string(),
   updatedAt: z.string(),
   ownerId: z.number(),
-  avatarOwner: z.string().url().nullable().optional(),
+
+  avatarOwner: z.string().nullable().optional(),
+
   owner: postOwnerSchema,
+
   likesCount: z.number(),
   isLiked: z.boolean(),
-  avatarWhoLikes: z.boolean(),
+  avatarWhoLikes: z.union([z.boolean(), z.array(z.any())]).optional(),
 });
-
