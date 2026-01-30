@@ -198,3 +198,14 @@ h3 {
   line-height: 1.33333;
   color: var(--light-100);
 }
+
+// для стилизации react-toastify:
+.Toastify__toast--error {
+  border: 1px solid var(--danger-500) !important;
+  border-radius: 2px;
+}
+
+.Toastify__toast--success {
+  border: 1px solid var(--success-500) !important;
+  border-radius: 2px;
+}

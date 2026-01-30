@@ -45,4 +45,10 @@
   --light-500: #edf3fa;
   --light-700: #d5dae0;
   --light-900: #8d9094;
+
+  // react-toastify
+  --toastify-color-error: var(--danger-900);
+  --toastify-color-success: var(--success-900);
+  --toastify-text-color-error: var(--light-100);
+  --toastify-text-color-success: var(--light-100);
 }

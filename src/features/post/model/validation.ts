@@ -48,3 +48,48 @@ export const createPostResponseSchema = z.object({
   isLiked: z.boolean(),
   avatarWhoLikes: z.union([z.boolean(), z.array(z.any())]).optional(),
 });
+
+export const getPostsResponseSchema = z.object({
+  totalCount: z.number(),
+  pageSize: z.number(),
+
+  items: z.array(
+    z.object({
+      id: z.number(),
+      userName: z.string(),
+
+      description: z.string(),
+      location: z.string().nullable(),
+
+      images: z.array(
+        z.object({
+          url: z.string(),
+          width: z.number(),
+          height: z.number(),
+          fileSize: z.number(),
+          createdAt: z.string(),
+          uploadId: z.string(),
+        })
+      ),
+
+      createdAt: z.string(),
+      updatedAt: z.string(),
+
+      avatarOwner: z.string(),
+      ownerId: z.number(),
+
+      owner: z.object({
+        firstName: z.string().nullable(),
+        lastName: z.string().nullable(),
+      }),
+
+      likesCount: z.number(),
+      isLiked: z.boolean(),
+
+      avatarWhoLikes: z.array(z.unknown()),
+    })
+  ),
+
+  totalUsers: z.number().optional(),
+  nextCursor: z.number().nullable().optional(),
+});

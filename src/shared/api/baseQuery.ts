@@ -6,10 +6,14 @@ export const baseQuery = fetchBaseQuery({
   credentials: "include", // для того, чтобы отправлялись куки (важно для refreshToken)
 
   // это по сути interceptor
-  prepareHeaders: headers => {
+  prepareHeaders: (headers, { endpoint }) => {
     // accessToken храним в sessionStorage
     const accessToken = sessionStorage.getItem(AUTH_KEYS.accessToken);
     // если он там есть, цепляем к каждому запросу в заголовках
+
+    // не цепляем
+    if (endpoint === "getPosts") return headers;
+
     if (accessToken) {
       headers.set("Authorization", `Bearer ${accessToken}`);
     }
