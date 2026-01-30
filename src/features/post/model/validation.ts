@@ -93,3 +93,9 @@ export const getPostsResponseSchema = z.object({
   totalUsers: z.number().optional(),
   nextCursor: z.number().nullable().optional(),
 });
+
+
+
+
+
+
