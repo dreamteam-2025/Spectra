@@ -2,3 +2,4 @@
 export * from "./header";
 export * from "./sideBar";
 export * from "./registeredUsersCounter";
+export * from "./post";

@@ -1,7 +1,10 @@
 .sideBar {
-  height: calc(100vh - 61px);
-  width: 220px;
   position: sticky;
+  // height: calc(100vh - 61px);
+  height: 100vh;
+  top: 0px;
+  width: 220px;
+
   border-right: 1px solid var(--dark-100);
   font-size: 14px;
   display: flex;
@@ -11,8 +14,9 @@
     width: 110px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 100%;
+    gap: 180px;
 
     ul li {
       margin-bottom: 24px;
@@ -40,14 +44,14 @@
     }
 
     .mainUlSideBar {
-      height: calc(100% - 80px);
+      //height: calc(100% - 80px);
 
       .Ul1 {
         padding-top: 80px;
       }
 
       .Ul2 {
-        padding-top: 25px;
+        padding-top: 35px;
       }
     }
 
@@ -64,7 +68,7 @@
         }
 
         &:hover {
-          color: #ff6b6b; // Красный цвет при наведении на logout
+          color: var(--danger-300); // Красный цвет при наведении на logout
         }
       }
     }
@@ -72,7 +76,7 @@
     // Специальный класс для logout item
     .logoutItem {
       &:hover {
-        color: #ff6b6b !important;
+        color: var(--danger-300) !important;
       }
 
       // Убираем стандартное активное состояние
