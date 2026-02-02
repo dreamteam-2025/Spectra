@@ -1,1 +1,1 @@
-// реэкспорт только Post.tsx
+export { PostList } from "./postList/ui/PostList";

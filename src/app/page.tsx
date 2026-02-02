@@ -1,5 +1,6 @@
-import { RegisteredUsersCounter } from "@/widgets";
+import { PostList, RegisteredUsersCounter } from "@/widgets";
 import { redirect } from "next/navigation";
+import s from "./page.module.scss";
 
 type Props = {
   searchParams: Promise<{
@@ -29,5 +30,10 @@ export default async function Home({ searchParams }: Props) {
     else redirect(`/confirm-email?${qs.toString()}`);
   }
 
-  return <RegisteredUsersCounter />;
+  return (
+    <div className={s.contentWrapper}>
+      <RegisteredUsersCounter />
+      <PostList />
+    </div>
+  );
 }
