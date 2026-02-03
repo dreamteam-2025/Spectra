@@ -71,3 +71,13 @@ export const postApi = baseApi.injectEndpoints({
 });
 
 export const { useUploadPostImagesMutation, useCreatePostMutation, useGetPostsInfiniteQuery } = postApi;
+
+
+
+
+
+
+
+
+
+

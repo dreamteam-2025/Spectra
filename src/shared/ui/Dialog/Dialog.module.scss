@@ -5,15 +5,19 @@
 }
 
 .content {
+  --dialog-pad-x: 24px;
+  --dialog-pad-y: 24px;
+
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 378px;
+  max-width: 95vw;
+  max-height: 90vh;
+
   background: var(--dark-300);
   color: var(--light-100);
-  padding: 0 24px;
 
   border: 1px solid var(--dark-100);
   border-radius: 2px;
@@ -23,30 +27,34 @@
   overflow: hidden;
 }
 
+/* горизонтальные паддинги одинаковые */
+.header,
+.headerSlot,
+.description,
+.children {
+  padding-left: var(--dialog-pad-x);
+  padding-right: var(--dialog-pad-x);
+}
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
+
+  padding-top: 12px;
+  padding-bottom: 12px;
   flex: 0 0 auto;
 }
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 0;
+
+.headerSlot {
+  padding-top: 12px;
+  padding-bottom: 12px;
   flex: 0 0 auto;
 }
 
 .title {
   font-size: 18px;
   font-weight: 600;
-  padding: 5px 0;
-}
-.title {
-  font-size: 18px;
-  font-weight: 600;
-  padding: 5px 0;
 }
 
 .close {
@@ -57,35 +65,14 @@
   color: var(--light-100);
 }
 
-.headerSlot {
-  padding: 12px 0;
-  flex: 0 0 auto;
-}
-.close {
-  all: unset;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--light-100);
-}
-
-.headerSlot {
-  padding: 12px 0;
-  flex: 0 0 auto;
-}
-
 .divider {
   border: none;
   height: 1px;
   background: var(--dark-100);
-  margin: 0 -24px;
-  flex: 0 0 auto;
-}
-.divider {
-  border: none;
-  height: 1px;
-  background: var(--dark-100);
-  margin: 0 -24px;
+
+  margin-left: calc(var(--dialog-pad-x) * -1);
+  margin-right: calc(var(--dialog-pad-x) * -1);
+
   flex: 0 0 auto;
 }
 
@@ -93,46 +80,20 @@
   font-size: 14px;
   line-height: 1.5;
   color: #d1d1d1;
-  margin-top: 30px;
-  flex: 0 0 auto;
-}
-.description {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #d1d1d1;
-  margin-top: 30px;
+  padding-top: 16px;
   flex: 0 0 auto;
 }
 
+/* ✅ вот тут возвращаем “низ” через paddingY */
 .children {
   flex: 1 1 auto;
   min-height: 0;
-  margin: 0;
-}
-.children {
-  flex: 1 1 auto;
-  min-height: 0;
-  margin: 0;
+  overflow: hidden;
+
+  padding-top: 0;
+  padding-bottom: var(--dialog-pad-y);
 }
 
-.footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 36px;
-  flex: 0 0 auto;
-}
-.footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 36px;
-  flex: 0 0 auto;
-}
-
-.okButton {
-  width: 96px;
-}
-
-// visually hidden для RadixDialog.Title в headerSlot
 .visuallyHidden {
   position: absolute !important;
   width: 1px;

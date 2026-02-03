@@ -25,24 +25,28 @@ export const createPostRequestSchema = z.object({
 });
 
 export const postOwnerSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().nullable().optional(),
+  lastName: z.string().nullable().optional(),
 });
 
 export const createPostResponseSchema = z.object({
   id: z.number(),
   userName: z.string(),
-  description: z.string(),
-  location: z.string(),
-  images: z.array(uploadedImageSchema), // совпадает по полям
+  description: z.string().nullable().optional().default(""),
+  location: z.string().nullable().optional().default(""),
+  images: z.array(uploadedImageSchema),
+
   createdAt: z.string(),
   updatedAt: z.string(),
   ownerId: z.number(),
-  avatarOwner: z.string().url(),
+
+  avatarOwner: z.string().nullable().optional(),
+
   owner: postOwnerSchema,
+
   likesCount: z.number(),
   isLiked: z.boolean(),
-  avatarWhoLikes: z.boolean(),
+  avatarWhoLikes: z.union([z.boolean(), z.array(z.any())]).optional(),
 });
 
 export const getPostsResponseSchema = z.object({
@@ -89,3 +93,9 @@ export const getPostsResponseSchema = z.object({
   totalUsers: z.number().optional(),
   nextCursor: z.number().nullable().optional(),
 });
+
+
+
+
+
+

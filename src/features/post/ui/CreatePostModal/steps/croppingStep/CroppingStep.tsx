@@ -21,7 +21,7 @@ type Props = {
   previewUrl: string;
   onBack: () => void;
   onNext: (payload: CropPayload) => void;
-  submitRef: React.MutableRefObject<null | (() => void)>;
+  submitRef: React.RefObject<(() => void) | null>;
 };
 
 export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
@@ -30,20 +30,10 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const lastGeneratedPreviewRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (lastGeneratedPreviewRef.current) {
-        URL.revokeObjectURL(lastGeneratedPreviewRef.current);
-        lastGeneratedPreviewRef.current = null;
-      }
-    };
-  }, []);
+  const lastPreviewUrlRef = useRef<string | null>(null);
 
   const onCropComplete = useCallback((_a: Area, areaPixels: Area) => {
     setCroppedAreaPixels(areaPixels);
@@ -57,24 +47,25 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
       const blob = await getCroppedBlob(previewUrl, croppedAreaPixels);
       const nextPreviewUrl = URL.createObjectURL(blob);
 
-      if (lastGeneratedPreviewRef.current) {
-        URL.revokeObjectURL(lastGeneratedPreviewRef.current);
+      if (lastPreviewUrlRef.current) {
+        URL.revokeObjectURL(lastPreviewUrlRef.current);
       }
-      lastGeneratedPreviewRef.current = nextPreviewUrl;
+      lastPreviewUrlRef.current = nextPreviewUrl;
 
       onNext({ blob, previewUrl: nextPreviewUrl, aspect });
-    } catch (e) {
-      console.error("Cropping failed:", e);
     } finally {
       setLoading(false);
     }
   }, [aspect, croppedAreaPixels, loading, onNext, previewUrl]);
 
-
   useEffect(() => {
-    submitRef.current = handleNext;
+    if (submitRef) {
+      submitRef.current = handleNext;
+    }
     return () => {
-      submitRef.current = null;
+      if (submitRef?.current === handleNext) {
+        submitRef.current = null;
+      }
     };
   }, [handleNext, submitRef]);
 
@@ -93,15 +84,16 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
           objectFit="cover"
         />
 
-        
         <div className={s.controls}>
           <div className={s.ratios}>
             <button className={s.ratioBtn} type="button" onClick={() => setRatio("1:1")} aria-pressed={ratio === "1:1"}>
               1:1
             </button>
+
             <button className={s.ratioBtn} type="button" onClick={() => setRatio("4:5")} aria-pressed={ratio === "4:5"}>
               4:5
             </button>
+
             <button
               className={s.ratioBtn}
               type="button"

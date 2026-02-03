@@ -2,7 +2,6 @@ import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolk
 import { Mutex } from "async-mutex";
 import { baseQuery } from "./baseQuery";
 import { AUTH_KEYS, handleErrors, isToken } from "../lib";
-import { baseApi } from "./baseApi";
 
 // создаем объект мьютекса
 const mutex = new Mutex();
