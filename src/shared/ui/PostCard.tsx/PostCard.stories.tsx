@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    postImage,
+    slides: [{ id: 1, postImage }],
     avatarImage,
     userName: "User Name",
     createdAt: "2026-01-16T10:32:15.123Z",

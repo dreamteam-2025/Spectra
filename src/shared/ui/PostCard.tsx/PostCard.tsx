@@ -6,6 +6,7 @@ import { StaticImageData } from "next/image";
 import clsx from "clsx";
 import { formatPostDate } from "@/shared/lib/utils/formatPostDate/formatPostDate";
 import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
+import Image from "next/image";
 
 type Slide = {
   id: number;
@@ -14,7 +15,7 @@ type Slide = {
 
 type Props = {
   slides: Slide[];
-  avatarImage?: string;
+  avatarImage?: string | StaticImageData;
   userName: string;
   createdAt: string;
   text: string;
@@ -37,7 +38,11 @@ export const PostCard = ({ slides, avatarImage, userName, createdAt, text, class
       </div>
 
       <div className={s.content}>
-        <img className={s.avatar} src={avatarImage || "/images/post-image-mock.png"} alt="avatar-image" />
+        {avatarImage ? (
+          <Image className={s.avatar} src={avatarImage} alt="avatar-image" width={36} height={36} />
+        ) : (
+          <img className={s.avatar} src="/images/post-image-mock.png" alt="avatar-image" />
+        )}
         <h3 className={s.userName}>{userName}</h3>
       </div>
 
