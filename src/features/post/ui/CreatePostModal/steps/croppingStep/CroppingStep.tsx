@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
-
 import s from "./CroppingStep.module.scss";
 import { getCroppedBlob } from "@/features/post/model/cropImage";
 
@@ -14,15 +13,15 @@ const ratioToAspect: Record<Ratio, number> = {
 
 export type CropPayload = {
   blob: Blob;
-  previewUrl: string; // blob url результата кропа
+  previewUrl: string;
   aspect: number;
 };
 
 type Props = {
-  previewUrl: string; // blob url оригинала (из Select step)
+  previewUrl: string;
   onBack: () => void;
   onNext: (payload: CropPayload) => void;
-  submitRef: React.MutableRefObject<null | (() => void)>;
+  submitRef: React.RefObject<(() => void) | null>;
 };
 
 export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
@@ -31,25 +30,10 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Храним последний сгенерированный previewUrl, чтобы:
-  // - при повторной генерации (Next ещё раз) удалять предыдущий URL
-  // - НЕ удалять при unmount (он нужен PublishStep)
-  const lastGeneratedPreviewRef = useRef<string | null>(null);
-
-  // ⚠️ ВАЖНО:
-  // НЕ делаем URL.revokeObjectURL(...) на unmount,
-  // потому что при переходе на publish CroppingStep размонтируется,
-  // и тогда previewUrl станет "мертвым" -> ERR_FILE_NOT_FOUND.
-  // Освобождай этот URL в reset() модалки после закрытия/публикации.
-  useEffect(() => {
-    return () => {
-      // nothing
-    };
-  }, []);
+  const lastPreviewUrlRef = useRef<string | null>(null);
 
   const onCropComplete = useCallback((_a: Area, areaPixels: Area) => {
     setCroppedAreaPixels(areaPixels);
@@ -63,25 +47,25 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
       const blob = await getCroppedBlob(previewUrl, croppedAreaPixels);
       const nextPreviewUrl = URL.createObjectURL(blob);
 
-      // если уже генерировали превью ранее — освобождаем старое,
-      // чтобы не копить blob-url при повторных нажатиях Next
-      if (lastGeneratedPreviewRef.current) {
-        URL.revokeObjectURL(lastGeneratedPreviewRef.current);
+      if (lastPreviewUrlRef.current) {
+        URL.revokeObjectURL(lastPreviewUrlRef.current);
       }
-      lastGeneratedPreviewRef.current = nextPreviewUrl;
+      lastPreviewUrlRef.current = nextPreviewUrl;
 
       onNext({ blob, previewUrl: nextPreviewUrl, aspect });
-    } catch (e) {
-      console.error("Cropping failed:", e);
     } finally {
       setLoading(false);
     }
   }, [aspect, croppedAreaPixels, loading, onNext, previewUrl]);
 
   useEffect(() => {
-    submitRef.current = handleNext;
+    if (submitRef) {
+      submitRef.current = handleNext;
+    }
     return () => {
-      submitRef.current = null;
+      if (submitRef?.current === handleNext) {
+        submitRef.current = null;
+      }
     };
   }, [handleNext, submitRef]);
 
@@ -102,21 +86,11 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
 
         <div className={s.controls}>
           <div className={s.ratios}>
-            <button
-              className={s.ratioBtn}
-              type="button"
-              onClick={() => setRatio("1:1")}
-              aria-pressed={ratio === "1:1"}
-            >
+            <button className={s.ratioBtn} type="button" onClick={() => setRatio("1:1")} aria-pressed={ratio === "1:1"}>
               1:1
             </button>
 
-            <button
-              className={s.ratioBtn}
-              type="button"
-              onClick={() => setRatio("4:5")}
-              aria-pressed={ratio === "4:5"}
-            >
+            <button className={s.ratioBtn} type="button" onClick={() => setRatio("4:5")} aria-pressed={ratio === "4:5"}>
               4:5
             </button>
 
@@ -137,7 +111,7 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
             max={3}
             step={0.01}
             value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
+            onChange={e => setZoom(Number(e.target.value))}
             aria-label="zoom"
           />
         </div>

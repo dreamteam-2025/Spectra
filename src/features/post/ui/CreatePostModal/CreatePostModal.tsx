@@ -5,8 +5,9 @@ import { Dialog } from "@/shared/ui/Dialog/Dialog";
 import s from "./CreatePostModal.module.scss";
 import { SelectPhotoStep } from "./steps/selectPhotoStep/SelectPhotoStep";
 import { CroppingStep, CropPayload } from "./steps/croppingStep/CroppingStep";
-import { Button } from "@/shared";
 import { PublishStep } from "./steps/publishStep/PublishStep";
+import { Button } from "@/shared";
+import { useMeQuery } from "@/features/auth";
 
 type Props = {
   open: boolean;
@@ -16,27 +17,33 @@ type Props = {
 type Step = "select" | "cropping" | "publish";
 
 export function CreatePostModal({ open, onOpenChange }: Props) {
+  const { data: user } = useMeQuery();
+
+  if (!user) return null;
+
   const [step, setStep] = useState<Step>("select");
   const [originalPreviewUrl, setOriginalPreviewUrl] = useState<string | null>(null);
-
   const [cropped, setCropped] = useState<CropPayload | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  // refs for header buttons
   const cropNextRef = useRef<null | (() => void)>(null);
   const publishRef = useRef<null | (() => void)>(null);
 
   const hasUnsaved = useMemo(() => {
-    return step !== "select" || Boolean(originalPreviewUrl) || Boolean(cropped);
-  }, [cropped, originalPreviewUrl, step]);
+    return Boolean(originalPreviewUrl || cropped);
+  }, [originalPreviewUrl, cropped]);
 
   const reset = () => {
     if (originalPreviewUrl) URL.revokeObjectURL(originalPreviewUrl);
     if (cropped?.previewUrl) URL.revokeObjectURL(cropped.previewUrl);
-
     setOriginalPreviewUrl(null);
     setCropped(null);
     setStep("select");
+  };
+
+  const closeModal = () => {
+    reset();
+    onOpenChange(false);
   };
 
   const requestClose = () => {
@@ -44,16 +51,15 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
       setConfirmOpen(true);
       return;
     }
-    reset();
-    onOpenChange(false);
+    closeModal();
   };
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) {
       requestClose();
-      return;
+    } else {
+      onOpenChange(true);
     }
-    onOpenChange(true);
   };
 
   useEffect(() => {
@@ -61,16 +67,11 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
       reset();
       setConfirmOpen(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  // ✅ ширина / padding по шагам (как в Figma)
   const dialogWidth = step === "publish" ? 972 : 492;
-  const dialogPadding = step === "publish" ? 0 : 24;
-
-
-const paddingX = step === "select" ? 24 : 0;
-const paddingY = step === "select" ? 24 : 0;
+  const paddingX = step === "select" ? 24 : 0;
+  const paddingY = step === "select" ? 24 : 0;
 
   const headerSelect = (
     <div className={s.headerSelect}>
@@ -88,16 +89,14 @@ const paddingY = step === "select" ? 24 : 0;
         type="button"
         aria-label="Back"
         onClick={() => {
-          setStep("select");
           if (cropped?.previewUrl) URL.revokeObjectURL(cropped.previewUrl);
           setCropped(null);
+          setStep("select");
         }}
       >
         ←
       </button>
-
       <div className={s.titleCenter}>Cropping</div>
-
       <Button variant="ghost" type="button" className={s.nextBtn} onClick={() => cropNextRef.current?.()}>
         Next
       </Button>
@@ -109,9 +108,7 @@ const paddingY = step === "select" ? 24 : 0;
       <button className={s.iconBtn} type="button" aria-label="Back" onClick={() => setStep("cropping")}>
         ←
       </button>
-
       <div className={s.titleCenter}>Publication</div>
-
       <Button variant="ghost" type="button" className={s.publishBtn} onClick={() => publishRef.current?.()}>
         Publish
       </Button>
@@ -121,29 +118,16 @@ const paddingY = step === "select" ? 24 : 0;
   return (
     <>
       <Dialog
-        key={`create-post-${step}`} // ✅ важно при смене ширины/паддинга (492 ↔ 972)
+        key={`create-post-${step}`}
         open={open}
         onOpenChange={handleOpenChange}
         headerSlot={step === "select" ? headerSelect : step === "cropping" ? headerCropping : headerPublish}
-        className={s.modal} // тут НЕ должно быть width
+        className={s.modal}
         showClose={false}
         title="Create post"
         width={dialogWidth}
-  paddingX={paddingX}
-  paddingY={paddingY}
-        // padding={dialogPadding} // ✅ publish: 0 чтобы картинка могла быть “в край”
-        contentProps={{
-          onInteractOutside: e => {
-            if (!hasUnsaved) return;
-            e.preventDefault();
-            setConfirmOpen(true);
-          },
-          onEscapeKeyDown: e => {
-            if (!hasUnsaved) return;
-            e.preventDefault();
-            setConfirmOpen(true);
-          },
-        }}
+        paddingX={paddingX}
+        paddingY={paddingY}
       >
         {step === "select" && (
           <SelectPhotoStep
@@ -160,7 +144,7 @@ const paddingY = step === "select" ? 24 : 0;
             previewUrl={originalPreviewUrl}
             onBack={() => setStep("select")}
             submitRef={cropNextRef}
-            onNext={(payload: CropPayload) => {
+            onNext={payload => {
               setCropped(payload);
               setStep("publish");
             }}
@@ -172,54 +156,29 @@ const paddingY = step === "select" ? 24 : 0;
             previewUrl={cropped.previewUrl}
             cropped={cropped}
             submitRef={publishRef}
-            onPublished={() => {
-              reset();
-              onOpenChange(false);
-            }}
+            onPublished={closeModal}
+            user={user}
           />
         )}
       </Dialog>
 
       <Dialog
-        key="create-post-confirm"
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
         className={s.confirmDialogWrap}
         title="Close"
         description="Do you really want to close the creation of a publication? If you close everything will be deleted"
         width={378}
-  paddingX={24}
-  paddingY={24}
-        // padding={24} // ✅ явно оставляем нормальный padding
+        paddingX={24}
+        paddingY={24}
       >
         <div className={s.confirmButtons}>
-          <div className={s.leftBtn}>
-            <Button
-              variant="outlined"
-              type="button"
-              onClick={() => {
-                setConfirmOpen(false);
-                reset();
-                onOpenChange(false);
-              }}
-            >
-              Discard
-            </Button>
-          </div>
-
-          <div className={s.rightBtn}>
-            <Button
-              variant="primary"
-              type="button"
-              onClick={() => {
-                setConfirmOpen(false);
-                reset();
-                onOpenChange(false);
-              }}
-            >
-              Save draft
-            </Button>
-          </div>
+          <Button variant="outlined" onClick={closeModal}>
+            Discard
+          </Button>
+          <Button variant="primary" onClick={() => setConfirmOpen(false)}>
+            Continue editing
+          </Button>
         </div>
       </Dialog>
     </>
