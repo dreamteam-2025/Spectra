@@ -1,3 +1,5 @@
+"use client";
+
 // Компонент, срабатывающий после успешной OAuth github авторизации
 import { useEffect } from "react";
 

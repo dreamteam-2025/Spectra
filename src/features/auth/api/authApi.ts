@@ -116,12 +116,14 @@ export const authApi = baseApi.injectEndpoints({
           body: {},
         };
       },
+
       onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
         await queryFulfilled;
         sessionStorage.removeItem(AUTH_KEYS.accessToken);
         sessionStorage.removeItem(AUTH_KEYS.authProvider);
         // инвалидация после КАЖДОГО удаления токенов
-        dispatch(baseApi.util.resetApiState());
+        //dispatch(baseApi.util.resetApiState());
+        dispatch(authApi.util.resetApiState());
       },
     }),
   }),
