@@ -1,11 +1,25 @@
 import { baseApi } from "@/shared";
-import { createPostRequestSchema, createPostResponseSchema, uploadPostImagesResponseSchema } from "../model/validation";
+import {
+  createPostRequestSchema,
+  createPostResponseSchema,
+  getPostByIdResponseSchema,
+  getPostCommentsResponseSchema,
+  updatePostRequestSchema,
+  updatePostResponseSchema,
+  uploadPostImagesResponseSchema,
+} from "../model/validation";
 import type {
   CreatePostArgs,
   CreatePostResponse,
   GetPostsArgs,
   GetPostsResponse,
   UploadPostImagesResponse,
+  GetPostByIdArgs,
+  GetPostByIdResponse,
+  UpdatePostResponse,
+  UpdatePostArgs,
+  GetPostCommentsResponse,
+  GetPostCommentsArgs,
 } from "./postApi.types";
 
 export const postApi = baseApi.injectEndpoints({
@@ -67,17 +81,63 @@ export const postApi = baseApi.injectEndpoints({
 
       providesTags: ["Posts"],
     }),
+
+    getPostById: build.query<GetPostByIdResponse, GetPostByIdArgs>({
+      query: ({ postId }) => ({
+        method: "GET",
+        url: `posts/id/${postId}`,
+      }),
+      transformResponse: (response: unknown) => getPostByIdResponseSchema.parse(response),
+
+      providesTags: (_result, _error, { postId }) => [{ type: "Posts", id: postId }],
+    }),
+
+    updatePost: build.mutation<UpdatePostResponse, UpdatePostArgs>({
+      query: ({ postId, body }) => {
+        const parsedBody = updatePostRequestSchema.parse(body);
+
+        return {
+          method: "PUT",
+          url: `posts/${postId}`,
+          body: parsedBody,
+        };
+      },
+
+      transformResponse: (response: unknown) => updatePostResponseSchema.parse(response),
+
+      invalidatesTags: (_result, _error, { postId }) => [
+        // детальная страница поста
+        { type: "Posts", id: postId },
+
+        // список постов (infiniteQuery)
+        { type: "Posts" },
+      ],
+    }),
+
+    getPostComments: build.query<GetPostCommentsResponse, GetPostCommentsArgs>({
+      query: ({ postId, pageSize = 10, pageNumber = 1, sortBy = "createdAt", sortDirection = "desc" }) => ({
+        method: "GET",
+        url: `posts/${postId}/comments`,
+        params: {
+          pageSize,
+          pageNumber,
+          sortBy,
+          sortDirection,
+        },
+      }),
+
+      transformResponse: (response: unknown) => getPostCommentsResponseSchema.parse(response),
+
+      providesTags: (_result, _error, { postId }) => [{ type: "Comments", id: postId }],
+    }),
   }),
 });
 
-export const { useUploadPostImagesMutation, useCreatePostMutation, useGetPostsInfiniteQuery } = postApi;
-
-
-
-
-
-
-
-
-
-
+export const {
+  useUploadPostImagesMutation,
+  useCreatePostMutation,
+  useGetPostsInfiniteQuery,
+  useGetPostByIdQuery,
+  useUpdatePostMutation,
+  useGetPostCommentsQuery,
+} = postApi;
