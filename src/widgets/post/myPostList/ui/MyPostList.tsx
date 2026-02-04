@@ -8,6 +8,7 @@ import { useGetMyPostsInfiniteQuery } from "@/features/post/api/postApi";
 import { useInfiniteScroll } from "@/widgets/post/postList/model/hooks/useInfinityScroll";
 import { Loader } from "@/shared/ui/Loader/Loader";
 import { useMeQuery } from "@/features";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 interface Props {
   className?: string;
@@ -17,13 +18,7 @@ export const MyPostList = ({ className }: Props) => {
   const { data: me, isLoading: isMeLoading } = useMeQuery();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetMyPostsInfiniteQuery(
-    {
-      userId: me?.userId as number,
-      pageSize: 10,
-    },
-    {
-      skip: !me,
-    }
+    me?.userId ? { userId: me.userId, pageSize: 10 } : skipToken
   );
 
   const posts = useMemo(() => data?.pages.flatMap(page => page.items) ?? [], [data]);
@@ -34,7 +29,15 @@ export const MyPostList = ({ className }: Props) => {
     isFetchingNextPage,
   });
 
-  if (isMeLoading || isLoading) {
+  if (isMeLoading) {
+    return <Loader />;
+  }
+
+  if (!me) {
+    return null;
+  }
+
+  if (isLoading) {
     return <Loader />;
   }
 
