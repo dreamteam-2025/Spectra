@@ -94,8 +94,66 @@ export const getPostsResponseSchema = z.object({
   nextCursor: z.number().nullable().optional(),
 });
 
+/** ---------- Get post by id response ---------- */
+export const getPostByIdResponseSchema = z.object({
+  id: z.number(),
+  userName: z.string(),
 
+  description: z.string().nullable().optional().default(""),
+  location: z.string().nullable().optional(),
 
+  images: z.array(uploadedImageSchema),
 
+  createdAt: z.string(),
+  updatedAt: z.string(),
 
+  ownerId: z.number(),
+  avatarOwner: z.string().nullable().optional(),
 
+  owner: postOwnerSchema,
+
+  likesCount: z.number(),
+  isLiked: z.boolean(),
+
+  avatarWhoLikes: z.boolean().optional(),
+});
+
+/** ---------- Update post ---------- */
+export const updatePostRequestSchema = z.object({
+  description: z.string().max(500),
+});
+
+export const updatePostResponseSchema = z.object({
+  description: z.string(),
+});
+
+/** ---------- Comment author ---------- */
+export const commentAuthorSchema = z.object({
+  id: z.number(),
+  username: z.string(),
+  avatars: z.array(z.unknown()), // в swagger-е [{}]
+});
+
+/** ---------- Comment ---------- */
+export const commentSchema = z.object({
+  id: z.number(),
+  postId: z.number(),
+
+  from: commentAuthorSchema,
+
+  content: z.string(),
+  createdAt: z.string(),
+
+  answerCount: z.number(),
+  likeCount: z.number(),
+  isLiked: z.boolean(),
+});
+
+/** ---------- Get post comments response ---------- */
+export const getPostCommentsResponseSchema = z.object({
+  pageSize: z.number(),
+  totalCount: z.number(),
+  notReadCount: z.number(),
+
+  items: z.array(commentSchema),
+});
