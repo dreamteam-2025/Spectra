@@ -81,6 +81,26 @@ export const postApi = baseApi.injectEndpoints({
 
       providesTags: ["Posts"],
     }),
+    getMyPosts: build.infiniteQuery<GetPostsResponse, GetPostsArgs & { userId: number }, number>({
+      infiniteQueryOptions: {
+        initialPageParam: 0,
+        getNextPageParam: lastPage => {
+          if (lastPage.items.length === 0) return undefined;
+
+          return lastPage.items[lastPage.items.length - 1].id;
+        },
+      },
+
+      query: ({ queryArg, pageParam }) => ({
+        method: "GET",
+        url: `posts/user/${queryArg.userId}/${pageParam}`,
+        params: {
+          pageSize: queryArg.pageSize ?? 10,
+          sortDirection: "desc",
+        },
+      }),
+
+      providesTags: ["Posts"],
 
     getPostById: build.query<GetPostByIdResponse, GetPostByIdArgs>({
       query: ({ postId }) => ({
@@ -137,6 +157,7 @@ export const {
   useUploadPostImagesMutation,
   useCreatePostMutation,
   useGetPostsInfiniteQuery,
+  useGetMyPostsInfiniteQuery,
   useGetPostByIdQuery,
   useUpdatePostMutation,
   useGetPostCommentsQuery,
