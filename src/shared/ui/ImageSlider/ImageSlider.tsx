@@ -4,13 +4,6 @@ import { useState } from "react";
 import s from "./ImageSlider.module.scss";
 import clsx from "clsx";
 import Image, { StaticImageData } from "next/image";
-//import { MockPost } from "@/widgets/post/postList/model/mock";
-
-// type MockPostImages = Array<
-//   Pick<MockPost, "id" | "postImage"> & {
-//     postImage: string | StaticImageData;
-//   }
-// >;
 
 type MockPostImages = {
   id: number;
