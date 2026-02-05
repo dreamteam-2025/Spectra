@@ -81,6 +81,8 @@ export const postApi = baseApi.injectEndpoints({
 
       providesTags: ["Posts"],
     }),
+
+    // Get my posts
     getMyPosts: build.infiniteQuery<GetPostsResponse, GetPostsArgs & { userId: number }, number>({
       infiniteQueryOptions: {
         initialPageParam: 0,
@@ -101,7 +103,9 @@ export const postApi = baseApi.injectEndpoints({
       }),
 
       providesTags: ["Posts"],
+    }),
 
+    // Get post by id
     getPostById: build.query<GetPostByIdResponse, GetPostByIdArgs>({
       query: ({ postId }) => ({
         method: "GET",
@@ -112,6 +116,7 @@ export const postApi = baseApi.injectEndpoints({
       providesTags: (_result, _error, { postId }) => [{ type: "Posts", id: postId }],
     }),
 
+    // Update post
     updatePost: build.mutation<UpdatePostResponse, UpdatePostArgs>({
       query: ({ postId, body }) => {
         const parsedBody = updatePostRequestSchema.parse(body);
@@ -134,6 +139,7 @@ export const postApi = baseApi.injectEndpoints({
       ],
     }),
 
+    // Get post comments
     getPostComments: build.query<GetPostCommentsResponse, GetPostCommentsArgs>({
       query: ({ postId, pageSize = 10, pageNumber = 1, sortBy = "createdAt", sortDirection = "desc" }) => ({
         method: "GET",
