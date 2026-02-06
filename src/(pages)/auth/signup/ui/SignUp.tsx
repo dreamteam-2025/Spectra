@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useSignUpMutation } from "@/features/auth/api/authApi";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useGithubOauthLogin } from "@/features";
+import { useGithubOauthLogin, useGoogleOauthLogin } from "@/features";
 
 export const SignUp = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
@@ -22,6 +22,7 @@ export const SignUp = () => {
   const [submitEmail, setSubmitEmail] = useState<string>("");
 
   const { openOauthPopup } = useGithubOauthLogin();
+  const { openGoogleOauthPopup } = useGoogleOauthLogin();
 
   const {
     register,
@@ -66,7 +67,7 @@ export const SignUp = () => {
       <Card className={s.container}>
         <h1 className={s.title}>Sign Up</h1>
         <section className={s.logos}>
-          <button type="button" onClick={() => alert("Logged in from google account")}>
+          <button type="button" onClick={openGoogleOauthPopup}>
             <Image src="/icons/google.svg" alt="google" width={36} height={36} />
           </button>
           <button type="button" onClick={openOauthPopup}>

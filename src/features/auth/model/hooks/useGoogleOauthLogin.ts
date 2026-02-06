@@ -1,24 +1,41 @@
 "use client";
 
-import { AUTH_KEYS, isOauthData, ROUTES, isOauthError } from "@/shared";
-import { errorToast } from "@/shared/lib/utils/toasts/errorToast";
-import { useUpdateGithubTokensMutation } from "../../api/authApi";
+import { AUTH_KEYS, errorToast, generateSecureState, isOauthData, isOauthError, ROUTES } from "@/shared/lib";
 import { useRouter } from "next/navigation";
 
-export const useGithubOauthLogin = () => {
-  const [updateTokens] = useUpdateGithubTokensMutation();
+// Хук только для инициализации процесса OAuth2 Google
+export const useGoogleOauthLogin = () => {
   const router = useRouter();
 
-  const openOauthPopup = () => {
+  // Возвращаем функцию для открытия popup с нужным сформированным URL
+  const openGoogleOauthPopup = () => {
     // ID интервала и таймера для очистки
     // (тип number - потому что наша среда браузер)
     let checkInterval: number;
     let cleanupTimeout: number;
 
-    const redirectUrl = process.env.NEXT_PUBLIC_DOMAIN_ADDRESS + ROUTES.AUTH.GITHUB_OAUTH;
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/github/login?redirect_url=${redirectUrl}`;
+    // генерация secure state для Google
+    const state = generateSecureState();
+    sessionStorage.setItem("google-oauth-state", state);
 
-    const popup = window.open(url, "oauthPopup", "width=500,height=600");
+    // генерация url для Google (не для бэка)
+    const redirectUri = window.location.origin + ROUTES.AUTH.GOOGLE_OAUTH;
+
+    // собираем параметры для googleAuthUrl
+    const params = new URLSearchParams({
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
+      redirect_uri: redirectUri,
+      response_type: "code",
+      scope: "profile email",
+      state,
+      prompt: "select_account",
+    });
+
+    // формируем googleAuthUrl с параметрами
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+
+    // открыть popup на Google
+    const popup = window.open(googleAuthUrl, "oauthPopup", "width=500,height=600");
 
     // раннее прерывание, если popup по какой-либо причине не открылся
     if (!popup) {
@@ -34,21 +51,18 @@ export const useGithubOauthLogin = () => {
       const originHost = new URL(event.origin).hostname;
 
       if (originHost !== allowedHost) return;
-      // более строгая проверка:
-      //if (event.origin !== process.env.NEXT_PUBLIC_DOMAIN_ADDRESS) return;
+
+      const data = event.data;
 
       // раннее прерывание, если пришедшее в event.data !== необходимому
-      //if (!event.data || typeof event.data !== "object" || Array.isArray(event.data) || !isOauthData(event.data)) {
-      if (!event.data || typeof event.data !== "object" || Array.isArray(event.data)) {
+      if (!data || typeof data !== "object" || Array.isArray(data)) {
         console.log("Ignoring trash messages");
         return;
       }
 
-      const data = event.data;
-
       // если в data объект { accessToken, email }
       if (isOauthData(data)) {
-        const { accessToken, email } = event.data;
+        const { accessToken, email } = data;
 
         // если accessToken не пришел - раннее прерывание
         if (!accessToken) {
@@ -57,12 +71,13 @@ export const useGithubOauthLogin = () => {
         }
 
         // если initial accessToken прилетел, то запишем в sessionStorage
-        // указываем также, что токен установлен именно при oauth via github (важно при первом обновлении токена)
+        // указываем также, что токен установлен именно при oauth via google
         sessionStorage.setItem(AUTH_KEYS.accessToken, accessToken);
-        sessionStorage.setItem(AUTH_KEYS.authProvider, "github");
+        sessionStorage.setItem(AUTH_KEYS.authProvider, "google");
 
         cleanup();
-        handleOAuthSuccess();
+        // и редиректим на страницу user profile
+        router.push(ROUTES.APP.PROFILE);
         return;
       }
 
@@ -76,35 +91,16 @@ export const useGithubOauthLogin = () => {
       }
     };
 
+    window.addEventListener("message", recieveMessage);
+
     // Функция полной очистки
     const cleanup = () => {
+      // удаляем проверочный state из sessionStorage
+      sessionStorage.removeItem("google-oauth-state");
       window.removeEventListener("message", recieveMessage);
       clearInterval(checkInterval);
       if (cleanupTimeout) clearTimeout(cleanupTimeout);
     };
-
-    const handleOAuthSuccess = async () => {
-      try {
-        // затем сразу же инициируем первоначальный запрос на обновление токена
-        // (это нужно после получения initial токена, только в первый раз, для github)
-        const updateTokensResult = await updateTokens().unwrap();
-
-        // затем в случае успеха перезапишем новым токеном
-        sessionStorage.setItem(AUTH_KEYS.accessToken, updateTokensResult.accessToken);
-        // (и удалим запись о авторизации через гитхаб в sessionStorage) - ?
-        //sessionStorage.removeItem(AUTH_KEYS.authProvider);
-
-        // и редиректим на страницу user profile
-        router.push(ROUTES.APP.PROFILE);
-      } catch (error) {
-        console.error("Error with update-tokens: ", error);
-      } finally {
-        // удаляем обработчик
-        cleanup();
-      }
-    };
-
-    window.addEventListener("message", recieveMessage);
 
     // Проверяем закрытие popup каждые 500 мс
     checkInterval = window.setInterval(() => {
@@ -127,5 +123,5 @@ export const useGithubOauthLogin = () => {
     );
   };
 
-  return { openOauthPopup };
+  return { openGoogleOauthPopup };
 };

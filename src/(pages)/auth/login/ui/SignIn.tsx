@@ -9,6 +9,7 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Card } from "@/shared/ui/Card/Card";
 import { useSignIn } from "../model/hooks";
 import { useGithubOauthLogin } from "@/features/auth/model/hooks/useGithubOauthLogin";
+import { useGoogleOauthLogin } from "@/features/auth/model/hooks/useGoogleOauthLogin";
 
 export const SignIn = () => {
   const {
@@ -22,6 +23,7 @@ export const SignIn = () => {
   } = useSignIn();
 
   const { openOauthPopup } = useGithubOauthLogin();
+  const { openGoogleOauthPopup } = useGoogleOauthLogin();
 
   return (
     <main>
@@ -29,7 +31,7 @@ export const SignIn = () => {
         <h1 className={s.h1}>Sign In</h1>
 
         <div className={s.icons}>
-          <button type="button">
+          <button type="button" onClick={openGoogleOauthPopup}>
             <Image src="/icons/google.svg" alt="google" width={36} height={36} />
           </button>
           <button type="button" onClick={openOauthPopup}>

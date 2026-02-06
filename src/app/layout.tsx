@@ -1,10 +1,9 @@
-import { Header } from "@/widgets";
 import type { Metadata } from "next";
 import "./globals.scss";
 import Script from "next/script";
 import { Providers } from "./providers";
 import { ToastsProvider } from "./providers";
-import { RootLoader } from "../app/providers/notifications/RootLoader";
+import { LayoutController } from "./LayoutController";
 
 export const metadata: Metadata = {
   title: "Spectra",
@@ -23,15 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <Header />
-          <RootLoader />
-
-          {/* Контейнер с параллельными роутами */}
-          <div className="appContainer">
-            {sidebar || <div className="sidebarPlaceholder" />}
-            <main className="mainContent">{children}</main>
-          </div>
-
+          {/* Этот LayoutController нужен для отображения/сокрытия всего лишнего в ouath popup */}
+          <LayoutController sidebar={sidebar}>{children}</LayoutController>
           <ToastsProvider />
           <Script src="https://www.google.com/recaptcha/api.js" strategy="beforeInteractive" />
         </Providers>

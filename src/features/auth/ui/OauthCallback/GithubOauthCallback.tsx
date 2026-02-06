@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader } from "@/shared";
 // Компонент, срабатывающий после успешной OAuth github авторизации
 import { useEffect } from "react";
 
@@ -41,5 +42,10 @@ export const GithubOauthCallback = () => {
     window.close();
   }, []);
 
-  return <p>Logging you in GitHub...</p>;
+  return (
+    <>
+      <Loader />
+      <p>Logging you in GitHub...</p>
+    </>
+  );
 };

@@ -17,6 +17,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
   let result = await baseQuery(args, api, extraOptions);
 
   // если есть ошибка и это именно 401 ошибка
+  // (эта логика должна отрабатывать с случае, когда accessToken протух)
   if (result.error && result.error.status === 401) {
     // проверка залочен ли мьютекс
     if (!mutex.isLocked()) {
@@ -36,8 +37,6 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
         // проверка прилетели ли данные и соответствие
         if (refreshResult.data && isToken(refreshResult.data)) {
-          // удалить, если была запись о том, что токен полученный ранее для гитхаб
-          //sessionStorage.removeItem(AUTH_KEYS.authProvider);
           // кладем в sessionStorage новый accessToken
           sessionStorage.setItem(AUTH_KEYS.accessToken, refreshResult.data.accessToken);
           // повтор первоначального запроса
