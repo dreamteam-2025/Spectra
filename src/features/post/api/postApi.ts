@@ -25,42 +25,21 @@ import type {
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
     // 1) Upload images (multipart/form-data)
-    // uploadPostImages: build.mutation<UploadPostImagesResponse, File[]>({
-    //   query: files => {
-    //     const formData = new FormData();
-
-    //     // Swagger: file = array
-    //     files.forEach(file => formData.append("file", file));
-
-    //     return {
-    //       method: "POST",
-    //       url: "posts/image", // важно: без /api/v1 если baseUrl уже /api/v1
-    //       body: formData,
-    //       // Content-Type НЕ ставим, браузер сам проставит boundary
-    //     };
-    //   },
-    //   transformResponse: (response: unknown) => uploadPostImagesResponseSchema.parse(response),
-    // }),
-
-uploadPostImages: build.mutation<UploadPostImagesResponse, File[]>({
+    uploadPostImages: build.mutation<UploadPostImagesResponse, File[]>({
       query: files => {
         const formData = new FormData();
 
-        // ВАЖНО: сервер чаще всего ждёт "files"
-        // files.forEach(file => formData.append("files", file));
-files.forEach(file => formData.append("file[]", file));
+        files.forEach(file => formData.append("file", file));
 
         return {
           method: "POST",
-          url: "posts/image",
+          url: "posts/image", // важно: без /api/v1 если baseUrl уже /api/v1
           body: formData,
+          // Content-Type НЕ ставим, браузер сам проставит boundary
         };
       },
       transformResponse: (response: unknown) => uploadPostImagesResponseSchema.parse(response),
     }),
-  
-
-
 
     // 2) Create post
     createPost: build.mutation<CreatePostResponse, CreatePostArgs>({
