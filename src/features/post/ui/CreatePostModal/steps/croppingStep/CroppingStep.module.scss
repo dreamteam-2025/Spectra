@@ -66,6 +66,290 @@
 
 
 
+
+
+
+/* src/features/post/ui/CreatePostModal/steps/croppingStep/CroppingStep.module.scss */
+
+// .root {
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .canvas {
+//   position: relative;
+//   flex: 1;
+//   min-height: 0;
+//   overflow: hidden;
+// }
+
+// /* ====== стрелки по бокам (как на макете) ====== */
+// .navBtn {
+//   position: absolute;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   width: 44px;
+//   height: 44px;
+
+//   display: grid;
+//   place-items: center;
+
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.12);
+//   background: rgba(76, 76, 76, 0.55);
+//   color: rgba(255, 255, 255, 0.95);
+//   cursor: pointer;
+
+//   z-index: 3;
+
+//   &:hover {
+//     background: rgba(76, 76, 76, 0.75);
+//   }
+
+//   &:active {
+//     transform: translateY(-50%) scale(0.98);
+//   }
+// }
+
+// .navLeft {
+//   left: 16px;
+// }
+
+// .navRight {
+//   right: 16px;
+// }
+
+// /* ====== общий контейнер контролов снизу ====== */
+// .controls {
+//   position: absolute;
+//   left: 16px;
+//   right: 16px;
+//   bottom: 16px;
+
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+
+//   z-index: 3;
+
+//   /* ВАЖНО: без большого “фона” — в макете панель компактная */
+//   padding: 0;
+//   background: transparent;
+// }
+
+// /* ====== миниатюры (плавающий блок как в макете) ====== */
+// .thumbs {
+//   align-self: center;
+
+//   display: flex;
+//   gap: 10px;
+//   overflow-x: auto;
+
+//   max-width: 520px;
+//   padding: 10px 12px;
+
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.12);
+//   background: rgba(0, 0, 0, 0.35);
+//   backdrop-filter: blur(6px);
+
+//   /* аккуратный скролл */
+//   scrollbar-width: thin;
+//   scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+
+//   &::-webkit-scrollbar {
+//     height: 6px;
+//   }
+//   &::-webkit-scrollbar-thumb {
+//     background: rgba(255, 255, 255, 0.25);
+//     border-radius: 999px;
+//   }
+// }
+
+// .thumbBtn {
+//   border: 1px solid rgba(255, 255, 255, 0.14);
+//   border-radius: 2px;
+//   padding: 0;
+//   background: transparent;
+//   cursor: pointer;
+
+//   width: 64px;
+//   height: 64px;
+
+//   overflow: hidden;
+//   flex: 0 0 auto;
+
+//   &:hover {
+//     border-color: rgba(255, 255, 255, 0.26);
+//   }
+// }
+
+// .thumbActive {
+//   border-color: rgba(57, 125, 246, 0.95);
+// }
+
+// .thumbImg {
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+//   display: block;
+// }
+
+// /* ====== "Go to not cropped" — как узкая плашка ====== */
+// .goOriginal {
+//   align-self: center;
+
+//   height: 40px;
+//   min-width: 340px;
+//   padding: 0 16px;
+
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.12);
+//   background: rgba(0, 0, 0, 0.35);
+//   backdrop-filter: blur(6px);
+
+//   color: rgba(255, 255, 255, 0.9);
+//   cursor: pointer;
+
+//   &:hover {
+//     background: rgba(0, 0, 0, 0.5);
+//   }
+// }
+
+// /* ====== нижняя панель с ratio + zoom + add (компактная как в макете) ====== */
+// .bottomRow {
+//   display: flex;
+//   align-items: center;
+//   gap: 12px;
+
+//   padding: 10px 12px;
+
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.12);
+//   background: rgba(0, 0, 0, 0.35);
+//   backdrop-filter: blur(6px);
+// }
+
+// /* ratios */
+// .ratios {
+//   display: flex;
+//   gap: 8px;
+// }
+
+// .ratioBtn {
+//   height: 34px;
+//   min-width: 44px;
+//   padding: 0 12px;
+
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.16);
+//   background: rgba(0, 0, 0, 0.25);
+
+//   color: rgba(255, 255, 255, 0.95);
+//   cursor: pointer;
+
+//   &:hover {
+//     background: rgba(0, 0, 0, 0.4);
+//   }
+
+//   &[aria-pressed="true"] {
+//     border-color: rgba(57, 125, 246, 0.95);
+//     background: rgba(57, 125, 246, 0.25);
+//   }
+// }
+
+// /* zoom slider */
+// .zoom {
+//   width: 220px;
+//   accent-color: rgb(57, 125, 246);
+// }
+
+// /* ====== add area (правый низ как в макете) ====== */
+// .addWrap {
+//   margin-left: auto;
+//   position: relative;
+// }
+
+// /* маленькая квадратная кнопка (как иконка в правом нижнем углу) */
+// .addBtn {
+//   width: 40px;
+//   height: 40px;
+
+//   display: grid;
+//   place-items: center;
+
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.14);
+//   background: rgba(57, 125, 246, 0.75);
+
+//   color: rgba(255, 255, 255, 0.95);
+//   cursor: pointer;
+
+//   &:hover {
+//     background: rgba(57, 125, 246, 0.9);
+//   }
+// }
+
+// /* всплывашка с большой круглой кнопкой "+" */
+// .addMenu {
+//   position: absolute;
+//   right: 0;
+//   bottom: 52px;
+
+//   width: 92px;
+//   height: 92px;
+
+//   border-radius: 2px;
+//   border: 1px solid rgba(255, 255, 255, 0.14);
+//   background: rgba(0, 0, 0, 0.55);
+//   backdrop-filter: blur(6px);
+
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+
+//   z-index: 4;
+// }
+
+// .addPlus {
+//   width: 56px;
+//   height: 56px;
+
+//   border-radius: 999px;
+//   border: 2px solid rgba(255, 255, 255, 0.85);
+
+//   background: rgba(0, 0, 0, 0.25);
+//   color: rgba(255, 255, 255, 0.95);
+
+//   font-size: 30px;
+//   line-height: 1;
+
+//   cursor: pointer;
+
+//   &:hover {
+//     background: rgba(0, 0, 0, 0.45);
+//   }
+
+//   &:active {
+//     transform: scale(0.98);
+//   }
+// }
+
+// .addInput {
+//   display: none;
+// }
+
+
+
+
+
+
+
+
+
+
+
 .root {
   height: 100%;
   display: flex;
@@ -79,111 +363,113 @@
   overflow: hidden;
 }
 
-/* большие стрелки по бокам */
+/* ✅ стрелки (квадраты как в макете) */
 .navBtn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(60, 60, 60, 0.6);
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  z-index: 3;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  line-height: 1;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(60, 60, 60, 0.78);
   }
 }
 
 .navLeft {
-  left: 12px;
+  left: 18px;
 }
 
 .navRight {
-  right: 12px;
+  right: 18px;
 }
 
-/* controls поверх картинки */
-.controls {
+/* ✅ нижняя панель (как в макете) */
+.bottomBar {
   position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
 
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+
+  z-index: 5;
+  pointer-events: none; /* включаем pointer-events точечно */
+}
+
+/* левый блок */
+.leftTools {
+  justify-self: start;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  padding: 10px;
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
-  z-index: 3;
+  gap: 12px;
+  pointer-events: auto;
+  position: relative;
 }
 
-/* миниатюры */
-.thumbs {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 2px;
-}
-
-.thumbBtn {
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 2px;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  width: 56px;
-  height: 40px;
-  overflow: hidden;
-  flex: 0 0 auto;
-}
-
-.thumbActive {
-  border-color: rgba(57, 125, 246, 0.95);
-}
-
-.thumbImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.goOriginal {
-  height: 36px;
+.toolBtn {
+  width: 44px;
+  height: 44px;
   border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(60, 60, 60, 0.6);
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
+  display: grid;
+  place-items: center;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(60, 60, 60, 0.78);
   }
 }
 
-.bottomRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* popovers */
+.popover {
+  position: absolute;
+  bottom: 54px;
+  left: 0;
+
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(30, 30, 30, 0.75);
+  backdrop-filter: blur(10px);
+
+  padding: 10px;
+}
+
+.zoomPopover {
+  left: 56px; /* под вторую кнопку */
+  width: 220px;
+}
+
+.settingsPopover {
+  width: 170px;
+}
+
+.zoom {
+  width: 100%;
 }
 
 .ratios {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .ratioBtn {
   height: 32px;
   padding: 0 10px;
   border-radius: 2px;
-
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(0, 0, 0, 0.25);
   color: #fff;
@@ -195,60 +481,114 @@
   }
 }
 
-.zoom {
-  width: 160px;
+/* точки в центре */
+.dots {
+  justify-self: center;
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+  padding-bottom: 6px;
 }
 
-/* добавление фото (правый низ) */
-.addWrap {
-  margin-left: auto;
-  position: relative;
-}
-
-.addBtn {
-  width: 34px;
-  height: 34px;
-  border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.25);
-  color: rgba(255, 255, 255, 0.9);
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: none;
   cursor: pointer;
+  background: rgba(255, 255, 255, 0.35);
 
   &:hover {
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(255, 255, 255, 0.55);
   }
 }
 
-.addMenu {
-  position: absolute;
-  right: 0;
-  bottom: 40px;
-  width: 84px;
-  height: 84px;
-  border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 4;
+.dotActive {
+  background: rgba(57, 125, 246, 0.95);
 }
 
-.addPlus {
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
+/* правый блок: галерея */
+.galleryWrap {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  pointer-events: auto;
+}
+
+.gallery {
+  display: flex;
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 2px;
+
+  /* ✅ синяя рамка вокруг блока миниатюр (как в макете) */
+  border: 2px solid rgba(57, 125, 246, 0.95);
+  background: rgba(30, 30, 30, 0.55);
+  backdrop-filter: blur(10px);
+}
+
+.thumbBtn {
+  width: 92px;
+  height: 72px;
+  padding: 0;
+  border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(57, 125, 246, 0.35);
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 24px;
+  background: rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
 
   &:hover {
-    background: rgba(57, 125, 246, 0.55);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.thumbActive {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ✅ круглая кнопка "+" справа от миниатюр */
+.addBtn {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  line-height: 1;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.55);
   }
 }
 
 .addInput {
+  display: none;
+}
+
+/* просто “заглушка”, чтобы сетка не дергалась */
+.previewGuard {
+  justify-self: end;
+  width: 1px;
+  height: 1px;
+}
+
+/* скрытый блок чтобы не ругался линтер/сборка на preview */
+.hiddenPreview {
   display: none;
 }

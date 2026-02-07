@@ -432,7 +432,7 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
             Discard
           </Button>
           <Button variant="primary" onClick={() => setConfirmOpen(false)}>
-            Continue editing
+            Save draft
           </Button>
         </div>
       </Dialog>
