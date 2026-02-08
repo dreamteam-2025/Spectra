@@ -8,6 +8,8 @@ import type {
   PasswordRecovery,
   PasswordRecoveryResending,
   NewPassword,
+  LoginGoogleResponse,
+  LoginGoogleArgs,
 } from "./authApi.types";
 import { SignInForm } from "@/(pages)/auth/login/model";
 
@@ -81,12 +83,12 @@ export const authApi = baseApi.injectEndpoints({
       onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
         await queryFulfilled;
         sessionStorage.removeItem(AUTH_KEYS.accessToken);
-        sessionStorage.removeItem(AUTH_KEYS.authProvider);
         // инвалидация после КАЖДОГО удаления токенов
         dispatch(baseApi.util.resetApiState());
       },
     }),
 
+    // OAuth2 Github
     loginGithub: build.query<void, LoginOauthGithubArgs>({
       query: ({ redirectUrl }) => ({
         method: "get",
@@ -103,11 +105,31 @@ export const authApi = baseApi.injectEndpoints({
       onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
         const { data } = await queryFulfilled;
         sessionStorage.setItem(AUTH_KEYS.accessToken, data.accessToken);
-        //sessionStorage.removeItem(AUTH_KEYS.authProvider);
         // инвалидация после КАЖДОГО сохранения токенов
         dispatch(authApi.util.invalidateTags(["Auth"]));
       },
     }),
+
+    // OAuth2 Google
+    loginGoogle: build.mutation<LoginGoogleResponse, LoginGoogleArgs>({
+      query: payload => ({
+        method: "post",
+        url: "auth/google/login",
+        body: payload,
+      }),
+      onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
+        try {
+          // ждем успешного завершения запроса
+          await queryFulfilled;
+          // здесь только инвалидация кеша, сохранение токена будет в основном окне
+          // (p.s. так нужно)
+          dispatch(authApi.util.invalidateTags(["Auth"]));
+        } catch (error) {
+          console.error("Error in onQueryStarted:", error);
+        }
+      },
+    }),
+
     logout: build.mutation<void, void>({
       query: () => {
         return {
@@ -129,6 +151,7 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
+// экспорт всех генерируемых RTK Query хуков
 export const {
   useMeQuery,
   useLogoutMutation,
@@ -140,15 +163,5 @@ export const {
   usePasswordRecoveryMutation,
   usePasswordRecoveryResendingMutation,
   useNewPasswordMutation,
+  useLoginGoogleMutation,
 } = authApi;
-
-
-
-
-
-
-
-
-
-
-

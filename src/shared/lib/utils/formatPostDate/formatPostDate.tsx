@@ -1,5 +1,3 @@
-// libs/date/formatPostDate.ts
-
 export function formatPostDate(iso?: string): string {
   if (!iso) return "";
 

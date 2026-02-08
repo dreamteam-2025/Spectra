@@ -1,12 +1,13 @@
 "use client";
 
 import clsx from "clsx";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { PostCard } from "@/shared";
 import s from "./PostList.module.scss";
 import { useGetPostsInfiniteQuery } from "@/features/post/api/postApi";
 import { useInfiniteScroll } from "@/widgets/post/postList/model/hooks/useInfinityScroll";
 import { Loader } from "@/shared/ui/Loader/Loader";
+import { ViewPostModal } from "@/features/post/ui/ViewPostModal/ViewPostModal";
 
 type Props = { className?: string };
 
@@ -14,6 +15,7 @@ export const PostList = ({ className }: Props) => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetPostsInfiniteQuery({
     pageSize: 10,
   });
+  const [selectedPostId, setSelectedPostId] = useState<null | number>(null);
 
   const posts = useMemo(() => data?.pages.flatMap(page => page.items) ?? [], [data]);
 
@@ -27,11 +29,20 @@ export const PostList = ({ className }: Props) => {
     return <Loader />;
   }
 
+  const openPostHandler = (id: number) => {
+    setSelectedPostId(id);
+  };
+
+  const closeHandler = () => {
+    setSelectedPostId(null);
+  };
+
   return (
     <div className={clsx(s.list, className)}>
       {posts.map(post => (
         <PostCard
           key={post.id}
+          onClick={() => openPostHandler(post.id)}
           slides={post.images.map((img, index) => ({
             id: index,
             postImage: img.url,
@@ -42,7 +53,15 @@ export const PostList = ({ className }: Props) => {
           text={post.description}
         />
       ))}
-
+      {selectedPostId && (
+        <ViewPostModal
+          postId={selectedPostId}
+          open={!!selectedPostId}
+          onOpenChange={open => {
+            if (!open) closeHandler();
+          }}
+        />
+      )}
       {hasNextPage && <div ref={loadMoreRef} />}
     </div>
   );

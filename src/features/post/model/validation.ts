@@ -115,7 +115,7 @@ export const getPostByIdResponseSchema = z.object({
   likesCount: z.number(),
   isLiked: z.boolean(),
 
-  avatarWhoLikes: z.boolean().optional(),
+  avatarWhoLikes: z.array(z.string()).optional(),
 });
 
 /** ---------- Update post ---------- */
@@ -153,7 +153,9 @@ export const commentSchema = z.object({
 export const getPostCommentsResponseSchema = z.object({
   pageSize: z.number(),
   totalCount: z.number(),
-  notReadCount: z.number(),
+  pagesCount: z.number(),
+  page: z.number(),
+  notReadCount: z.number().optional(),
 
   items: z.array(commentSchema),
 });
