@@ -28,5 +28,32 @@ export const Default: Story = {
       { id: 2, postImage: postImage3 },
       { id: 3, postImage: postImage4 },
     ],
+    variant: "small",
+  },
+};
+
+export const BigImageSlider: Story = {
+  args: {
+    slides: [
+      { id: 0, postImage: postImage1 },
+      { id: 1, postImage: postImage2 },
+      { id: 2, postImage: postImage3 },
+      { id: 3, postImage: postImage4 },
+    ],
+    variant: "big",
+  },
+};
+
+export const EmptySmall: Story = {
+  args: {
+    slides: [{ id: 0, postImage: "" }],
+    variant: "small",
+  },
+};
+
+export const EmptyBig: Story = {
+  args: {
+    slides: [{ id: 0, postImage: "" }],
+    variant: "big",
   },
 };
