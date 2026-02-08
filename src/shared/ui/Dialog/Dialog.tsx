@@ -3,6 +3,7 @@ import clsx from "clsx";
 import type { CSSProperties, ReactNode } from "react";
 import s from "./Dialog.module.scss";
 import { Card } from "@/shared";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 type DialogSize = "sm" | "md" | "lg" | "xl" | "full";
 
@@ -68,10 +69,12 @@ export const Dialog = ({
 
         <RadixDialog.Content asChild {...contentProps}>
           <Card data-dialog-content className={clsx(s.content, className)} style={style}>
+            <VisuallyHidden asChild>
+              <RadixDialog.Title>{title ?? "Dialog"}</RadixDialog.Title>
+            </VisuallyHidden>
             {headerSlot ? (
               <>
                 <div className={s.headerSlot} data-dialog-header>
-                  <RadixDialog.Title className={s.visuallyHidden}>{title ?? "Dialog"}</RadixDialog.Title>
                   {headerSlot}
                 </div>
 
@@ -80,7 +83,7 @@ export const Dialog = ({
             ) : title ? (
               <>
                 <div className={s.header}>
-                  <RadixDialog.Title className={s.title}>{title}</RadixDialog.Title>
+                  <span className={s.title}>{title}</span>
 
                   {showClose && (
                     <RadixDialog.Close className={s.close} aria-label="Close dialog">
@@ -92,9 +95,7 @@ export const Dialog = ({
                 {showDivider && <hr className={s.divider} />}
               </>
             ) : null}
-
             {description && <RadixDialog.Description className={s.description}>{description}</RadixDialog.Description>}
-
             <div className={s.children}>{children}</div>
           </Card>
         </RadixDialog.Content>

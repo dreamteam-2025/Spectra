@@ -22,17 +22,18 @@ type Props = {
   className?: string;
 } & ComponentProps<"article">;
 
-export const PostCard = ({ slides, avatarImage, userName, createdAt, text, className }: Props) => {
+export const PostCard = ({ slides, avatarImage, userName, createdAt, text, className, onClick }: Props) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const hasText = Boolean(text?.trim());
 
-  const expandedHandler = () => {
+  const expandedHandler = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setExpanded(prev => !prev);
   };
 
   return (
-    <article className={clsx(s.card, className)}>
+    <article className={clsx(s.card, className)} onClick={onClick}>
       <div className={s.media}>
         <ImageSlider slides={slides} />
       </div>
