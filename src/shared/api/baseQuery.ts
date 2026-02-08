@@ -11,12 +11,10 @@ export const baseQuery = fetchBaseQuery({
     const accessToken = sessionStorage.getItem(AUTH_KEYS.accessToken);
     // если он там есть, цепляем к каждому запросу в заголовках
 
-    // не цепляем
-    if (endpoint === "getPosts") return headers;
-
-    if (accessToken) {
+    if (accessToken && endpoint !== "getPosts") {
       headers.set("Authorization", `Bearer ${accessToken}`);
     }
+
     return headers;
   },
 });

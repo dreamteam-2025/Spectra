@@ -15,5 +15,6 @@ export const ROUTES = {
     EMAIL_VERIFIED: "/signup-email-verified",
     VERIFICATION_EXPIRED: "/verification-expired",
     GITHUB_OAUTH: "/auth/github",
+    GOOGLE_OAUTH: "/auth/callback",
   },
 } as const;
