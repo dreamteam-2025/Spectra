@@ -1,5 +1,10 @@
+"use client";
+
+import type React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Cropper, { Area } from "react-easy-crop";
+import Cropper, { type Area } from "react-easy-crop";
+import clsx from "clsx";
+
 import s from "./CroppingStep.module.scss";
 import { getCroppedBlob } from "@/features/post/model/cropImage";
 
@@ -17,14 +22,38 @@ export type CropPayload = {
   aspect: number;
 };
 
+type CreateImage = {
+  id: string;
+  file: File;
+  originalUrl: string;
+};
+
 type Props = {
-  previewUrl: string;
-  onBack: () => void;
+  images: CreateImage[];
+  croppedList: (CropPayload | null)[];
+  activeIndex: number;
+  setActiveIndex: (idx: number) => void;
+
+  onAddFiles: (files: File[]) => void;
+  onRemoveImage: (idx: number) => void;
+
   onNext: (payload: CropPayload) => void;
   submitRef: React.RefObject<(() => void) | null>;
 };
 
-export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
+const MAX_SIZE = 20 * 1024 * 1024;
+const ALLOWED = new Set(["image/jpeg", "image/png"]);
+
+export function CroppingStep({
+  images,
+  croppedList,
+  activeIndex,
+  setActiveIndex,
+  onAddFiles,
+  onRemoveImage,
+  onNext,
+  submitRef,
+}: Props) {
   const [ratio, setRatio] = useState<Ratio>("1:1");
   const aspect = useMemo(() => ratioToAspect[ratio], [ratio]);
 
@@ -33,47 +62,73 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const lastPreviewUrlRef = useRef<string | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
+  const addInputRef = useRef<HTMLInputElement | null>(null);
+
+  const current = images[activeIndex];
 
   const onCropComplete = useCallback((_a: Area, areaPixels: Area) => {
     setCroppedAreaPixels(areaPixels);
   }, []);
 
+  useEffect(() => {
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    setCroppedAreaPixels(null);
+  }, [activeIndex, ratio]);
+
   const handleNext = useCallback(async () => {
-    if (!croppedAreaPixels || loading) return;
+    if (!current || !croppedAreaPixels || loading) return;
 
     setLoading(true);
     try {
-      const blob = await getCroppedBlob(previewUrl, croppedAreaPixels);
+      const blob = await getCroppedBlob(current.originalUrl, croppedAreaPixels);
       const nextPreviewUrl = URL.createObjectURL(blob);
-
-      if (lastPreviewUrlRef.current) {
-        URL.revokeObjectURL(lastPreviewUrlRef.current);
-      }
-      lastPreviewUrlRef.current = nextPreviewUrl;
 
       onNext({ blob, previewUrl: nextPreviewUrl, aspect });
     } finally {
       setLoading(false);
     }
-  }, [aspect, croppedAreaPixels, loading, onNext, previewUrl]);
+  }, [aspect, croppedAreaPixels, current, loading, onNext]);
 
   useEffect(() => {
-    if (submitRef) {
-      submitRef.current = handleNext;
-    }
+    if (submitRef) submitRef.current = handleNext;
     return () => {
-      if (submitRef?.current === handleNext) {
-        submitRef.current = null;
-      }
+      if (submitRef?.current === handleNext) submitRef.current = null;
     };
   }, [handleNext, submitRef]);
+
+  const goPrev = () => setActiveIndex(activeIndex === 0 ? images.length - 1 : activeIndex - 1);
+  const goNext = () => setActiveIndex(activeIndex === images.length - 1 ? 0 : activeIndex + 1);
+
+  const validate = (file: File) => ALLOWED.has(file.type) && file.size <= MAX_SIZE;
+
+  const onPickMore: React.ChangeEventHandler<HTMLInputElement> = e => {
+    const list = Array.from(e.target.files ?? []);
+    if (!list.length) return;
+
+    const bad = list.find(f => !validate(f));
+    if (bad) {
+      e.target.value = "";
+      return;
+    }
+
+    setAddOpen(false);
+    onAddFiles(list);
+    e.target.value = "";
+  };
+
+  const openFileDialog = () => addInputRef.current?.click();
+
+  if (!current) return null;
+
+  const showInlineAdd = images.length >= 2;
 
   return (
     <div className={s.root}>
       <div className={s.canvas}>
         <Cropper
-          image={previewUrl}
+          image={current.originalUrl}
           crop={crop}
           zoom={zoom}
           aspect={aspect}
@@ -84,36 +139,137 @@ export function CroppingStep({ previewUrl, onBack, onNext, submitRef }: Props) {
           objectFit="cover"
         />
 
+        {images.length > 1 && (
+          <>
+            <button type="button" className={clsx(s.navBtn, s.navLeft)} onClick={goPrev} aria-label="Previous image">
+              ‹
+            </button>
+            <button type="button" className={clsx(s.navBtn, s.navRight)} onClick={goNext} aria-label="Next image">
+              ›
+            </button>
+          </>
+        )}
+
         <div className={s.controls}>
-          <div className={s.ratios}>
-            <button className={s.ratioBtn} type="button" onClick={() => setRatio("1:1")} aria-pressed={ratio === "1:1"}>
-              1:1
-            </button>
+          {/* миниатюры + аккуратный плюс в правом верхнем углу контейнера */}
+          {images.length > 1 && (
+            <div className={s.thumbsRow}>
+              <div className={s.thumbsList}>
+                {images.map((img, idx) => (
+                  <div key={img.id} className={s.thumbItem}>
+                    <button
+                      type="button"
+                      className={clsx(s.thumbBtn, idx === activeIndex && s.thumbActive)}
+                      onClick={() => setActiveIndex(idx)}
+                      aria-label={`Go to image ${idx + 1}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img className={s.thumbImg} src={croppedList[idx]?.previewUrl ?? img.originalUrl} alt="" />
+                    </button>
 
-            <button className={s.ratioBtn} type="button" onClick={() => setRatio("4:5")} aria-pressed={ratio === "4:5"}>
-              4:5
-            </button>
+                    <button
+                      type="button"
+                      className={s.thumbRemove}
+                      aria-label={`Remove image ${idx + 1}`}
+                      onClick={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onRemoveImage(idx);
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
 
-            <button
-              className={s.ratioBtn}
-              type="button"
-              onClick={() => setRatio("16:9")}
-              aria-pressed={ratio === "16:9"}
-            >
-              16:9
-            </button>
+              {showInlineAdd && (
+                <button type="button" className={s.thumbAddFloating} onClick={openFileDialog} aria-label="Add photo">
+                  +
+                </button>
+              )}
+
+              <input
+                ref={addInputRef}
+                className={s.addInput}
+                type="file"
+                accept="image/jpeg,image/png"
+                multiple
+                onChange={onPickMore}
+              />
+            </div>
+          )}
+
+          <div className={s.bottomRow}>
+            <div className={s.ratios}>
+              <button
+                className={s.ratioBtn}
+                type="button"
+                onClick={() => setRatio("1:1")}
+                aria-pressed={ratio === "1:1"}
+              >
+                1:1
+              </button>
+              <button
+                className={s.ratioBtn}
+                type="button"
+                onClick={() => setRatio("4:5")}
+                aria-pressed={ratio === "4:5"}
+              >
+                4:5
+              </button>
+              <button
+                className={s.ratioBtn}
+                type="button"
+                onClick={() => setRatio("16:9")}
+                aria-pressed={ratio === "16:9"}
+              >
+                16:9
+              </button>
+            </div>
+
+            <input
+              className={s.zoom}
+              type="range"
+              min={1}
+              max={3}
+              step={0.01}
+              value={zoom}
+              onChange={e => setZoom(Number(e.target.value))}
+              aria-label="zoom"
+            />
+
+            <div className={s.addWrap}>
+              <button
+                type="button"
+                className={s.addBtn}
+                aria-label="Add photo"
+                onClick={() => {
+                  if (showInlineAdd) openFileDialog();
+                  else setAddOpen(v => !v);
+                }}
+              >
+                ⧉
+              </button>
+
+              {!showInlineAdd && addOpen && (
+                <button type="button" className={s.addPlusFloating} onClick={openFileDialog} aria-label="Add new photo">
+                  +
+                </button>
+              )}
+            </div>
+
+            {images.length <= 1 && (
+              <input
+                ref={addInputRef}
+                className={s.addInput}
+                type="file"
+                accept="image/jpeg,image/png"
+                multiple
+                onChange={onPickMore}
+              />
+            )}
           </div>
-
-          <input
-            className={s.zoom}
-            type="range"
-            min={1}
-            max={3}
-            step={0.01}
-            value={zoom}
-            onChange={e => setZoom(Number(e.target.value))}
-            aria-label="zoom"
-          />
         </div>
       </div>
     </div>

@@ -5,8 +5,6 @@
   overflow: hidden;
 }
 
-/* ===== Header layouts ===== */
-
 /* Step 1: "Add Photo" слева, X справа */
 .headerSelect {
   display: grid;
@@ -74,14 +72,10 @@
   padding-top: 16px;
 }
 
-
 .confirmButtons :global(button) {
-  width: 120px;   // или 124px/128px — зависит от твоего Button
+  width: 120px; // или 124px/128px — зависит от твоего Button
   height: 36px;
 }
-
-
-
 
 .confirmDialogWrap {
   max-width: 520px;
@@ -109,15 +103,9 @@
   height: 36px;
 }
 
-
-
-
-
-
 .leftBtn :global(button),
 .rightBtn :global(button) {
-  width: 140px;        // ← увеличили ширину
+  width: 140px; // ← увеличили ширину
   height: 36px;
   white-space: nowrap; // ← запрещаем перенос текста
 }
-

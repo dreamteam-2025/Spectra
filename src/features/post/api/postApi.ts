@@ -29,7 +29,6 @@ export const postApi = baseApi.injectEndpoints({
       query: files => {
         const formData = new FormData();
 
-        // Swagger: file = array
         files.forEach(file => formData.append("file", file));
 
         return {
