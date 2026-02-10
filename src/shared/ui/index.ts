@@ -12,3 +12,5 @@ export type { SelectOption } from "./SelectBox/SelectBox.types";
 export { Dialog } from "@/shared/ui/Dialog/Dialog";
 export { PostCard } from "./PostCard.tsx/PostCard";
 export * from "./RadioGroup/RadioGroup";
+export { Dropdown } from "./Dropdown/Dropdown";
+export type { DropdownItem } from "./Dropdown/Dropdown";
