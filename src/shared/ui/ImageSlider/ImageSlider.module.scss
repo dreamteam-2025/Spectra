@@ -1,6 +1,23 @@
+$smallSize: 240px;
+$bigSize: 490px;
+
+$smallArrow: 24px;
+$bigArrow: 48px;
+
+$smallDot: 6px;
+$bigDot: 8px;
+
+$smallDotsContainer: 12px;
+$bigDotsContainer: 24px;
+
+$smallCommonIndent: 8px;
+$bigCommonIndent: 14px;
+
+$smallDotsMargin: 4px;
+$bigDotsMargin: 6px;
+
 .imageContainer {
-  width: 240px;
-  height: 240px;
+  position: relative;
   margin: 0 auto;
 
   // Показываем навигацию при наведении на контейнер
@@ -15,6 +32,8 @@
 }
 
 .empty {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -44,18 +63,8 @@
   cursor: pointer;
 
   border-radius: 2px;
-  width: 24px;
-  height: 24px;
 
   background: color-mix(in srgb, var(--dark-300) 50%, transparent);
-
-  &.left {
-    left: 8px;
-  }
-
-  &.right {
-    right: 8px;
-  }
 
   // Скрываем по умолчанию
   opacity: 0;
@@ -67,7 +76,6 @@
 
 .dotsContainer {
   position: absolute;
-  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
 
@@ -75,7 +83,6 @@
   justify-content: center;
   align-items: center;
 
-  height: 12px;
   background-color: color-mix(in srgb, var(--dark-300) 50%, transparent);
   border-radius: 2px;
   z-index: 1;
@@ -88,20 +95,14 @@
     visibility 0.2s ease;
 
   .dot {
-    width: 6px;
-    height: 6px;
-
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin: 0 4px;
     cursor: pointer;
 
     &::before {
       content: "";
-      width: 6px;
-      height: 6px;
       border-radius: 50%;
       background-color: var(--light-100);
     }
@@ -109,15 +110,65 @@
     &.active::before {
       background-color: var(--accent-500);
     }
+  }
+}
 
-    &:first-child {
-      margin-left: 8px;
-      margin-right: 4px;
+// миксин для variant ImageSlider
+@mixin sliderVariant($size, $arrowContainerSize, $dotSize, $dotsContainerSize, $dotsMargin, $indent) {
+  width: $size;
+  height: $size;
+
+  .left,
+  .right {
+    width: $arrowContainerSize;
+    height: $arrowContainerSize;
+
+    &.left {
+      left: $indent;
     }
 
-    &:last-child {
-      margin-left: 4px;
-      margin-right: 8px;
+    &.right {
+      right: $indent;
+    }
+
+    img {
+      width: $arrowContainerSize;
+      height: $arrowContainerSize;
     }
   }
+
+  .dotsContainer {
+    height: $dotsContainerSize;
+    bottom: $indent;
+
+    .dot {
+      width: $dotSize;
+      height: $dotSize;
+      margin: 0 $dotsMargin;
+
+      &::before {
+        width: $dotSize;
+        height: $dotSize;
+      }
+
+      &:first-child {
+        margin-left: $dotsMargin * 2;
+        margin-right: $dotsMargin;
+      }
+
+      &:last-child {
+        margin-right: $dotsMargin * 2;
+        margin-left: $dotsMargin;
+      }
+    }
+  }
+}
+
+// применение миксина
+.small {
+  @include sliderVariant($smallSize, $smallArrow, $smallDot, $smallDotsContainer, $smallDotsMargin, $smallCommonIndent);
+}
+
+.big {
+  @include sliderVariant($bigSize, $bigArrow, $bigDot, $bigDotsContainer, $bigDotsMargin, $bigCommonIndent);
 }

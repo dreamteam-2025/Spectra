@@ -1,29 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./ImageSlider.module.scss";
 import clsx from "clsx";
 import Image, { StaticImageData } from "next/image";
 
-type MockPostImages = {
+type PostImages = {
   id: number;
   postImage: string | StaticImageData;
 };
 
 type Props = {
-  slides: MockPostImages[];
+  slides: PostImages[];
+  variant?: "small" | "big";
 };
 
-export const ImageSlider = ({ slides }: Props) => {
+export const ImageSlider = ({ slides, variant = "small" }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [hasError, setHasError] = useState(false);
+  //const [hasError, setHasError] = useState(false);
+
+  // Сброс ошибки при смене слайда
+  // useEffect(() => {
+  //   setHasError(false);
+  // }, [currentIndex]);
 
   // Полная валидация слайдов
   const validSlides = slides.filter(slide => {
-    if (!slide || typeof slide !== "object") return false;
-    if (!slide.postImage) return false;
+    if (!slide || typeof slide !== "object" || !slide.postImage) return false;
 
-    //Если postImage - строка (URL)
+    // Если postImage - строка (URL)
     if (typeof slide.postImage === "string") {
       return slide.postImage.trim() !== "";
     }
@@ -41,12 +46,15 @@ export const ImageSlider = ({ slides }: Props) => {
     return false;
   });
 
-  // Если нет валидных слайдов или ошибка загрузки
-  if (!validSlides.length || hasError) {
+  // Обработка ошибок
+  // Если нет валидных слайдов
+  if (!validSlides.length) {
     return (
-      <div className={clsx(s.imageContainer, s.empty)}>
-        <Image src="icons/image-outline.svg" alt="no image" width={48} height={48} />
-        <p>{hasError ? "Image failed to load" : "No image"}</p>
+      <div className={clsx(s.imageContainer, s[variant])}>
+        <div className={s.empty}>
+          <Image src="icons/image-outline.svg" alt="no image" width={64} height={64} />
+          <p>"No image"</p>
+        </div>
       </div>
     );
   }
@@ -60,16 +68,18 @@ export const ImageSlider = ({ slides }: Props) => {
   const goToSlideHandler = (slideIndex: number) => setCurrentIndex(slideIndex);
 
   return (
-    <div className={s.imageContainer}>
+    <div className={clsx(s.imageContainer, s[variant])}>
       <div className={s.slider}>
         {/* Непосредственно изображение */}
         <Image
           fill
-          sizes="240px"
+          sizes={variant === "big" ? "490px" : "240px"}
           className={s.slide}
           src={validSlides[currentIndex].postImage}
           alt={`Slide ${currentIndex + 1}`}
           aria-label={`Slide ${currentIndex + 1} of ${validSlides.length}`}
+          priority={currentIndex === 0}
+          //onError={() => setHasError(true)}
         />
 
         {/* Условный рендеринг: отрисовка кнопок "пролистывания" фотографий, если загружено > 1 фото*/}
