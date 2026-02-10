@@ -1,9 +1,11 @@
 import { skipToken } from "@reduxjs/toolkit/query";
 import s from "./ViewPostModal.module.scss";
-
 import { useGetPostByIdQuery, useGetPostCommentsQuery } from "@/features/post/api/postApi";
-import { Dialog, Loader } from "@/shared/ui";
+import { Dialog, Dropdown, Loader } from "@/shared/ui";
 import { formatPostDate } from "@/shared/lib";
+import { useState } from "react";
+import { ImageSlider } from "@/shared/ui";
+import { useMeQuery } from "@/features/auth";
 
 type Props = {
   open: boolean;
@@ -15,10 +17,46 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
   const { data: post, isLoading: isPostLoading } = useGetPostByIdQuery(postId ? { postId } : skipToken);
 
   const { data: comments, isLoading: isCommentsLoading } = useGetPostCommentsQuery(
-    postId ? { postId, pageSize: 10 } : skipToken
+    postId ? { postId, pageSize: 10 } : skipToken,
+    { skip: !open }
   );
+  const { data: me, isLoading: isMeLoading } = useMeQuery();
 
+  const [openMenu, setOpenMenu] = useState(false);
   const isLoading = isPostLoading || isCommentsLoading;
+  const isOwner = me?.userId === post?.ownerId;
+
+  const slides = {};
+
+  const menuItems = isOwner
+    ? [
+        {
+          id: "edit",
+          label: "Edit Post",
+          icon: "/icons/edit-icon.svg",
+          onSelect: () => console.log("edit"), // todo
+        },
+        {
+          id: "delete",
+          label: "Delete",
+          icon: "/icons/trash-outline.svg",
+          onSelect: () => console.log("delete"), // todo
+        },
+      ]
+    : [
+        {
+          id: "unfollow",
+          label: "Unfollow",
+          icon: "/icons/person-remove-outline.svg",
+          onSelect: () => console.log("unfollow"), // todo
+        },
+        {
+          id: "copyLink",
+          label: "Copy link",
+          icon: "/icons/copy-outline.svg",
+          onSelect: () => console.log("copy link"), //todo
+        },
+      ];
 
   if (!post && !isLoading) return null;
 
@@ -34,22 +72,36 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
         <div className={s.wrapper}>
           {/* LEFT */}
           <div className={s.left}>
-            {post.images?.[0]?.url && <img src={post.images[0].url} alt="post" className={s.image} />}
-
-            {post.images.length > 1 && (
-              <>
-                <button className={s.navLeft}>‹</button>
-                <button className={s.navRight}>›</button>
-              </>
-            )}
+            <ImageSlider
+              slides={post.images.map((img, index) => ({
+                id: index,
+                postImage: img.url,
+              }))}
+              variant="big"
+            />
           </div>
 
           {/* RIGHT */}
           <div className={s.right}>
-            {/* Author */}
-            <div className={s.author}>
-              {post.avatarOwner && <img src={post.avatarOwner} alt="avatar" className={s.avatar} />}
-              <span className={s.username}>{post.userName}</span>
+            {/* Header */}
+            <div className={s.header}>
+              <div className={s.author}>
+                {/* Author */}
+                {post.avatarOwner && <img src={post.avatarOwner} alt="avatar" className={s.avatar} />}
+                <span className={s.username}>{post.userName}</span>
+              </div>
+
+              {/* Menu */}
+              <Dropdown
+                open={openMenu}
+                onOpenChange={setOpenMenu}
+                trigger={
+                  <button className={s.iconBtn} type="button">
+                    ...
+                  </button>
+                }
+                items={menuItems}
+              />
             </div>
 
             {/* Description */}
