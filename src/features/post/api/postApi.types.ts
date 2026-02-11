@@ -19,6 +19,10 @@ export type GetPostsArgs = {
   sortDirection?: SortDirection;
 };
 
+export type DeletePostArgs = {
+  postId: number;
+};
+
 export type GetPostByIdArgs = {
   postId: number;
 };
