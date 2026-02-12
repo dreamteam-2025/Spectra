@@ -121,8 +121,8 @@ export const postApi = baseApi.injectEndpoints({
         method: "GET",
         url: `posts/id/${postId}`,
       }),
+      keepUnusedDataFor: 10,
       transformResponse: (response: unknown) => getPostByIdResponseSchema.parse(response),
-
       providesTags: (_result, _error, { postId }) => [{ type: "SinglePost", id: postId }],
     }),
 
@@ -143,7 +143,6 @@ export const postApi = baseApi.injectEndpoints({
       invalidatesTags: (_result, _error, { postId }) => [
         // детальная страница поста
         { type: "SinglePost", id: postId },
-
         // список постов (infiniteQuery)
         "PostsList",
       ],
@@ -161,9 +160,8 @@ export const postApi = baseApi.injectEndpoints({
           sortDirection,
         },
       }),
-
+      keepUnusedDataFor: 10,
       transformResponse: (response: unknown) => getPostCommentsResponseSchema.parse(response),
-
       providesTags: (_result, _error, { postId }) => [{ type: "Comments", id: postId }],
     }),
   }),
