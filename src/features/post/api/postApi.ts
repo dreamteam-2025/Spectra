@@ -20,10 +20,25 @@ import type {
   UpdatePostArgs,
   GetPostCommentsResponse,
   GetPostCommentsArgs,
+  DeletePostArgs,
 } from "./postApi.types";
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
+    //Delete post
+    deletePost: build.mutation<void, DeletePostArgs>({
+      query: ({ postId }) => ({
+        method: "DELETE",
+        url: `posts/${postId}`,
+      }),
+      invalidatesTags: (_result, _error, { postId }) => [
+        { type: "Posts", id: postId },
+        { type: "Posts", id: "LIST" },
+        { type: "Posts" },
+        { type: "Comments", id: postId },
+      ],
+    }),
+
     // 1) Upload images (multipart/form-data)
     uploadPostImages: build.mutation<UploadPostImagesResponse, File[]>({
       query: files => {
@@ -166,4 +181,5 @@ export const {
   useGetPostByIdQuery,
   useUpdatePostMutation,
   useGetPostCommentsQuery,
+  useDeletePostMutation,
 } = postApi;
