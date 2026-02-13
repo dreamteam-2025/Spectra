@@ -12,9 +12,12 @@ import { ViewPostModal } from "@/features/post/ui/ViewPostModal/ViewPostModal";
 type Props = { className?: string };
 
 export const PostList = ({ className }: Props) => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetPostsInfiniteQuery({
-    pageSize: 10,
-  });
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetPostsInfiniteQuery(
+    {
+      pageSize: 10,
+    },
+    { pollingInterval: 60000 } // по ТЗ обновление каждую минуту
+  );
   const [selectedPostId, setSelectedPostId] = useState<null | number>(null);
 
   const posts = useMemo(() => data?.pages.flatMap(page => page.items) ?? [], [data]);

@@ -30,13 +30,9 @@ export const postApi = baseApi.injectEndpoints({
       query: ({ postId }) => ({
         method: "DELETE",
         url: `posts/${postId}`,
+        responseHandler: "content-type",
       }),
-      invalidatesTags: (_result, _error, { postId }) => [
-        { type: "Posts", id: postId },
-        { type: "Posts", id: "LIST" },
-        { type: "Posts" },
-        { type: "Comments", id: postId },
-      ],
+      invalidatesTags: (_result, _error, { postId }) => ["PostsList", { type: "Comments", id: postId }],
     }),
 
     // 1) Upload images (multipart/form-data)
@@ -68,7 +64,7 @@ export const postApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: unknown) => createPostResponseSchema.parse(response),
-      invalidatesTags: ["Posts"],
+      invalidatesTags: ["PostsList"],
     }),
 
     // Get posts
@@ -93,7 +89,7 @@ export const postApi = baseApi.injectEndpoints({
         },
       }),
 
-      providesTags: ["Posts"],
+      providesTags: ["PostsList"],
     }),
 
     // Get my posts
@@ -116,7 +112,7 @@ export const postApi = baseApi.injectEndpoints({
         },
       }),
 
-      providesTags: ["Posts"],
+      providesTags: ["PostsList"],
     }),
 
     // Get post by id
@@ -125,9 +121,9 @@ export const postApi = baseApi.injectEndpoints({
         method: "GET",
         url: `posts/id/${postId}`,
       }),
+      keepUnusedDataFor: 10,
       transformResponse: (response: unknown) => getPostByIdResponseSchema.parse(response),
-
-      providesTags: (_result, _error, { postId }) => [{ type: "Posts", id: postId }],
+      providesTags: (_result, _error, { postId }) => [{ type: "SinglePost", id: postId }],
     }),
 
     // Update post
@@ -146,10 +142,9 @@ export const postApi = baseApi.injectEndpoints({
 
       invalidatesTags: (_result, _error, { postId }) => [
         // детальная страница поста
-        { type: "Posts", id: postId },
-
+        { type: "SinglePost", id: postId },
         // список постов (infiniteQuery)
-        { type: "Posts" },
+        "PostsList",
       ],
     }),
 
@@ -165,9 +160,8 @@ export const postApi = baseApi.injectEndpoints({
           sortDirection,
         },
       }),
-
+      keepUnusedDataFor: 10,
       transformResponse: (response: unknown) => getPostCommentsResponseSchema.parse(response),
-
       providesTags: (_result, _error, { postId }) => [{ type: "Comments", id: postId }],
     }),
   }),

@@ -59,19 +59,8 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
   // если ошибка не 401, обработчик общий
   if (result.error && result.error.status !== 401) {
-    // Игнорируем ошибки 404 для запросов к конкретным постам (GET /posts/id/{id})
-    const url = typeof args === "string" ? args : args.url;
-    const urlString = typeof url === "string" ? url : "";
-
-    const isGetPostByIdRequest = urlString.includes("posts/id/") && result.error.status === 404;
-
-    if (isGetPostByIdRequest) {
-      // Просто логируем, но не показываем ошибку пользователю
-      console.log(`Post not found (ignored): ${urlString}`);
-    } else {
-      // обработчик ошибок для всех остальных случаев
-      handleErrors(result.error);
-    }
+    // обработчик ошибок для всех остальных случаев
+    handleErrors(result.error);
   }
 
   return result;
