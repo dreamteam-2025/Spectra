@@ -52,7 +52,7 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
     return (
       <div className={clsx(s.imageContainer, s[variant])}>
         <div className={s.empty}>
-          <Image src="icons/image-outline.svg" alt="no image" width={64} height={64} />
+          <Image src="/icons/image-outline.svg" alt="no image" width={64} height={64} />
           <p>"No image"</p>
         </div>
       </div>
@@ -87,10 +87,10 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
           <>
             {/* Кнопки "перелистывания" изображений */}
             <button type="button" className={s.left} onClick={goToPreviousHandler} aria-label="Previous slide">
-              <img src={"icons/arrow-ios-back-outline.svg"} alt="previous" />
+              <img src={"/icons/arrow-ios-back-outline.svg"} alt="previous" />
             </button>
             <button type="button" className={s.right} onClick={goToNextHandler} aria-label="Next slide">
-              <img src={"icons/arrow-ios-forward.svg"} alt="next" />
+              <img src={"/icons/arrow-ios-forward.svg"} alt="next" />
             </button>
             {/* "Точки" для переключения на конкретное изображение из серии */}
             <div className={s.dotsContainer}>

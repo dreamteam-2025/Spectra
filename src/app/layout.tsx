@@ -16,7 +16,7 @@ export default function RootLayout({
   sidebar,
 }: Readonly<{
   children: React.ReactNode;
-  sidebar?: React.ReactNode;
+  sidebar: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -25,7 +25,7 @@ export default function RootLayout({
           {/* Этот LayoutController нужен для отображения/сокрытия всего лишнего в ouath popup */}
           <LayoutController sidebar={sidebar}>{children}</LayoutController>
           <ToastsProvider />
-          <Script src="https://www.google.com/recaptcha/api.js" strategy="beforeInteractive" />
+          <Script src="https://www.google.com/recaptcha/api.js" strategy="afterInteractive" />
         </Providers>
       </body>
     </html>

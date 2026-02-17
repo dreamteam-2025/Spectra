@@ -1,9 +1,11 @@
+import { ROUTES } from "@/shared";
+
 export const menuItems = [
   {
     id: "feed",
     label: "Feed",
     component: "FeedIcon",
-    path: "/",
+    path: ROUTES.APP.FEED,
     group: 1,
   },
   {
@@ -14,38 +16,38 @@ export const menuItems = [
     group: 1,
   },
   {
-    id: "myProfile",
+    id: "profile",
     label: "My Profile",
     component: "ProfileIcon",
-    path: "/profile",
+    path: ROUTES.APP.PROFILE,
     group: 1,
   },
   {
     id: "messenger",
     label: "Messenger",
     component: "MessengerIcon",
-    path: "/messenger",
+    path: ROUTES.APP.MESSENGER,
     group: 1,
   },
   {
     id: "search",
     label: "Search",
     component: "SearchIcon",
-    path: "/search",
+    path: ROUTES.APP.SEARCH,
     group: 1,
   },
   {
     id: "statistics",
     label: "Statistics",
     component: "StatisticsIcon",
-    path: "/statistics",
+    path: ROUTES.APP.STATISTICS,
     group: 2,
   },
   {
     id: "favorites",
     label: "Favorites",
     component: "FavoritesIcon",
-    path: "/favorites",
+    path: ROUTES.APP.FAVORITES,
     group: 2,
   },
 ];

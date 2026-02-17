@@ -18,6 +18,7 @@ export const authApi = baseApi.injectEndpoints({
     me: build.query<MeResponse, void>({
       query: () => "auth/me",
       providesTags: ["Auth"],
+      keepUnusedDataFor: 300,
     }),
 
     login: build.mutation<{ accessToken: string }, SignInForm>({
