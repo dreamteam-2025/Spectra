@@ -13,7 +13,7 @@ type Props = {
   currentCount: number;
 };
 
-const MAX_SIZE = 20 * 1024 * 1024;
+const MAX_SIZE = 10 * 1024 * 1024;
 const ALLOWED = new Set(["image/jpeg", "image/png"]);
 
 export function SelectPhotoStep({ onSelected, max, currentCount }: Props) {
@@ -69,18 +69,6 @@ export function SelectPhotoStep({ onSelected, max, currentCount }: Props) {
           />
           Select from Computer
         </label>
-
-        {/* ✅ возвращаем кнопку как было */}
-        <Button
-          variant="outlined"
-          className={s.openDraft}
-          type="button"
-          onClick={() => {
-            // пока без логики (как у тебя было) — просто не ломаем UI
-          }}
-        >
-          Open Draft
-        </Button>
 
         {error && <div className={s.error}>{error}</div>}
       </div>

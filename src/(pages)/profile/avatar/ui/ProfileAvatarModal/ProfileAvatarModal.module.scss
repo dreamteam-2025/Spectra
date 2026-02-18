@@ -1,0 +1,73 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.closeBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.body {
+  height: 536px;
+}
+
+.selectWrap {
+  height: 100%;
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.previewStep {
+  height: 100%;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.avatarPreview {
+  position: relative;
+  width: 280px;
+  height: 280px;
+
+  margin: 32px auto 0;
+  border-radius: 50%;
+  overflow: hidden;
+
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.avatarImg {
+  object-fit: cover;
+}
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
