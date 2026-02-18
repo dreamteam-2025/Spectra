@@ -1,10 +1,16 @@
 export const ROUTES = {
   APP: {
     HOME: "/",
+    FEED: "/feed",
+    PROFILE: "/profile",
+    MESSENGER: "/messenger",
+    SEARCH: "/search",
+    STATISTICS: "/statistics",
+    FAVORITES: "/favorites",
+    SETTINGS: "/settings",
     TERMS: "/terms",
     PRIVACY: "/privacy",
     ERROR404: "/error404",
-    PROFILE: "/profile",
   },
   AUTH: {
     LOGIN: "/login",

@@ -40,7 +40,7 @@ export const SelectBox = (props: Props) => {
             <Select.Value placeholder={placeholder} />
 
             <Select.Icon className={s.icon}>
-              <img src="icons/arrow.svg" alt="arrow" />
+              <img src="/icons/arrow.svg" alt="arrow" />
             </Select.Icon>
           </Select.Trigger>
           <Select.Portal>

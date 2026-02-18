@@ -6,6 +6,7 @@ import { RootLoader } from "./providers/notifications/RootLoader";
 
 export function LayoutController({ children, sidebar }: { children: React.ReactNode; sidebar?: React.ReactNode }) {
   const pathname = usePathname();
+
   const hideLayout = pathname?.startsWith("/auth/") || pathname?.startsWith("/oauth/");
 
   return (

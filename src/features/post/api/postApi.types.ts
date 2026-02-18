@@ -47,3 +47,5 @@ export type GetPostsResponse = z.infer<typeof getPostsResponseSchema>;
 export type GetPostByIdResponse = z.infer<typeof getPostByIdResponseSchema>;
 export type UpdatePostResponse = z.infer<typeof updatePostResponseSchema>;
 export type GetPostCommentsResponse = z.infer<typeof getPostCommentsResponseSchema>;
+export type Post = GetPostsResponse["items"][number];
+export type PostsList = Post[];
