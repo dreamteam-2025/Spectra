@@ -5,32 +5,32 @@ import { GeneralInformation } from "@/widgets/settingsTabs/tabs/generalInformati
 import { MyPayments } from "@/widgets/settingsTabs/tabs/myPayments/ui/MyPayments";
 import * as Tabs from "@radix-ui/react-tabs";
 
-export default () => (
-  <Tabs.Root className={s.TabsRoot} defaultValue="tab1" orientation="vertical">
+export const SettingsTabs = () => (
+  <Tabs.Root className={s.TabsRoot} defaultValue="tab1" orientation="horizontal">
     <Tabs.List className={s.TabsList} aria-label="tabs">
-      <Tabs.Trigger className={s.TabsTrigger} value="tab1">
+      <Tabs.Trigger className={s.TabsTrigger} value="General">
         General information
       </Tabs.Trigger>
-      <Tabs.Trigger className={s.TabsTrigger} value="tab2">
+      <Tabs.Trigger className={s.TabsTrigger} value="Devices">
         Devices
       </Tabs.Trigger>
-      <Tabs.Trigger className={s.TabsTrigger} value="tab3">
+      <Tabs.Trigger className={s.TabsTrigger} value="Management">
         Account management
       </Tabs.Trigger>
-      <Tabs.Trigger className={s.TabsTrigger} value="tab4">
+      <Tabs.Trigger className={s.TabsTrigger} value="Payments">
         My payments
       </Tabs.Trigger>
     </Tabs.List>
-    <Tabs.Content value="tab1">
+    <Tabs.Content value="General">
       <GeneralInformation />
     </Tabs.Content>
-    <Tabs.Content value="tab2">
+    <Tabs.Content value="Devices">
       <Devices />
     </Tabs.Content>
-    <Tabs.Content value="tab3">
+    <Tabs.Content value="Management">
       <AccountManagement />
     </Tabs.Content>
-    <Tabs.Content value="tab4">
+    <Tabs.Content value="Payments">
       <MyPayments />
     </Tabs.Content>
   </Tabs.Root>
