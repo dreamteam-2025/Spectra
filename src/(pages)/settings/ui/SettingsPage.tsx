@@ -1,7 +1,5 @@
-export const SettingsPage = () => {
-  return (
-    <main>
-      <h1>Profile settings page</h1>
-    </main>
-  );
+import SettingsTabs from "@/widgets/settingsTabs/ui/SettingsTabs";
+
+export const Settings = () => {
+  return <SettingsTabs />;
 };
