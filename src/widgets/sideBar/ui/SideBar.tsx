@@ -1,4 +1,5 @@
 "use client";
+
 import s from "./SideBar.module.scss";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
@@ -11,15 +12,29 @@ export const SideBar = () => {
   const { logout, isLoading } = useLogout();
   const router = useRouter();
   const pathname = usePathname();
-  const [activeItem, setActiveItem] = useState("feed");
+  const [activeItem, setActiveItem] = useState("home");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Синхронизация активного элемента с текущим путем
   useEffect(() => {
-    const currentMenuItem = menuItems.find(item => item.path === pathname);
-    if (currentMenuItem) {
-      setActiveItem(currentMenuItem.id);
-    }
+    // const currentMenuItem = menuItems.find(item => item.path === pathname);
+    // if (currentMenuItem) {
+    //   setActiveItem(currentMenuItem.id);
+    // } else {
+    //   setActiveItem("home");
+    // }
+
+    const currentMenuItem = menuItems.find(item => {
+      if (item.id === "profile") {
+        // Разбиваем путь (pathname) на сегменты
+        const segments = pathname.split("/").filter(Boolean);
+
+        return segments[0] === item.id && segments.length <= 2;
+      }
+      return item.path === pathname;
+    });
+
+    setActiveItem(currentMenuItem?.id || "home");
   }, [pathname]);
 
   const group1Items = menuItems.filter(item => item.group === 1);
@@ -48,7 +63,7 @@ export const SideBar = () => {
   const handleLogoutConfirm = async () => {
     try {
       await logout();
-      setActiveItem("feed");
+      setActiveItem("home");
       setIsDialogOpen(false);
     } catch (error) {
       console.error("Ошибка при выходе:", error);

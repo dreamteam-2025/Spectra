@@ -2,6 +2,7 @@
 
 import { AUTH_KEYS, errorToast, generateSecureState, isOauthData, isOauthError, ROUTES } from "@/shared/lib";
 import { useRouter } from "next/navigation";
+import { useMeQuery } from "../../api/authApi";
 
 // Хук только для инициализации процесса OAuth2 Google
 export const useGoogleOauthLogin = () => {
@@ -44,7 +45,7 @@ export const useGoogleOauthLogin = () => {
     }
 
     // обработчик сообщений
-    const recieveMessage = (event: MessageEvent) => {
+    const recieveMessage = async (event: MessageEvent) => {
       // раннее прерывание, если popup был открыт не на нашем доменном адресе
       // проверяем hostname вместо полного origin, чтобы OAuth не ломался из-за www/http/port различий
       const allowedHost = new URL(process.env.NEXT_PUBLIC_DOMAIN_ADDRESS!).hostname;
@@ -76,6 +77,7 @@ export const useGoogleOauthLogin = () => {
         sessionStorage.setItem(AUTH_KEYS.authProvider, "google");
 
         cleanup();
+
         // и редиректим на страницу user profile
         router.push(ROUTES.APP.PROFILE);
         return;

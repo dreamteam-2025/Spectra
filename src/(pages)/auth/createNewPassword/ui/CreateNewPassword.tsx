@@ -7,38 +7,6 @@ import { useCreateNewPasswordForm } from "../model/hooks/useCreateNewPasswordFor
 import s from "./CreateNewPassword.module.scss";
 
 export const CreateNewPassword = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   reset,
-  //   formState: { errors, isValid },
-  // } = useForm<PasswordFormData>({
-  //   resolver: zodResolver(passwordSchema),
-  //   mode: "onChange",
-  // });
-
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
-
-  // const [newPassword, { isLoading }] = useNewPasswordMutation();
-  // const code = searchParams.get("code");
-
-  // async function onSubmit(data: PasswordFormData) {
-  //   if (code) {
-  //     try {
-  //       await newPassword({
-  //         newPassword: data.password,
-  //         recoveryCode: code,
-  //       }).unwrap();
-  //       reset();
-  //       router.push(ROUTES.AUTH.LOGIN);
-  //     } catch (err) {
-  //       reset();
-  //       console.log(err);
-  //     }
-  //   }
-  // }
-
   const {
     register,
     handleSubmit,

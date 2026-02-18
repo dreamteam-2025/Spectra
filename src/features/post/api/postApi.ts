@@ -21,6 +21,7 @@ import type {
   GetPostCommentsResponse,
   GetPostCommentsArgs,
   DeletePostArgs,
+  Post,
 } from "./postApi.types";
 
 export const postApi = baseApi.injectEndpoints({
@@ -68,7 +69,7 @@ export const postApi = baseApi.injectEndpoints({
     }),
 
     // Get posts
-    getPosts: build.infiniteQuery<GetPostsResponse, GetPostsArgs, number>({
+    getPostsInfinite: build.infiniteQuery<GetPostsResponse, GetPostsArgs, number>({
       infiniteQueryOptions: {
         initialPageParam: 0,
         getNextPageParam: lastPage => {
@@ -89,6 +90,19 @@ export const postApi = baseApi.injectEndpoints({
         },
       }),
 
+      providesTags: ["PostsList"],
+    }),
+
+    getPosts: build.query<Post[], { pageSize?: number }>({
+      query: ({ pageSize = 6 }) => ({
+        method: "GET",
+        url: "posts/all/0",
+        params: {
+          pageSize,
+          sortDirection: "desc",
+        },
+      }),
+      transformResponse: (response: { items: Post[] }) => response.items,
       providesTags: ["PostsList"],
     }),
 
@@ -170,7 +184,7 @@ export const postApi = baseApi.injectEndpoints({
 export const {
   useUploadPostImagesMutation,
   useCreatePostMutation,
-  useGetPostsInfiniteQuery,
+  useGetPostsQuery,
   useGetMyPostsInfiniteQuery,
   useGetPostByIdQuery,
   useUpdatePostMutation,

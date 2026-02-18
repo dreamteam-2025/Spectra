@@ -1,32 +1,19 @@
 "use client";
 
 import clsx from "clsx";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { PostCard } from "@/shared";
 import s from "./PostList.module.scss";
-import { useGetPostsInfiniteQuery } from "@/features/post/api/postApi";
-import { useInfiniteScroll } from "@/widgets/post/postList/model/hooks/useInfinityScroll";
+import { useGetPostsQuery } from "@/features/post/api/postApi";
 import { Loader } from "@/shared/ui/Loader/Loader";
 import { ViewPostModal } from "@/features/post/ui/ViewPostModal/ViewPostModal";
 
 type Props = { className?: string };
 
 export const PostList = ({ className }: Props) => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetPostsInfiniteQuery(
-    {
-      pageSize: 10,
-    },
-    { pollingInterval: 60000 } // по ТЗ обновление каждую минуту
-  );
+  const { data: posts, isLoading } = useGetPostsQuery({ pageSize: 4 }, { pollingInterval: 60000 }); // по ТЗ обновление каждую минуту);
+
   const [selectedPostId, setSelectedPostId] = useState<null | number>(null);
-
-  const posts = useMemo(() => data?.pages.flatMap(page => page.items) ?? [], [data]);
-
-  const loadMoreRef = useInfiniteScroll({
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  });
 
   if (isLoading) {
     return <Loader />;
@@ -42,7 +29,7 @@ export const PostList = ({ className }: Props) => {
 
   return (
     <div className={clsx(s.list, className)}>
-      {posts.map(post => (
+      {posts?.map(post => (
         <PostCard
           key={post.id}
           onClick={() => openPostHandler(post.id)}
@@ -65,7 +52,6 @@ export const PostList = ({ className }: Props) => {
           }}
         />
       )}
-      {hasNextPage && <div ref={loadMoreRef} />}
     </div>
   );
 };

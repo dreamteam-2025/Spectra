@@ -1,4 +1,5 @@
 "use client";
+
 import cx from "clsx";
 import s from "./RegisteredUsersCounter.module.scss";
 import { useGetPublicUsersCountQuery } from "@/shared/api";
