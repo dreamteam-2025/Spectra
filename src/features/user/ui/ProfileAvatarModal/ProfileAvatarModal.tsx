@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-
 import { Dialog } from "@/shared/ui/Dialog/Dialog";
 import { Button } from "@/shared";
 import { SelectPhotoStep } from "@/features/post/ui/CreatePostModal/steps/selectPhotoStep/SelectPhotoStep";
-
 import s from "./ProfileAvatarModal.module.scss";
-import { useUploadAvatarMutation } from "../../api/avatarApi";
+import { useUploadAvatarMutation } from "@/features/user/api/userApi";
+import { useObjectURL } from "@/shared/lib/hooks/useObjectURL";
+import { validateAvatar } from "../../api/model/lib/validateAvatar";
 
 type Props = {
   open: boolean;
@@ -18,30 +18,24 @@ type Props = {
 
 type Step = "select" | "preview";
 
-const MAX_AVATAR_SIZE = 10 * 1024 * 1024;
-const isValidAvatar = (f: File) => (f.type === "image/jpeg" || f.type === "image/png") && f.size <= MAX_AVATAR_SIZE;
-
 export function ProfileAvatarModal({ open, onOpenChange, onSaved }: Props) {
   const [step, setStep] = useState<Step>("select");
   const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const previewUrl = useObjectURL(file);
 
   const [uploadAvatar, { isLoading }] = useUploadAvatarMutation();
 
-  // ✅ чистим objectURL на размонтировании компонента (без влияния на шаги)
   useEffect(() => {
-    return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-    };
-  }, [previewUrl]);
+    if (!open) {
+      setStep("select");
+      setFile(null);
+    }
+  }, [open]);
 
   const reset = () => {
     setStep("select");
     setFile(null);
-    setPreviewUrl(prev => {
-      if (prev) URL.revokeObjectURL(prev);
-      return null;
-    });
   };
 
   const close = () => {
@@ -52,12 +46,13 @@ export function ProfileAvatarModal({ open, onOpenChange, onSaved }: Props) {
   const onSelected = (files: File[]) => {
     const f = files[0];
     if (!f) return;
-    if (!isValidAvatar(f)) return;
+
+    const res = validateAvatar(f);
+    if (!res.isValid) {
+      return;
+    }
+
     setFile(f);
-    setPreviewUrl(prev => {
-      if (prev) URL.revokeObjectURL(prev);
-      return URL.createObjectURL(f);
-    });
     setStep("preview");
   };
 

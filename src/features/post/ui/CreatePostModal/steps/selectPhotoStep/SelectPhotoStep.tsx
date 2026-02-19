@@ -13,7 +13,7 @@ type Props = {
   currentCount: number;
 };
 
-const MAX_SIZE = 10 * 1024 * 1024;
+const MAX_SIZE = 20 * 1024 * 1024;
 const ALLOWED = new Set(["image/jpeg", "image/png"]);
 
 export function SelectPhotoStep({ onSelected, max, currentCount }: Props) {

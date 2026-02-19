@@ -9,7 +9,19 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: () => [{ type: "User" }],
     }),
+    uploadAvatar: builder.mutation<UploadAvatarResponse, File>({
+      query: file => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        return {
+          url: "users/profile/avatar",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetPublicUsersCountQuery } = userApi;
+export const { useGetPublicUsersCountQuery, useUploadAvatarMutation } = userApi;

@@ -12,7 +12,7 @@ export const Profile = ({ className }: Props) => {
 
 // import { useState } from "react";
 // import { Button } from "@/shared";
-// import { ProfileAvatarModal } from "../avatar/ui/ProfileAvatarModal/ProfileAvatarModal";
+// import { ProfileAvatarModal } from "../../../features/user/ui/ProfileAvatarModal/ProfileAvatarModal";
 // import { MyPostList } from "@/widgets/post/myPostList/ui/MyPostList";
 
 // export const Profile = () => {
