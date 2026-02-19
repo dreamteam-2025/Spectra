@@ -1,0 +1,223 @@
+$font-weight-regular: 400;
+$line-height-default: 24px;
+$font-size-sm: 14px;
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+
+  --datepicker-disabled-color: var(--dark-100);
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-regular;
+  color: var(--light-900);
+  line-height: $line-height-default;
+  transition: color 0.2s ease;
+}
+
+.labelDisabled {
+  color: var(--datepicker-disabled-color);
+}
+
+.inputWrapper {
+  box-sizing: border-box;
+  width: 100%;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  padding: 6px 12px;
+  border-radius: 2px;
+  border: 1px solid var(--dark-100);
+  background: var(--dark-500);
+
+  color: var(--light-900);
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: border-color 0.2s ease;
+
+  &:hover:not(.disabled):not(.error) {
+    border-color: var(--light-100);
+  }
+
+  &:focus-within:not(.disabled):not(.error),
+  &.open {
+    border-color: var(--accent-700);
+  }
+}
+
+.error {
+  border-color: var(--danger-500);
+  color: var(--danger-500);
+
+  &:focus-within {
+    border-color: var(--danger-500);
+  }
+
+  .icon {
+    background-color: var(--danger-500);
+  }
+}
+
+.errorText {
+  color: var(--danger-500);
+}
+
+.disabled {
+  cursor: not-allowed;
+  border-color: var(--dark-100);
+  color: var(--datepicker-disabled-color);
+
+  .icon {
+    background-color: var(--datepicker-disabled-color);
+    opacity: 0.8;
+  }
+}
+
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  font-size: 16px;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-default;
+
+  color: inherit;
+  cursor: inherit;
+
+  &::placeholder {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.icon {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--light-900);
+  opacity: 0.9;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 2v2M17 2v2M3.5 9h17M6 5h12a2.5 2.5 0 0 1 2.5 2.5V19A2.5 2.5 0 0 1 18 21.5H6A2.5 2.5 0 0 1 3.5 19V7.5A2.5 2.5 0 0 1 6 5Z' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 2v2M17 2v2M3.5 9h17M6 5h12a2.5 2.5 0 0 1 2.5 2.5V19A2.5 2.5 0 0 1 18 21.5H6A2.5 2.5 0 0 1 3.5 19V7.5A2.5 2.5 0 0 1 6 5Z' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  z-index: 50;
+
+  width: 336px;
+  padding: 16px;
+
+  border-radius: 2px;
+  border: 1px solid var(--dark-100);
+  background: var(--dark-500);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.calendar {
+  :global(.rdp) {
+    margin: 0;
+    font-size: 14px;
+    color: var(--light-900);
+  }
+
+  :global(.rdp-month) {
+    width: 100%;
+  }
+
+  :global(.rdp-caption) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  :global(.rdp-caption_label) {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  :global(.rdp-nav_button) {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--accent-700);
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  :global(.rdp-head_cell) {
+    font-size: 12px;
+    opacity: 0.6;
+    text-align: center;
+  }
+
+  :global(.rdp-day) {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--light-900);
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  :global(.rdp-day:hover:not(.rdp-day_selected)) {
+    background: var(--dark-300);
+  }
+
+  :global(.rdp-day_selected) {
+    background: var(--accent-700);
+    color: #fff;
+    border-radius: 6px;
+    box-shadow: none;
+  }
+
+  :global(.rdp-day_today) {
+    border: none;
+  }
+
+  :global(.rdp-day:focus),
+  :global(.rdp-day:focus-visible),
+  :global(.rdp-day_selected:focus),
+  :global(.rdp-day_selected:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+
+  :global(.rdp-day_outside) {
+    opacity: 0.3;
+  }
+
+  :global(.rdp-day_range_start),
+  :global(.rdp-day_range_end),
+  :global(.rdp-day_range_middle) {
+    background: transparent;
+  }
+}
