@@ -6,7 +6,7 @@ import { MyPayments } from "@/widgets/settingsTabs/tabs/myPayments/ui/MyPayments
 import * as Tabs from "@radix-ui/react-tabs";
 
 export const SettingsTabs = () => (
-  <Tabs.Root className={s.TabsRoot} defaultValue="tab1" orientation="horizontal">
+  <Tabs.Root className={s.TabsRoot} defaultValue="General" orientation="horizontal">
     <Tabs.List className={s.TabsList} aria-label="tabs">
       <Tabs.Trigger className={s.TabsTrigger} value="General">
         General information
