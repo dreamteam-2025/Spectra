@@ -1,0 +1,55 @@
+.TabsRoot {
+  width: 972px;
+
+  @media (max-width: 1279px) {
+    width: 100%;
+  }
+
+  .TabsList {
+    flex-shrink: 0;
+    display: flex;
+    border-bottom: 3px solid var(--dark-100);
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .TabsTrigger {
+    color: var(--dark-100);
+    padding: 0 20px;
+    height: 35px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    user-select: none;
+
+    &:hover {
+      color: var(--accent-500);
+      background-color: rgb(
+        16,
+        23,
+        34
+      ); // "магический" цвет, потому что нет в палитре нужного и в макете не указан какой...
+      cursor: pointer;
+    }
+
+    &:active {
+      background: rgb(28, 36, 49); // "магический" цвет, потому что нет в палитре нужного и в макете не указан какой...
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent-700);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    &[data-state="active"] {
+      color: var(--accent-500);
+      box-shadow:
+        inset 0 0 0 0 currentColor,
+        0 2px 0 0 currentColor;
+    }
+  }
+}

@@ -1,7 +1,8 @@
-export default function Settings() {
+import { Settings } from "@/(pages)";
+export default function SettingsPage() {
   return (
     <main>
-      <h1>Settings</h1>
+      <Settings />
     </main>
   );
 }
