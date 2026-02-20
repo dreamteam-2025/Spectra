@@ -5,7 +5,6 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 
 import s from "./SelectPhotoStep.module.scss";
-import { Button } from "@/shared";
 
 type Props = {
   onSelected: (files: File[]) => void;
@@ -13,7 +12,7 @@ type Props = {
   currentCount: number;
 };
 
-const MAX_SIZE = 20 * 1024 * 1024;
+const MAX_SIZE = 10 * 1024 * 1024;
 const ALLOWED = new Set(["image/jpeg", "image/png"]);
 
 export function SelectPhotoStep({ onSelected, max, currentCount }: Props) {
@@ -39,9 +38,9 @@ export function SelectPhotoStep({ onSelected, max, currentCount }: Props) {
       return;
     }
 
-    const bad = picked.find((f) => !validate(f));
+    const bad = picked.find(f => !validate(f));
     if (bad) {
-      setError("The photo must be less than 20 Mb and have JPEG or PNG format");
+      setError("The photo must be less than 10 Mb and have JPEG or PNG format");
       e.target.value = "";
       return;
     }

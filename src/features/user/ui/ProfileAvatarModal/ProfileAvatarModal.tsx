@@ -8,7 +8,7 @@ import { SelectPhotoStep } from "@/features/post/ui/CreatePostModal/steps/select
 import s from "./ProfileAvatarModal.module.scss";
 import { useUploadAvatarMutation } from "@/features/user/api/userApi";
 import { useObjectURL } from "@/shared/lib/hooks/useObjectURL";
-import { validateAvatar } from "../../api/model/lib/validateAvatar";
+import { validateAvatar } from "../../model/validateAvatar";
 
 type Props = {
   open: boolean;
