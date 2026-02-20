@@ -1,4 +1,5 @@
 // Реэкспорт содержимого на уровне UI
+import { DatePicker } from "./DatePicker/DatePicket";
 export { ImageSlider } from "./ImageSlider/ImageSlider";
 export { Loader } from "@/shared/ui/Loader/Loader";
 export { LinearProgress } from "./LinearProgress/LinearProgress";
@@ -14,3 +15,4 @@ export { PostCard } from "./PostCard.tsx/PostCard";
 export * from "./RadioGroup/RadioGroup";
 export { Dropdown } from "./Dropdown/Dropdown";
 export type { DropdownItem } from "./Dropdown/Dropdown";
+export { DatePicker } from "./DatePicker/DatePicket";
