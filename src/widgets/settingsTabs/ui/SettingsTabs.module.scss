@@ -27,7 +27,22 @@
 
     &:hover {
       color: var(--accent-500);
+      background-color: rgb(
+        16,
+        23,
+        34
+      ); // "магический" цвет, потому что нет в палитре нужного и в макете не указан какой...
       cursor: pointer;
+    }
+
+    &:active {
+      background: rgb(28, 36, 49); // "магический" цвет, потому что нет в палитре нужного и в макете не указан какой...
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent-700);
+      outline-offset: 2px;
+      border-radius: 2px;
     }
 
     &[data-state="active"] {
