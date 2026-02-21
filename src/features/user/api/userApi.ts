@@ -9,8 +9,8 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: () => [{ type: "User" }],
     }),
-    uploadAvatar: builder.mutation<UploadAvatarResponse, File>({
-      query: file => {
+    uploadAvatar: builder.mutation<UploadAvatarResponse, { file: File; userId: number }>({
+      query: ({ file }) => {
         const formData = new FormData();
         formData.append("file", file);
 
@@ -20,6 +20,7 @@ export const userApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: (_result, _error, { userId }) => [{ type: "UserAvatar", id: userId }],
     }),
   }),
 });

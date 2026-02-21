@@ -2,8 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { Dialog } from "@/shared/ui/Dialog/Dialog";
-import { Button } from "@/shared";
+import { Button, Dialog } from "@/shared";
 import { useMeQuery } from "@/features/auth";
 
 import s from "./CreatePostModal.module.scss";
@@ -46,7 +45,7 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
 
   const hasUnsaved = useMemo(() => images.length > 0, [images.length]);
 
-  // ✅ чтобы внутри removeImage не ловить "устаревшие" значения
+  // чтобы внутри removeImage не ловить "устаревшие" значения
   const imagesLenRef = useRef(0);
   const stepRef = useRef<Step>("select");
   useEffect(() => {
@@ -57,8 +56,8 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
   }, [step]);
 
   const revokeAllUrls = () => {
-    images.forEach((img) => URL.revokeObjectURL(img.originalUrl));
-    croppedList.forEach((c) => {
+    images.forEach(img => URL.revokeObjectURL(img.originalUrl));
+    croppedList.forEach(c => {
       if (c?.previewUrl) URL.revokeObjectURL(c.previewUrl);
     });
   };
@@ -98,12 +97,12 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
   }, [open]);
 
   const addFiles = (files: File[]) => {
-    const safeFiles = files.filter((f) => f instanceof File);
+    const safeFiles = files.filter(f => f instanceof File);
     if (!safeFiles.length) return;
 
-    setImages((prev) => {
+    setImages(prev => {
       const free = MAX_IMAGES - prev.length;
-      const toAdd = safeFiles.slice(0, free).map((file) => ({
+      const toAdd = safeFiles.slice(0, free).map(file => ({
         id: crypto.randomUUID(),
         file,
         originalUrl: URL.createObjectURL(file),
@@ -112,7 +111,7 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
       const next = [...prev, ...toAdd];
 
       // подгоняем croppedList под новую длину
-      setCroppedList((old) => {
+      setCroppedList(old => {
         const copy = [...old];
         while (copy.length < next.length) copy.push(null);
         return copy;
@@ -127,26 +126,26 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
     setStep("cropping");
   };
 
-  // ✅ Удаление фото (не ломая текущую логику)
+  // Удаление фото (не ломая текущую логику)
   const removeImage = (idx: number) => {
     if (imagesLenRef.current <= 0) return;
 
     // 1) удаляем previewUrl (если был) и убираем элемент из croppedList
-    setCroppedList((prev) => {
+    setCroppedList(prev => {
       const toRemove = prev[idx];
       if (toRemove?.previewUrl) URL.revokeObjectURL(toRemove.previewUrl);
       return prev.filter((_, i) => i !== idx);
     });
 
     // 2) удаляем originalUrl и убираем элемент из images
-    setImages((prev) => {
+    setImages(prev => {
       const img = prev[idx];
       if (img?.originalUrl) URL.revokeObjectURL(img.originalUrl);
       return prev.filter((_, i) => i !== idx);
     });
 
     // 3) корректируем activeIndex (по старой длине, но логика корректная)
-    setActiveIndex((prevActive) => {
+    setActiveIndex(prevActive => {
       const nextLen = Math.max(0, imagesLenRef.current - 1);
 
       if (nextLen === 0) return 0;
@@ -172,7 +171,7 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
   };
 
   const onCropped = (payload: CropPayload) => {
-    setCroppedList((prev) => {
+    setCroppedList(prev => {
       const copy = [...prev];
 
       // если раньше был кропнутый previewUrl — освобождаем
@@ -183,7 +182,7 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
       return copy;
     });
 
-    // ✅ Next один раз → сразу на publish
+    // Next один раз → сразу на publish
     setStep("publish");
   };
 
@@ -239,7 +238,7 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
         paddingY={paddingY}
       >
         {step === "select" && (
-          <SelectPhotoStep max={MAX_IMAGES} currentCount={images.length} onSelected={(files) => addFiles(files)} />
+          <SelectPhotoStep max={MAX_IMAGES} currentCount={images.length} onSelected={files => addFiles(files)} />
         )}
 
         {step === "cropping" && images.length > 0 && (
@@ -249,8 +248,8 @@ export function CreatePostModal({ open, onOpenChange }: Props) {
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
             submitRef={cropNextRef}
-            onAddFiles={(files) => addFiles(files)}
-            onRemoveImage={removeImage} // ✅ добавили
+            onAddFiles={files => addFiles(files)}
+            onRemoveImage={removeImage}
             onNext={onCropped}
           />
         )}

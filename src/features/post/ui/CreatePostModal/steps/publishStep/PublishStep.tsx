@@ -31,15 +31,7 @@ type Props = {
 
 const MAX_DESC = 500;
 
-export function PublishStep({
-  images,
-  croppedList,
-  activeIndex,
-  setActiveIndex,
-  submitRef,
-  onPublished,
-  user,
-}: Props) {
+export function PublishStep({ images, croppedList, activeIndex, setActiveIndex, submitRef, onPublished, user }: Props) {
   const [uploadImages, { isLoading: uploading }] = useUploadPostImagesMutation();
   const [createPost, { isLoading: creating }] = useCreatePostMutation();
 
@@ -104,7 +96,7 @@ export function PublishStep({
 
       await createPost({
         description: finalDescription,
-        childrenMetadata: uploadRes.images.map((img) => ({
+        childrenMetadata: uploadRes.images.map(img => ({
           uploadId: img.uploadId,
         })),
       }).unwrap();
@@ -146,12 +138,7 @@ export function PublishStep({
                   >
                     ‹
                   </button>
-                  <button
-                    type="button"
-                    className={clsx(s.navBtn, s.rightBtn)}
-                    onClick={goNext}
-                    aria-label="Next slide"
-                  >
+                  <button type="button" className={clsx(s.navBtn, s.rightBtn)} onClick={goNext} aria-label="Next slide">
                     ›
                   </button>
 
@@ -195,9 +182,7 @@ export function PublishStep({
           <div className={s.counter}>{counter}</div>
         </div>
 
-        {error === "No images to publish." && (
-          <div className={s.hintError}>No images to publish.</div>
-        )}
+        {error === "No images to publish." && <div className={s.hintError}>No images to publish.</div>}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Dialog, Button } from "@/shared/ui";
-import { useDeletePost } from "./../../api/deletePost/useDeletePost";
+import { useDeletePost } from "../../model/hooks/useDeletePost";
 import s from "./DeletePost.module.scss";
 import { useEffect } from "react";
 

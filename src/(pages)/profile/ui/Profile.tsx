@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/shared";
-import { ProfileAvatarModal } from "../../../features/user/ui/ProfileAvatarModal/ProfileAvatarModal";
+import { ProfileAvatarModal } from "@/features";
 import { MyPostList } from "@/widgets/post/myPostList/ui/MyPostList";
 
 export const Profile = () => {
