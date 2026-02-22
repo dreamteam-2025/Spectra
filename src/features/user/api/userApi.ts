@@ -1,4 +1,5 @@
 import { baseApi } from "@/shared/api/baseApi";
+import { ProfileResponse, UploadAvatarResponse } from "./userApi.types";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -9,6 +10,15 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: () => [{ type: "User" }],
     }),
+
+    getProfile: builder.query<ProfileResponse, void>({
+      query: () => ({
+        url: "users/profile",
+        method: "GET",
+      }),
+      providesTags: () => [{ type: "User" }],
+    }),
+
     uploadAvatar: builder.mutation<UploadAvatarResponse, File>({
       query: file => {
         const formData = new FormData();
@@ -24,4 +34,4 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetPublicUsersCountQuery, useUploadAvatarMutation } = userApi;
+export const { useGetPublicUsersCountQuery, useUploadAvatarMutation, useGetProfileQuery } = userApi;
