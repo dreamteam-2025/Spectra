@@ -23,10 +23,12 @@ import type {
   DeletePostArgs,
   Post,
 } from "./postApi.types";
+import { TagDescription } from "@reduxjs/toolkit/query";
+import { TagTypes } from "@/shared/api/tags";
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    //Delete post
+    // Delete post
     deletePost: build.mutation<void, DeletePostArgs>({
       query: ({ postId }) => ({
         method: "DELETE",
@@ -45,9 +47,8 @@ export const postApi = baseApi.injectEndpoints({
 
         return {
           method: "POST",
-          url: "posts/image", // важно: без /api/v1 если baseUrl уже /api/v1
+          url: "posts/image",
           body: formData,
-          // Content-Type НЕ ставим, браузер сам проставит boundary
         };
       },
       transformResponse: (response: unknown) => uploadPostImagesResponseSchema.parse(response),
@@ -68,7 +69,7 @@ export const postApi = baseApi.injectEndpoints({
       invalidatesTags: ["PostsList"],
     }),
 
-    // Get posts
+    // Get posts (infinite scroll)
     getPostsInfinite: build.infiniteQuery<GetPostsResponse, GetPostsArgs, number>({
       infiniteQueryOptions: {
         initialPageParam: 0,
@@ -93,8 +94,9 @@ export const postApi = baseApi.injectEndpoints({
       providesTags: ["PostsList"],
     }),
 
+    // Get exact count of posts (default count of posts = 4)
     getPosts: build.query<Post[], { pageSize?: number }>({
-      query: ({ pageSize = 6 }) => ({
+      query: ({ pageSize = 4 }) => ({
         method: "GET",
         url: "posts/all/0",
         params: {
@@ -103,7 +105,16 @@ export const postApi = baseApi.injectEndpoints({
         },
       }),
       transformResponse: (response: { items: Post[] }) => response.items,
-      providesTags: ["PostsList"],
+      providesTags: (result, _error): TagDescription<TagTypes>[] => {
+        const tags: TagDescription<TagTypes>[] = ["PostsList"];
+        if (result) {
+          const uniqueOwnerIds = [...new Set(result.map(post => post.ownerId))];
+          uniqueOwnerIds.forEach(ownerId => {
+            tags.push({ type: "UserAvatar", id: ownerId });
+          });
+        }
+        return tags;
+      },
     }),
 
     // Get my posts
@@ -126,7 +137,10 @@ export const postApi = baseApi.injectEndpoints({
         },
       }),
 
-      providesTags: ["PostsList"],
+      providesTags: (_result, _error, { userId }): TagDescription<TagTypes>[] => [
+        "PostsList",
+        { type: "UserAvatar", id: userId },
+      ],
     }),
 
     // Get post by id
@@ -137,7 +151,13 @@ export const postApi = baseApi.injectEndpoints({
       }),
       keepUnusedDataFor: 10,
       transformResponse: (response: unknown) => getPostByIdResponseSchema.parse(response),
-      providesTags: (_result, _error, { postId }) => [{ type: "SinglePost", id: postId }],
+      providesTags: (result, _error, { postId }): TagDescription<TagTypes>[] => {
+        const tags: TagDescription<TagTypes>[] = [{ type: "SinglePost", id: postId }];
+        if (result?.ownerId) {
+          tags.push({ type: "UserAvatar", id: result.ownerId });
+        }
+        return tags;
+      },
     }),
 
     // Update post
@@ -176,7 +196,21 @@ export const postApi = baseApi.injectEndpoints({
       }),
       keepUnusedDataFor: 10,
       transformResponse: (response: unknown) => getPostCommentsResponseSchema.parse(response),
-      providesTags: (_result, _error, { postId }) => [{ type: "Comments", id: postId }],
+      providesTags: (result, _error, { postId }): TagDescription<TagTypes>[] => {
+        const tags: TagDescription<TagTypes>[] = [{ type: "Comments", id: postId }];
+
+        // если есть результат и он содержит массив items
+        if (result?.items) {
+          // cобираем id авторов комментариев
+          const uniqueAuthorIds = [...new Set(result.items.map(comment => comment.from?.id).filter(Boolean))];
+          // добавляем тег "UserAvatar" для каждого автора
+          uniqueAuthorIds.forEach(authorId => {
+            tags.push({ type: "UserAvatar", id: authorId });
+          });
+        }
+
+        return tags;
+      },
     }),
   }),
 });

@@ -1,5 +1,7 @@
 import { baseApi } from "@/shared/api/baseApi";
 import { ProfileResponse, UploadAvatarResponse } from "./userApi.types";
+import { TagDescription } from "@reduxjs/toolkit/query";
+import { TagTypes } from "@/shared/api/tags";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -16,11 +18,18 @@ export const userApi = baseApi.injectEndpoints({
         url: "users/profile",
         method: "GET",
       }),
-      providesTags: () => [{ type: "User" }],
+      providesTags: (result): TagDescription<TagTypes>[] => {
+        const tags: TagDescription<TagTypes>[] = ["User"];
+        if (result?.id) {
+          tags.push({ type: "UserAvatar", id: result.id });
+          tags.push({ type: "User", id: result.id });
+        }
+        return tags;
+      },
     }),
 
-    uploadAvatar: builder.mutation<UploadAvatarResponse, File>({
-      query: file => {
+    uploadAvatar: builder.mutation<UploadAvatarResponse, { file: File; userId: number }>({
+      query: ({ file }) => {
         const formData = new FormData();
         formData.append("file", file);
 
@@ -30,6 +39,7 @@ export const userApi = baseApi.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: (_result, _error, { userId }) => [{ type: "UserAvatar", id: userId }],
     }),
   }),
 });

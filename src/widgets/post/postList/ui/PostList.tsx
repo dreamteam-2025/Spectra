@@ -6,7 +6,7 @@ import { PostCard } from "@/shared";
 import s from "./PostList.module.scss";
 import { useGetPostsQuery } from "@/features/post/api/postApi";
 import { Loader } from "@/shared/ui/Loader/Loader";
-import { ViewPostModal } from "@/features/post/ui/ViewPostModal/ViewPostModal";
+import { ViewPostModal } from "@/features/post/ui/viewPostModal/ViewPostModal";
 
 type Props = { className?: string };
 
