@@ -5,9 +5,6 @@
 }
 
 .content {
-  --dialog-pad-x: 24px;
-  --dialog-pad-y: 24px;
-
   position: fixed;
   top: 50%;
   left: 50%;
@@ -29,11 +26,11 @@
 
 /* горизонтальные паддинги одинаковые */
 .header,
-.headerSlot,
 .description,
 .children {
-  padding-left: var(--dialog-pad-x);
-  padding-right: var(--dialog-pad-x);
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
 }
 
 .header {
@@ -41,8 +38,7 @@
   align-items: center;
   justify-content: space-between;
 
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 12px 24px;
   flex: 0 0 auto;
 }
 
@@ -70,8 +66,8 @@
   height: 1px;
   background: var(--dark-100);
 
-  margin-left: calc(var(--dialog-pad-x) * -1);
-  margin-right: calc(var(--dialog-pad-x) * -1);
+  margin-left: calc(var(--dialog-pad-x, 24px) * -1);
+  margin-right: calc(var(--dialog-pad-x, 24px) * -1);
 
   flex: 0 0 auto;
 }
@@ -80,8 +76,10 @@
   font-size: 14px;
   line-height: 1.5;
   color: #d1d1d1;
-  padding-top: 16px;
   flex: 0 0 auto;
+  padding-top: 16px;
+  padding-left: var(--dialog-pad-x, 0px);
+  padding-right: var(--dialog-pad-x, 0px);
 }
 
 .children {
@@ -90,5 +88,5 @@
   overflow: hidden;
 
   padding-top: 0;
-  padding-bottom: var(--dialog-pad-y);
+  padding-right: var(--dialog-pad-x, 0px);
 }

@@ -1,0 +1,47 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .textareaWrapper {
+    position: relative;
+  }
+
+  .textarea {
+    width: 100%;
+    min-height: 120px;
+    resize: none;
+    padding: 2px 10px 2px 10px;
+    margin-bottom: 30px;
+    background: var(--dark-500);
+    border: 1px solid var(--dark-100);
+    border-radius: 4px;
+
+    color: white;
+    font-size: 14px;
+    line-height: 1.4;
+
+    outline: none;
+  }
+
+  .counter {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 11px;
+    color: var(--dark-100);
+  }
+
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 200px;
+  }
+}
