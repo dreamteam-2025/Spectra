@@ -11,6 +11,8 @@ import { TextArea } from "@/shared/ui/TextArea/TextArea";
 import { useCreatePostMutation, useUploadPostImagesMutation } from "@/features/post/api/postApi";
 import type { CropPayload } from "../croppingStep/CroppingStep";
 import type { MeResponse } from "@/features/auth/api/authApi.types";
+import { useGetProfileQuery } from "@/features/user/api/userApi";
+import Image from "next/image";
 
 type CreateImage = {
   id: string;
@@ -31,17 +33,13 @@ type Props = {
 
 const MAX_DESC = 500;
 
-export function PublishStep({
-  images,
-  croppedList,
-  activeIndex,
-  setActiveIndex,
-  submitRef,
-  onPublished,
-  user,
-}: Props) {
+export function PublishStep({ images, croppedList, activeIndex, setActiveIndex, submitRef, onPublished, user }: Props) {
   const [uploadImages, { isLoading: uploading }] = useUploadPostImagesMutation();
   const [createPost, { isLoading: creating }] = useCreatePostMutation();
+
+  const { data: profile } = useGetProfileQuery();
+  const avatarPlaceholder = "/images/post-image-mock.png";
+  const avatarSrc = profile?.avatars?.[0]?.url ?? avatarPlaceholder;
 
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -99,12 +97,12 @@ export function PublishStep({
       const uploadRes = await uploadImages(files).unwrap();
       if (!uploadRes.images?.length) throw new Error("Upload failed");
 
-      // ✅ ЕСЛИ ПУСТО → ОТПРАВЛЯЕМ ПРОБЕЛ
+      //ЕСЛИ ПУСТО → ОТПРАВЛЯЕМ ПРОБЕЛ
       const finalDescription = description.trim() === "" ? " " : description.trim();
 
       await createPost({
         description: finalDescription,
-        childrenMetadata: uploadRes.images.map((img) => ({
+        childrenMetadata: uploadRes.images.map(img => ({
           uploadId: img.uploadId,
         })),
       }).unwrap();
@@ -121,7 +119,6 @@ export function PublishStep({
     return () => {
       submitRef.current = null;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images, croppedList, description]);
 
   const hasMultiple = slides.length > 1;
@@ -133,7 +130,6 @@ export function PublishStep({
         <div className={s.imageWrap}>
           {currentUrl ? (
             <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className={s.image} src={currentUrl} alt="Publication preview" />
 
               {hasMultiple && (
@@ -146,12 +142,7 @@ export function PublishStep({
                   >
                     ‹
                   </button>
-                  <button
-                    type="button"
-                    className={clsx(s.navBtn, s.rightBtn)}
-                    onClick={goNext}
-                    aria-label="Next slide"
-                  >
+                  <button type="button" className={clsx(s.navBtn, s.rightBtn)} onClick={goNext} aria-label="Next slide">
                     ›
                   </button>
 
@@ -177,7 +168,10 @@ export function PublishStep({
 
       <div className={s.right}>
         <div className={s.profileRow}>
-          <div className={s.avatar} aria-hidden />
+          <div className={s.avatar}>
+            <Image src={avatarSrc} alt="User avatar" fill sizes="36px" style={{ objectFit: "cover" }} priority />
+          </div>
+
           <div className={s.userName}>{user.userName}</div>
         </div>
 
@@ -195,9 +189,7 @@ export function PublishStep({
           <div className={s.counter}>{counter}</div>
         </div>
 
-        {error === "No images to publish." && (
-          <div className={s.hintError}>No images to publish.</div>
-        )}
+        {error === "No images to publish." && <div className={s.hintError}>No images to publish.</div>}
       </div>
     </div>
   );

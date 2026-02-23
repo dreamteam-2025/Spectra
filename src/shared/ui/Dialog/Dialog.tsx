@@ -31,7 +31,6 @@ type DialogProps = {
   size?: DialogSize;
   width?: number | string;
 
-  /** ✅ NEW: padding по осям */
   paddingX?: number; // default 24
   paddingY?: number; // default 24
 
