@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 100px;
+
+  .indicator {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    span {
+      font-weight: 700;
+    }
+  }
+}

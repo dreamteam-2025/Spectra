@@ -29,3 +29,11 @@ export type ProfileResponse = {
   }>;
   createdAt?: string;
 };
+
+export type UserInfoResponse = {
+  isFollowing: boolean;
+  isFollowedBy: boolean;
+  followingCount: number;
+  followersCount: number;
+  publicationsCount: number;
+} & Omit<ProfileResponse, "createdAt">;
