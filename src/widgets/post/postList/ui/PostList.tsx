@@ -41,6 +41,7 @@ export const PostList = ({ className }: Props) => {
           userName={post.userName}
           createdAt={post.createdAt}
           text={post.description}
+          variant="full"
         />
       ))}
       {selectedPostId && (

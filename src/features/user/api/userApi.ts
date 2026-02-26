@@ -1,5 +1,5 @@
 import { baseApi } from "@/shared/api/baseApi";
-import { ProfileResponse, UploadAvatarResponse, UserInfoResponse } from "./userApi.types";
+import { ProfileResponse, UploadAvatarResponse, UserInfoByIdResponse, UserInfoResponse } from "./userApi.types";
 import { TagDescription } from "@reduxjs/toolkit/query";
 import { TagTypes } from "@/shared/api/tags";
 
@@ -46,6 +46,22 @@ export const userApi = baseApi.injectEndpoints({
       },
     }),
 
+    // get user info by userId
+    getUserInfoById: builder.query<UserInfoByIdResponse, { userId: number }>({
+      query: ({ userId }) => ({
+        url: `public-user/profile/${userId}`,
+        method: "GET",
+      }),
+      providesTags: (result): TagDescription<TagTypes>[] => {
+        const tags: TagDescription<TagTypes>[] = ["User"];
+        if (result?.id) {
+          tags.push({ type: "UserAvatar", id: result.id });
+          tags.push({ type: "User", id: result.id });
+        }
+        return tags;
+      },
+    }),
+
     // upload a new user's avatar
     uploadAvatar: builder.mutation<UploadAvatarResponse, { file: File; userId: number }>({
       query: ({ file }) => {
@@ -63,4 +79,10 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetPublicUsersCountQuery, useUploadAvatarMutation, useGetProfileQuery } = userApi;
+export const {
+  useGetPublicUsersCountQuery,
+  useUploadAvatarMutation,
+  useGetProfileQuery,
+  useGetUserInfoByIdQuery,
+  useGetUserInfoByNameQuery,
+} = userApi;

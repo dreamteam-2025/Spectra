@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
-import { MyPostList } from "./MyPostList";
+import { MyPostList } from "./UserPostList";
 
 const meta = {
   title: "Widgets/Posts/PostList",

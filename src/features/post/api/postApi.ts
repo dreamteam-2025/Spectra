@@ -117,8 +117,8 @@ export const postApi = baseApi.injectEndpoints({
       },
     }),
 
-    // Get my posts
-    getMyPosts: build.infiniteQuery<GetPostsResponse, GetPostsArgs & { userId: number }, number>({
+    // Get users' posts
+    getUserPosts: build.infiniteQuery<GetPostsResponse, GetPostsArgs & { userId: number }, number>({
       infiniteQueryOptions: {
         initialPageParam: 0,
         getNextPageParam: lastPage => {
@@ -219,7 +219,7 @@ export const {
   useUploadPostImagesMutation,
   useCreatePostMutation,
   useGetPostsQuery,
-  useGetMyPostsInfiniteQuery,
+  useGetUserPostsInfiniteQuery,
   useGetPostByIdQuery,
   useUpdatePostMutation,
   useGetPostCommentsQuery,

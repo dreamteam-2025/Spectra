@@ -85,3 +85,11 @@ $color: var(--light-100);
     white-space: nowrap;
   }
 }
+
+.thumb {
+  padding: 0;
+
+  .media {
+    margin: 0;
+  }
+}

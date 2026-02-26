@@ -62,8 +62,15 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
   // Если больше 1 фото
   const hasMultipleImages = validSlides.length > 1;
 
-  const goToPreviousHandler = () => setCurrentIndex(prev => (prev === 0 ? validSlides.length - 1 : prev - 1));
-  const goToNextHandler = () => setCurrentIndex(prev => (prev === validSlides.length - 1 ? 0 : prev + 1));
+  const goToPreviousHandler = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex(prev => (prev === 0 ? validSlides.length - 1 : prev - 1));
+  };
+
+  const goToNextHandler = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex(prev => (prev === validSlides.length - 1 ? 0 : prev + 1));
+  };
 
   const goToSlideHandler = (slideIndex: number) => setCurrentIndex(slideIndex);
 
@@ -98,7 +105,10 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
                 <button
                   key={slide.id}
                   className={clsx(s.dot, slideIndex === currentIndex && s.active)}
-                  onClick={() => goToSlideHandler(slideIndex)}
+                  onClick={(e: React.MouseEvent) => {
+                    e.stopPropagation();
+                    goToSlideHandler(slideIndex);
+                  }}
                   aria-label={`Go to slide ${slideIndex + 1}`}
                   aria-current={slideIndex === currentIndex}
                 />

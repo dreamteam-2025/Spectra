@@ -30,6 +30,12 @@ export type ProfileResponse = {
   createdAt?: string;
 };
 
+export type UserMetadata = {
+  following: number;
+  followers: number;
+  publications: number;
+};
+
 export type UserInfoResponse = {
   isFollowing: boolean;
   isFollowedBy: boolean;
@@ -37,3 +43,10 @@ export type UserInfoResponse = {
   followersCount: number;
   publicationsCount: number;
 } & Omit<ProfileResponse, "createdAt">;
+
+export type UserInfoByIdResponse = Pick<ProfileResponse, "id" | "userName" | "aboutMe" | "avatars"> & {
+  userMetadata: UserMetadata;
+  hasPaymentSubscription: boolean;
+  isFollowing: boolean;
+  isFollowedBy: boolean;
+};

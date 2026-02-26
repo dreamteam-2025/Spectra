@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 38px;
+
+  .infoContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+
+    min-width: 0;
+
+    .infoHeading {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .aboutMe {
+      text-align: left;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
+    }
+  }
+}
