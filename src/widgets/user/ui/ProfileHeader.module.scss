@@ -19,6 +19,13 @@
       flex-direction: row;
       justify-content: space-between;
       width: 100%;
+
+      .buttonContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 12px;
+      }
     }
 
     .aboutMe {

@@ -5,7 +5,8 @@ import { UserPostList } from "@/widgets/post/myPostList/ui/UserPostList";
 import { ProfileHeader } from "@/widgets/user/ui/ProfileHeader";
 import { useParams } from "next/navigation";
 import { useGetUserInfoByIdQuery } from "@/features/user/api/userApi";
-import { Loader } from "@/shared";
+import { Button, Loader } from "@/shared";
+import { useMeQuery } from "@/features";
 
 export const Profile = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -16,11 +17,13 @@ export const Profile = () => {
   const {
     data: userInfo,
     error,
-    isLoading,
+    isLoading: userLoading,
   } = useGetUserInfoByIdQuery({ userId: userIdNumber! }, { skip: !userIdNumber });
 
+  const { data: me, isLoading: meLoading } = useMeQuery();
+
   // обработка состояний (ранние прерывания)
-  if (isLoading) return <Loader />;
+  if (userLoading || meLoading) return <Loader />;
   if (error) return <>Failed to load user data</>;
   if (!userInfo) return <div>User not found</div>;
 
@@ -33,6 +36,18 @@ export const Profile = () => {
 
   const avatarUrl = avatars[0]?.url;
 
+  const isOwnProfile = me?.userId === userInfo?.id;
+
+  // Формируем actions в зависимости от владельца профиля
+  const actions = isOwnProfile ? (
+    <Button children={"Profile Settings"} variant={"secondary"} />
+  ) : (
+    <>
+      <Button children={"Follow"} variant={"primary"} />
+      <Button children={"Send Message"} variant={"secondary"} />
+    </>
+  );
+
   return (
     <main className={s.contentWrapper}>
       <ProfileHeader
@@ -42,6 +57,7 @@ export const Profile = () => {
         following={following}
         publications={publications}
         aboutMe={aboutMe ?? ""}
+        actions={actions}
       />
       <UserPostList userId={userIdNumber!} />
     </main>

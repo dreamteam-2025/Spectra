@@ -23,7 +23,7 @@ export const ProfileHeader = ({ src, userName, followers, following, publication
         <div className={s.infoHeading}>
           <h1>{userName}</h1>
           {/* Здесь отображены кнопки действий в зависимости от профиля (свой/друг/чужой) */}
-          {actions}
+          <div className={s.buttonContainer}>{actions}</div>
         </div>
         {/* Секция статистики и описания профиля */}
         <UserStats followers={followers} following={following} publications={publications} />
