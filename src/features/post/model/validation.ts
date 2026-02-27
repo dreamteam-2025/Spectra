@@ -123,10 +123,6 @@ export const updatePostRequestSchema = z.object({
   description: z.string().max(500),
 });
 
-export const updatePostResponseSchema = z.object({
-  description: z.string(),
-});
-
 /** ---------- Comment author ---------- */
 export const commentAuthorSchema = z.object({
   id: z.number(),
