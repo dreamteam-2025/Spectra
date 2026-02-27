@@ -9,7 +9,7 @@ import { useObjectURL } from "@/shared/lib/hooks/useObjectURL";
 import { validateAvatar } from "../../model/validateAvatar";
 import { useMeQuery } from "@/features/auth";
 import { AvatarCroppingStep } from "../steps/AvatarCroppingStep";
-import { SelectPhotoStep } from "@/features/post/ui/createPostModal/steps/selectPhotoStep/SelectPhotoStep";
+import { SelectPhotoStep } from "@/features/post/ui/CreatePostModal/steps/selectPhotoStep/SelectPhotoStep";
 
 type Props = {
   open: boolean;

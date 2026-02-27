@@ -1,3 +1,5 @@
+"use client";
+
 import { skipToken } from "@reduxjs/toolkit/query";
 import s from "./ViewPostModal.module.scss";
 import { useGetPostByIdQuery, useGetPostCommentsQuery, useUpdatePostMutation } from "@/features/post/api/postApi";
@@ -6,8 +8,8 @@ import { formatPostDate } from "@/shared/lib";
 import { ImageSlider } from "@/shared/ui";
 import { useMeQuery } from "@/features/auth";
 import { DeletePost } from "../deletePost/DeletePost";
-import { CloseEditConfirmDialog } from "../closeEditConfirmDialog/CloseEditConfirmDialog";
-import { EditPostForm } from "../editPostForm/EditPostForm";
+import { CloseEditConfirmDialog } from "../CloseEditConfirmDialog/CloseEditConfirmDialog";
+import { EditPostForm } from "../EditPostForm/EditPostForm";
 import { useState } from "react";
 
 type Props = {

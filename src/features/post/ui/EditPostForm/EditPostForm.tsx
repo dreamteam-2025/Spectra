@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, FormEvent } from "react";
 import s from "./EditPostFrom.module.scss";
 import { Button } from "@/shared/ui";
