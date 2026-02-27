@@ -6,8 +6,8 @@ import { formatPostDate } from "@/shared/lib";
 import { ImageSlider } from "@/shared/ui";
 import { useMeQuery } from "@/features/auth";
 import { DeletePost } from "../deletePost/DeletePost";
-import { CloseEditConfirmDialog } from "../CloseEditConfirmDialog/CloseEditConfirmDialog";
-import { EditPostForm } from "../EditPostForm/EditPostForm";
+import { CloseEditConfirmDialog } from "../closeEditConfirmDialog/CloseEditConfirmDialog";
+import { EditPostForm } from "../editPostForm/EditPostForm";
 import { useState } from "react";
 
 type Props = {

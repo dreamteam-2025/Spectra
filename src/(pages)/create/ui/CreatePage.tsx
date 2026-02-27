@@ -1,6 +1,6 @@
 "use client";
 
-import { CreatePostModal } from "@/features/post/ui/CreatePostModal/CreatePostModal";
+import { CreatePostModal } from "@/features/post";
 import { useEffect, useState } from "react";
 
 export function CreatePostPage() {
