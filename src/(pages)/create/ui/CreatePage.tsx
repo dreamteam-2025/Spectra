@@ -2,6 +2,10 @@
 
 import { CreatePostModal } from "@/features/post/ui/CreatePostModal/CreatePostModal";
 import { useEffect, useState } from "react";
+<<<<<<< I1-105
+=======
+import { CreatePostModal } from "@/features/post/ui/CreatePostModal/CreatePostModal";
+>>>>>>> dev
 
 export function CreatePostPage() {
   const [open, setOpen] = useState(false);
