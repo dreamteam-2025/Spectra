@@ -1,7 +1,7 @@
 "use client";
 
+import { CreatePostModal } from "@/features/post/ui/CreatePostModal/CreatePostModal";
 import { useEffect, useState } from "react";
-import { CreatePostModal } from "@/features/post/ui/createPostModal/CreatePostModal";
 
 export function CreatePostPage() {
   const [open, setOpen] = useState(false);
