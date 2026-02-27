@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Dialog } from "@/shared/ui/Dialog/Dialog";
 import { Button } from "@/shared";
-import { SelectPhotoStep } from "@/features/post/ui/createPostModal/steps/selectPhotoStep/SelectPhotoStep";
+import { SelectPhotoStep } from "@/features/post/ui/CreatePostModal/steps/selectPhotoStep/SelectPhotoStep";
 import s from "./ProfileAvatarModal.module.scss";
 import { useUploadAvatarMutation } from "@/features/user/api/userApi";
 import { useObjectURL } from "@/shared/lib/hooks/useObjectURL";
