@@ -9,7 +9,7 @@ import { useInfiniteScroll } from "@/widgets/post/postList/model/hooks/useInfini
 import { Loader } from "@/shared/ui/Loader/Loader";
 import { useMeQuery } from "@/features";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { ViewPostModal } from "@/features/post/ui/viewPostModal/ViewPostModal";
+import { ViewPostModal } from "@/features/post/ui/ViewPostModal/ViewPostModal";
 
 interface Props {
   className?: string;
