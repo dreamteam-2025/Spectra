@@ -1,1 +1,1 @@
-export { ProfileAvatarModal } from "./ui/profileAvatarModal/ProfileAvatarModal";
+export { ProfileAvatarModal } from "./ui/ProfileAvatarModal/ProfileAvatarModal";
