@@ -58,8 +58,8 @@ export const PostCard = ({
   };
 
   return (
-    <article className={clsx(s.card, variant === "thumb" && s.thumb, className)} onClick={onClick} {...props}>
-      <div className={s.media}>
+    <article className={clsx(s.card, variant === "thumb" && s.thumb, className)} {...props}>
+      <div className={s.media} onClick={onClick}>
         <ImageSlider slides={slides} />
       </div>
 
@@ -67,9 +67,7 @@ export const PostCard = ({
         <>
           {(avatarImage || userName) && (
             <div className={s.content}>
-              {avatarImage && (
-                <UserAvatar src={avatarImage} alt={userName} width={36} height={36} className={s.avatar} />
-              )}
+              <UserAvatar src={avatarImage} alt={userName} width={36} height={36} className={s.avatar} />
               {userName && <h3 className={s.userName}>{userName}</h3>}
             </div>
           )}

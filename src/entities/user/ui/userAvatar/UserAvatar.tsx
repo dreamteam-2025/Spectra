@@ -40,6 +40,7 @@ export const UserAvatar = ({
 
   return (
     <Image
+      sizes={"(max-width: 768px) 100vw, 1440px"}
       width={width}
       height={height}
       alt={alt}

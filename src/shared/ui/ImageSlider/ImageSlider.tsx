@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import s from "./ImageSlider.module.scss";
 import clsx from "clsx";
 import Image, { StaticImageData } from "next/image";
@@ -80,12 +80,13 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
         {/* Непосредственно изображение */}
         <Image
           fill
-          sizes={variant === "big" ? "490px" : "240px"}
+          sizes={"(max-width: 768px) 100vw, 1440px"}
           className={s.slide}
           src={validSlides[currentIndex].postImage}
           alt={`Slide ${currentIndex + 1}`}
           aria-label={`Slide ${currentIndex + 1} of ${validSlides.length}`}
           priority={currentIndex === 0}
+          objectFit="cover"
           //onError={() => setHasError(true)}
         />
 
