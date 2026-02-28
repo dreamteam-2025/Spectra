@@ -7,7 +7,7 @@ import s from "./UserPostList.module.scss";
 import { useGetUserPostsInfiniteQuery } from "@/features/post/api/postApi";
 import { useInfiniteScroll } from "@/widgets/post/postList/model/hooks/useInfinityScroll";
 import { Loader } from "@/shared/ui/Loader/Loader";
-import { ViewPostModal } from "@/features/post/ui/viewPostModal/ViewPostModal";
+import { ViewPostModal } from "@/features";
 
 interface Props {
   className?: string;

@@ -6,7 +6,6 @@ import {
   getPostsResponseSchema,
   getPostByIdResponseSchema,
   updatePostRequestSchema,
-  updatePostResponseSchema,
   getPostCommentsResponseSchema,
 } from "../model/validation";
 
@@ -45,7 +44,6 @@ export type CreatePostArgs = z.infer<typeof createPostRequestSchema>;
 export type CreatePostResponse = z.infer<typeof createPostResponseSchema>;
 export type GetPostsResponse = z.infer<typeof getPostsResponseSchema>;
 export type GetPostByIdResponse = z.infer<typeof getPostByIdResponseSchema>;
-export type UpdatePostResponse = z.infer<typeof updatePostResponseSchema>;
 export type GetPostCommentsResponse = z.infer<typeof getPostCommentsResponseSchema>;
 export type Post = GetPostsResponse["items"][number];
 export type PostsList = Post[];

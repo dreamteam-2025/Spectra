@@ -1,12 +1,16 @@
+"use client";
+
 import { skipToken } from "@reduxjs/toolkit/query";
 import s from "./ViewPostModal.module.scss";
-import { useGetPostByIdQuery, useGetPostCommentsQuery } from "@/features/post/api/postApi";
+import { useGetPostByIdQuery, useGetPostCommentsQuery, useUpdatePostMutation } from "@/features/post/api/postApi";
 import { Dialog, Dropdown, Loader } from "@/shared/ui";
 import { formatPostDate } from "@/shared/lib";
-import { useState } from "react";
 import { ImageSlider } from "@/shared/ui";
 import { useMeQuery } from "@/features/auth";
 import { DeletePost } from "../deletePost/DeletePost";
+import { CloseEditConfirmDialog } from "../CloseEditConfirmDialog/CloseEditConfirmDialog";
+import { EditPostForm } from "../EditPostForm/EditPostForm";
+import { useState } from "react";
 
 type Props = {
   open: boolean;
@@ -21,12 +25,19 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
     postId && open ? { postId, pageSize: 10 } : skipToken
   );
 
+  const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
+
   const { data: me } = useMeQuery();
 
   const [openMenu, setOpenMenu] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [mode, setMode] = useState<"view" | "edit">("view");
 
-  const isLoading = isPostLoading || isCommentsLoading;
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isEditClosed, setIsEditClosed] = useState(false);
+
+  const [isDirty, setIsDirty] = useState(false);
+
+  const isLoading = isPostLoading || isCommentsLoading || isUpdating;
   const isOwner = me?.userId === post?.ownerId;
 
   const menuItems = isOwner
@@ -35,7 +46,7 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
           id: "edit",
           label: "Edit Post",
           icon: "/icons/edit-icon.svg",
-          onSelect: () => console.log("edit"),
+          onSelect: () => setMode("edit"),
         },
         {
           id: "delete",
@@ -61,9 +72,39 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
 
   if (!post && !isLoading) return null;
 
+  function handleParentCloseAttempt(nextOpen: boolean) {
+    if (!nextOpen) {
+      // если редактируем и есть изменения — показываем confirm
+      if (mode === "edit" && isDirty) {
+        setIsEditClosed(true);
+        return;
+      }
+
+      // если редактируем без изменений — просто выйти вo view
+      if (mode === "edit") {
+        setMode("view");
+        return;
+      }
+
+      onOpenChange(nextOpen);
+    }
+  }
+
+  function handleEditClosing() {
+    setIsEditClosed(false);
+    setMode("view");
+  }
+
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange} size="xl" paddingX={0} paddingY={0} showDivider={false} showClose>
+      <Dialog
+        open={open}
+        title={mode === "edit" ? "Edit Post" : ""}
+        onOpenChange={handleParentCloseAttempt}
+        size="xl"
+        showDivider={false}
+        showClose
+      >
         {isLoading && (
           <div className={s.loader}>
             <Loader />
@@ -92,52 +133,66 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
                   <span className={s.username}>{post.userName}</span>
                 </div>
 
-                <Dropdown
-                  open={openMenu}
-                  onOpenChange={setOpenMenu}
-                  trigger={
-                    <button className={s.iconBtn} type="button">
-                      ...
-                    </button>
-                  }
-                  items={menuItems}
-                />
+                {mode === "view" && post && (
+                  <Dropdown
+                    open={openMenu}
+                    onOpenChange={setOpenMenu}
+                    trigger={
+                      <button className={s.iconBtn} type="button">
+                        ...
+                      </button>
+                    }
+                    items={menuItems}
+                  />
+                )}
               </div>
 
-              {/* Description */}
-              {post.description && (
-                <div className={s.description}>
-                  {post.avatarOwner && <img src={post.avatarOwner} alt="avatar" className={s.avatar} />}
-                  <div>
-                    <span className={s.username}>{post.userName}</span>
-                    <p>{post.description}</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Comments */}
-              <div className={s.comments}>
-                {comments?.items?.map(c => {
-                  const avatar = (c.from.avatars?.[0] as any)?.url;
-
-                  return (
-                    <div key={c.id} className={s.comment}>
-                      {avatar && <img src={avatar} alt="avatar" className={s.avatar} />}
+              {mode === "view" && (
+                <>
+                  {/* Description */}
+                  {post.description && (
+                    <div className={s.description}>
+                      {post.avatarOwner && <img src={post.avatarOwner} alt="avatar" className={s.avatar} />}
                       <div>
-                        <span className={s.username}>{c.from.username}</span>
-                        <p>{c.content}</p>
-                        <span className={s.time}>{c.createdAt}</span>
+                        <span className={s.username}>{post.userName}</span>
+                        <p>{post.description}</p>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  )}
 
-              {/* Footer */}
-              <div className={s.footer}>
-                <div className={s.likes}>{post.likesCount} likes</div>
-                <div className={s.date}>{formatPostDate(post.createdAt)}</div>
-              </div>
+                  {/* Comments */}
+                  <div className={s.comments}>
+                    {comments?.items?.map(c => {
+                      const avatar = (c.from.avatars?.[0] as any)?.url;
+
+                      return (
+                        <div key={c.id} className={s.comment}>
+                          {avatar && <img src={avatar} alt="avatar" className={s.avatar} />}
+                          <div>
+                            <span className={s.username}>{c.from.username}</span>
+                            <p>{c.content}</p>
+                            <span className={s.time}>{c.createdAt}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Footer */}
+                  <div className={s.footer}>
+                    <div className={s.likes}>{post.likesCount} likes</div>
+                    <div className={s.date}>{formatPostDate(post.createdAt)}</div>
+                  </div>
+                </>
+              )}
+              {mode === "edit" && post && postId && (
+                <EditPostForm
+                  postId={postId}
+                  initialDescription={post.description ?? ""}
+                  onSuccess={() => setMode("view")}
+                  onDirtyChange={setIsDirty}
+                />
+              )}
             </div>
           </div>
         )}
@@ -148,6 +203,12 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
         onOpenChange={setIsDeleteOpen}
         postId={postId}
         onDeleteSuccess={() => onOpenChange(false)}
+      />
+
+      <CloseEditConfirmDialog
+        open={isEditClosed}
+        onCancel={() => setIsEditClosed(false)}
+        onConfirm={handleEditClosing}
       />
     </>
   );

@@ -2,14 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 16px;
 }
 
 .title {
   font-size: 16px;
   font-weight: 600;
   color: var(--light-100);
-
 }
 
 .closeBtn {
@@ -27,39 +26,47 @@
 
 .body {
   height: 536px;
-}
-
-.selectWrap {
-  height: 100%;
-  padding: 24px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.previewStep {
-  height: 100%;
-  padding: 24px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
 }
 
-.avatarPreview {
-  position: relative;
-  width: 280px;
-  height: 280px;
-  margin: 32px auto 0;
-  border-radius: 50%;
-  overflow: hidden;
+.selectWrap {
+  flex: 1;
+  display: grid;
+  place-items: center;
 }
 
-.avatarImg {
-  object-fit: cover;
+.croppingWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cropCenter {
+  flex: 1;
+  display: grid;
+  place-items: center;
 }
 
 .actions {
-  margin-top: auto;
   display: flex;
   justify-content: flex-end;
+  padding-top: 8px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

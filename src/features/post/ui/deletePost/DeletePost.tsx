@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, Button } from "@/shared/ui";
 import { useDeletePost } from "../../model/hooks/useDeletePost";
 import s from "./DeletePost.module.scss";

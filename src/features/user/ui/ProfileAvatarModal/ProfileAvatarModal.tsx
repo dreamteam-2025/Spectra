@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { Dialog } from "@/shared/ui/Dialog/Dialog";
 import { Button } from "@/shared";
-import { SelectPhotoStep } from "@/features/post/ui/createPostModal/steps/selectPhotoStep/SelectPhotoStep";
 import s from "./ProfileAvatarModal.module.scss";
 import { useUploadAvatarMutation } from "@/features/user/api/userApi";
 import { useObjectURL } from "@/shared/lib/hooks/useObjectURL";
 import { validateAvatar } from "../../model/validateAvatar";
 import { useMeQuery } from "@/features/auth";
+import { AvatarCroppingStep } from "../steps/AvatarCroppingStep";
+import { SelectPhotoStep } from "@/features/post/ui/CreatePostModal/steps/selectPhotoStep/SelectPhotoStep";
 
 type Props = {
   open: boolean;
@@ -17,28 +17,36 @@ type Props = {
   onSaved?: () => void;
 };
 
-type Step = "select" | "preview";
+type Step = "select" | "cropping";
 
 export function ProfileAvatarModal({ open, onOpenChange, onSaved }: Props) {
+  const { data: meResponse } = useMeQuery();
+
   const [step, setStep] = useState<Step>("select");
   const [file, setFile] = useState<File | null>(null);
-  const { data: meResponse } = useMeQuery();
+
+  // кэш кропа (важно сбрасывать, когда пользователь двигает crop/zoom)
+  const [croppedBlob, setCroppedBlob] = useState<Blob | null>(null);
 
   const previewUrl = useObjectURL(file);
 
   const [uploadAvatar, { isLoading }] = useUploadAvatarMutation();
 
-  useEffect(() => {
-    if (!open) {
-      setStep("select");
-      setFile(null);
-    }
-  }, [open]);
+  // submitRef из шага cropping: возвращает Blob (кропнутый)
+  const cropSubmitRef = useRef<null | (() => Promise<Blob | null>)>(null);
+
+  // защита от double click (на случай, если isLoading не успел обновиться)
+  const savingRef = useRef(false);
 
   const reset = () => {
     setStep("select");
     setFile(null);
+    setCroppedBlob(null);
   };
+
+  useEffect(() => {
+    if (!open) reset();
+  }, [open]);
 
   const close = () => {
     reset();
@@ -50,24 +58,50 @@ export function ProfileAvatarModal({ open, onOpenChange, onSaved }: Props) {
     if (!f) return;
 
     const res = validateAvatar(f);
-    if (!res.isValid) {
-      return;
-    }
+    if (!res.isValid) return;
 
     setFile(f);
-    setStep("preview");
+    setCroppedBlob(null);
+    setStep("cropping");
+  };
+
+  const getFileToUpload = async (): Promise<File | null> => {
+    if (!file) return null;
+
+    let blob = croppedBlob;
+
+    // если blob ещё не готов или пользователь менял crop/zoom — берём новый
+    if (!blob) {
+      blob = (await cropSubmitRef.current?.()) ?? null;
+      setCroppedBlob(blob);
+    }
+
+    if (blob instanceof Blob) {
+      return new File([blob], "avatar.jpg", { type: blob.type || "image/jpeg" });
+    }
+
+    return file;
   };
 
   const onSave = async () => {
-    if (!file) return;
     if (!meResponse?.userId) return;
+    if (!file) return;
+
+    if (isLoading || savingRef.current) return;
+    savingRef.current = true;
 
     try {
-      await uploadAvatar({ file, userId: meResponse.userId }).unwrap();
+      const toUploadFile = await getFileToUpload();
+      if (!toUploadFile) return;
+
+      await uploadAvatar({ file: toUploadFile, userId: meResponse.userId }).unwrap();
+
       close();
       onSaved?.();
     } catch (e) {
       console.error(e);
+    } finally {
+      savingRef.current = false;
     }
   };
 
@@ -103,10 +137,14 @@ export function ProfileAvatarModal({ open, onOpenChange, onSaved }: Props) {
           </div>
         )}
 
-        {step === "preview" && previewUrl && (
-          <div className={s.previewStep}>
-            <div className={s.avatarPreview}>
-              <Image src={previewUrl} alt="Avatar preview" fill className={s.avatarImg} unoptimized />
+        {step === "cropping" && previewUrl && (
+          <div className={s.croppingWrap}>
+            <div className={s.cropCenter}>
+              <AvatarCroppingStep
+                imageUrl={previewUrl}
+                submitRef={cropSubmitRef}
+                onDirty={() => setCroppedBlob(null)}
+              />
             </div>
 
             <div className={s.actions}>

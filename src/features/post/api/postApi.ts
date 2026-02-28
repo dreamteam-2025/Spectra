@@ -1,11 +1,10 @@
-import { baseApi } from "@/shared";
+import { baseApi } from "@/shared/api/baseApi";
 import {
   createPostRequestSchema,
   createPostResponseSchema,
   getPostByIdResponseSchema,
   getPostCommentsResponseSchema,
   updatePostRequestSchema,
-  updatePostResponseSchema,
   uploadPostImagesResponseSchema,
 } from "../model/validation";
 import type {
@@ -16,7 +15,6 @@ import type {
   UploadPostImagesResponse,
   GetPostByIdArgs,
   GetPostByIdResponse,
-  UpdatePostResponse,
   UpdatePostArgs,
   GetPostCommentsResponse,
   GetPostCommentsArgs,
@@ -161,7 +159,7 @@ export const postApi = baseApi.injectEndpoints({
     }),
 
     // Update post
-    updatePost: build.mutation<UpdatePostResponse, UpdatePostArgs>({
+    updatePost: build.mutation<null, UpdatePostArgs>({
       query: ({ postId, body }) => {
         const parsedBody = updatePostRequestSchema.parse(body);
 
@@ -171,8 +169,6 @@ export const postApi = baseApi.injectEndpoints({
           body: parsedBody,
         };
       },
-
-      transformResponse: (response: unknown) => updatePostResponseSchema.parse(response),
 
       invalidatesTags: (_result, _error, { postId }) => [
         // детальная страница поста

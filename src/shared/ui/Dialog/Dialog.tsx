@@ -18,6 +18,7 @@ const sizeMap: Record<DialogSize, number | string> = {
 type DialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onCloseClick?: () => void;
 
   title?: string;
   description?: string;
@@ -40,6 +41,7 @@ type DialogProps = {
 export const Dialog = ({
   open,
   onOpenChange,
+  onCloseClick,
   title,
   description,
   children,
@@ -85,7 +87,13 @@ export const Dialog = ({
                   <span className={s.title}>{title}</span>
 
                   {showClose && (
-                    <RadixDialog.Close className={s.close} aria-label="Close dialog">
+                    <RadixDialog.Close
+                      onClick={e => {
+                        onCloseClick?.();
+                      }}
+                      className={s.close}
+                      aria-label="Close dialog"
+                    >
                       ✕
                     </RadixDialog.Close>
                   )}
@@ -95,7 +103,9 @@ export const Dialog = ({
               </>
             ) : null}
             {description && <RadixDialog.Description className={s.description}>{description}</RadixDialog.Description>}
-            <div className={s.children}>{children}</div>
+            <div className={s.children} style={style}>
+              {children}
+            </div>
           </Card>
         </RadixDialog.Content>
       </RadixDialog.Portal>
