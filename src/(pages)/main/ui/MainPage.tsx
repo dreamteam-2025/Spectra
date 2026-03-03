@@ -1,39 +1,22 @@
 import { PostList, RegisteredUsersCounter } from "@/widgets";
-import { redirect } from "next/navigation";
 import s from "./MainPage.module.scss";
+import type { Post } from "@/features/post/api/postApi.types";
+import { RecoveryHandler } from "./RecoveryHandler";
+import { Suspense } from "react";
 
 type Props = {
-  searchParams: Promise<{
-    code?: string;
-    email?: string;
-  }>;
+  initialPosts: Post[];
 };
 
-export const MainPage = async ({ searchParams }: Props) => {
-  const { code, email } = await searchParams;
-
-  if (code) {
-    const qs = new URLSearchParams();
-    qs.set("code", code);
-    if (email) qs.set("email", email);
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/check-recovery-code`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ recoveryCode: code }),
-      cache: "no-store",
-    });
-
-    if (res.ok) redirect(`/create-new-password?${qs.toString()}`);
-    else redirect(`/confirm-email?${qs.toString()}`);
-  }
-
+export const MainPage = ({ initialPosts }: Props) => {
   return (
     <main className={s.contentWrapper}>
-      <RegisteredUsersCounter />
-      <PostList />
+      <Suspense fallback={null}>
+        <RecoveryHandler />
+        <RegisteredUsersCounter />
+      </Suspense>
+      {/* Отрисовка 4 постов на главной странице, посты загружены на сервере */}
+      <PostList initialPosts={initialPosts} />
     </main>
   );
 };
