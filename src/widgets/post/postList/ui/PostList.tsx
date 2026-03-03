@@ -38,6 +38,7 @@ export const PostList = ({ className }: Props) => {
             postImage: img.url,
           }))}
           avatarImage={post.avatarOwner}
+          userId={post.ownerId}
           userName={post.userName}
           createdAt={post.createdAt}
           text={post.description}

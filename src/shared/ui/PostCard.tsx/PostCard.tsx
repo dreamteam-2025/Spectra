@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { formatPostDate } from "@/shared/lib/utils/formatPostDate/formatPostDate";
 import { ImageSlider } from "@/shared/ui/ImageSlider/ImageSlider";
 import { UserAvatar } from "@/entities";
+import Link from "next/link";
 
 type Slide = {
   id: number;
@@ -25,6 +26,7 @@ type FullVariantProps = BaseProps & {
   userName: string;
   createdAt: string;
   text?: string;
+  userId: number;
 };
 
 type ThumbVariantProps = BaseProps & {
@@ -33,6 +35,7 @@ type ThumbVariantProps = BaseProps & {
   userName?: never;
   createdAt?: never;
   text?: never;
+  userId?: never;
 };
 
 type Props = FullVariantProps | ThumbVariantProps;
@@ -45,6 +48,7 @@ export const PostCard = ({
   text,
   className,
   variant,
+  userId,
   onClick,
   ...props
 }: Props) => {
@@ -68,7 +72,11 @@ export const PostCard = ({
           {(avatarImage || userName) && (
             <div className={s.content}>
               <UserAvatar src={avatarImage} alt={userName} width={36} height={36} className={s.avatar} />
-              {userName && <h3 className={s.userName}>{userName}</h3>}
+              {userName && (
+                <Link href={`/profile/${userId}`}>
+                  <h3 className={s.userName}>{userName}</h3>
+                </Link>
+              )}
             </div>
           )}
           {createdAt && (

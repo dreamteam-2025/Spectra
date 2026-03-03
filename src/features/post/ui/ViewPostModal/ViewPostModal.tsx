@@ -171,7 +171,7 @@ export const ViewPostModal = ({ open, onOpenChange, postId }: Props) => {
                           <div>
                             <span className={s.username}>{c.from.username}</span>
                             <p>{c.content}</p>
-                            <span className={s.time}>{c.createdAt}</span>
+                            <span className={s.time}>{formatPostDate(c.createdAt)}</span>
                           </div>
                         </div>
                       );
