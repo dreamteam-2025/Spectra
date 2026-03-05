@@ -131,6 +131,20 @@ export const authApi = baseApi.injectEndpoints({
       },
     }),
 
+    updateAuthToken: build.mutation<{ accessToken: string }, void>({
+      query: () => ({
+        url: "auth/update",
+        method: "POST",
+        body: {},
+      }),
+      onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
+        const { data } = await queryFulfilled;
+        sessionStorage.setItem(AUTH_KEYS.accessToken, data.accessToken);
+        // инвалидация после КАЖДОГО сохранения токенов
+        dispatch(authApi.util.invalidateTags(["Auth"]));
+      },
+    }),
+
     logout: build.mutation<void, void>({
       query: () => {
         return {
@@ -165,4 +179,5 @@ export const {
   usePasswordRecoveryResendingMutation,
   useNewPasswordMutation,
   useLoginGoogleMutation,
+  useUpdateAuthTokenMutation
 } = authApi;

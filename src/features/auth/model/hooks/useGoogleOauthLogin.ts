@@ -2,10 +2,12 @@
 
 import { AUTH_KEYS, errorToast, generateSecureState, isOauthData, isOauthError, ROUTES } from "@/shared/lib";
 import { useRouter } from "next/navigation";
+import { useUpdateAuthTokenMutation } from "../../api/authApi";
 
 // Хук только для инициализации процесса OAuth2 Google
 export const useGoogleOauthLogin = () => {
   const router = useRouter();
+  const [updateTokens] = useUpdateAuthTokenMutation()
 
   // Возвращаем функцию для открытия popup с нужным сформированным URL
   const openGoogleOauthPopup = () => {
@@ -76,9 +78,7 @@ export const useGoogleOauthLogin = () => {
         sessionStorage.setItem(AUTH_KEYS.authProvider, "google");
 
         cleanup();
-
-        // и редиректим на страницу user profile
-        router.replace(ROUTES.APP.PROFILE);
+        handleOAuthSuccess();
         return;
       }
 
@@ -101,6 +101,23 @@ export const useGoogleOauthLogin = () => {
       window.removeEventListener("message", recieveMessage);
       clearInterval(checkInterval);
       if (cleanupTimeout) clearTimeout(cleanupTimeout);
+    };
+
+    const handleOAuthSuccess = async () => {
+      try {
+        // инициируем первоначальный запрос на обновление токена
+        const updateTokensResult = await updateTokens().unwrap();
+
+        // затем в случае успеха перезапишем новым токеном
+        sessionStorage.setItem(AUTH_KEYS.accessToken, updateTokensResult.accessToken);
+        // и редиректим на страницу user profile
+        router.push(ROUTES.APP.PROFILE);
+      } catch (error) {
+        console.error("Error with update-tokens: ", error);
+      } finally {
+        // удаляем обработчик
+        cleanup();
+      }
     };
 
     // Проверяем закрытие popup каждые 500 мс
