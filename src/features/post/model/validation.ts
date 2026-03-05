@@ -6,7 +6,7 @@ export const uploadedImageSchema = z.object({
   width: z.number(),
   height: z.number(),
   fileSize: z.number(),
-  createdAt: z.string(), // можно .datetime() если уверен в ISO
+  createdAt: z.string(),
   uploadId: z.string(),
 });
 

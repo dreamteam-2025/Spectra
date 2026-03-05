@@ -3,26 +3,24 @@
 import clsx from "clsx";
 import { useMemo, useState } from "react";
 import { PostCard } from "@/shared";
-import s from "./MyPostList.module.scss";
-import { useGetMyPostsInfiniteQuery } from "@/features/post/api/postApi";
+import s from "./UserPostList.module.scss";
+import { useGetUserPostsInfiniteQuery } from "@/features/post/api/postApi";
 import { useInfiniteScroll } from "@/widgets/post/postList/model/hooks/useInfinityScroll";
 import { Loader } from "@/shared/ui/Loader/Loader";
-import { useMeQuery } from "@/features";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { ViewPostModal } from "@/features/post";
+import { ViewPostModal } from "@/features";
 
 interface Props {
   className?: string;
+  userId: number;
 }
 
-export const MyPostList = ({ className }: Props) => {
+export const UserPostList = ({ userId, className }: Props) => {
   const [selectedPostId, setSelectedPostId] = useState<null | number>(null);
 
-  const { data: me, isLoading: isMeLoading } = useMeQuery();
-
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetMyPostsInfiniteQuery(
-    me?.userId ? { userId: me.userId, pageSize: 10 } : skipToken
-  );
+  const { data, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetUserPostsInfiniteQuery({
+    userId,
+    pageSize: 10,
+  });
 
   const posts = useMemo(() => data?.pages.flatMap(page => page.items) ?? [], [data]);
 
@@ -32,17 +30,9 @@ export const MyPostList = ({ className }: Props) => {
     isFetchingNextPage,
   });
 
-  if (isMeLoading) {
-    return <Loader />;
-  }
-
-  if (!me) {
-    return null;
-  }
-
-  if (isLoading) {
-    return <Loader />;
-  }
+  if (isLoading) return <Loader />;
+  if (error) return <p>Failed to load posts</p>;
+  if (!posts.length) return <p>User has no posts</p>;
 
   const openPostHandler = (id: number) => {
     setSelectedPostId(id);
@@ -62,10 +52,7 @@ export const MyPostList = ({ className }: Props) => {
             id: index,
             postImage: img.url,
           }))}
-          avatarImage={post.avatarOwner}
-          userName={post.userName}
-          createdAt={post.createdAt}
-          text={post.description}
+          variant="thumb"
         />
       ))}
 

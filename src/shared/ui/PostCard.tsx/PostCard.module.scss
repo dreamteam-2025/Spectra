@@ -5,6 +5,7 @@ $color: var(--light-100);
 
 .card {
   max-width: 240px;
+  width: 100%;
   color: var(--light-100);
 
   .media {
@@ -34,6 +35,10 @@ $color: var(--light-100);
     .userName {
       font-size: 16px;
       line-height: 24px;
+    }
+
+    a {
+      text-decoration: none;
     }
   }
 
@@ -83,5 +88,13 @@ $color: var(--light-100);
   .toggleInline {
     position: static;
     white-space: nowrap;
+  }
+}
+
+.thumb {
+  padding: 0;
+
+  .media {
+    margin: 0;
   }
 }

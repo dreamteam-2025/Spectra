@@ -51,9 +51,11 @@ export const PostList = ({ className, initialPosts = [] }: Props) => {
             postImage: img.url,
           }))}
           avatarImage={post.avatarOwner}
+          userId={post.ownerId}
           userName={post.userName}
           createdAt={post.createdAt}
           text={post.description}
+          variant="full"
         />
       ))}
       {selectedPostId && (

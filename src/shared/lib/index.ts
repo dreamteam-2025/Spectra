@@ -11,3 +11,4 @@ export { AUTH_KEYS } from "./constants/auth";
 export { isToken } from "./utils/isToken";
 export { isOauthData } from "./utils/isOauthData";
 export { formatPostDate } from "./utils/formatPostDate/formatPostDate";
+export { formatNumber } from "./utils/formatNumber/formatNumber";

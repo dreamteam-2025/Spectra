@@ -19,11 +19,20 @@ $bigDotsMargin: 6px;
 .imageContainer {
   position: relative;
   margin: 0 auto;
+  image-rendering: auto;
 
   // Показываем навигацию при наведении на контейнер
   &:hover {
     .left,
-    .right,
+    .right {
+      opacity: 0.5;
+      visibility: visible;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
     .dotsContainer {
       opacity: 1;
       visibility: visible;
@@ -115,8 +124,11 @@ $bigDotsMargin: 6px;
 
 // миксин для variant ImageSlider
 @mixin sliderVariant($size, $arrowContainerSize, $dotSize, $dotsContainerSize, $dotsMargin, $indent) {
-  width: $size;
-  height: $size;
+  max-width: $size;
+  max-height: $size;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
 
   .left,
   .right {

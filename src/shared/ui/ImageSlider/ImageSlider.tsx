@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import s from "./ImageSlider.module.scss";
 import clsx from "clsx";
 import Image, { StaticImageData } from "next/image";
@@ -62,8 +62,15 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
   // Если больше 1 фото
   const hasMultipleImages = validSlides.length > 1;
 
-  const goToPreviousHandler = () => setCurrentIndex(prev => (prev === 0 ? validSlides.length - 1 : prev - 1));
-  const goToNextHandler = () => setCurrentIndex(prev => (prev === validSlides.length - 1 ? 0 : prev + 1));
+  const goToPreviousHandler = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex(prev => (prev === 0 ? validSlides.length - 1 : prev - 1));
+  };
+
+  const goToNextHandler = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex(prev => (prev === validSlides.length - 1 ? 0 : prev + 1));
+  };
 
   const goToSlideHandler = (slideIndex: number) => setCurrentIndex(slideIndex);
 
@@ -73,12 +80,13 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
         {/* Непосредственно изображение */}
         <Image
           fill
-          sizes={variant === "big" ? "490px" : "240px"}
+          sizes={"(max-width: 768px) 100vw, 1440px"}
           className={s.slide}
           src={validSlides[currentIndex].postImage}
           alt={`Slide ${currentIndex + 1}`}
           aria-label={`Slide ${currentIndex + 1} of ${validSlides.length}`}
           priority={currentIndex === 0}
+          objectFit="cover"
           //onError={() => setHasError(true)}
         />
 
@@ -98,7 +106,10 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
                 <button
                   key={slide.id}
                   className={clsx(s.dot, slideIndex === currentIndex && s.active)}
-                  onClick={() => goToSlideHandler(slideIndex)}
+                  onClick={(e: React.MouseEvent) => {
+                    e.stopPropagation();
+                    goToSlideHandler(slideIndex);
+                  }}
                   aria-label={`Go to slide ${slideIndex + 1}`}
                   aria-current={slideIndex === currentIndex}
                 />

@@ -1,0 +1,8 @@
+.list {
+  width: 100%;
+  display: grid;
+  // grid-template-columns: repeat(auto-fit, 240px);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  justify-content: space-between;
+  gap: 12px;
+}

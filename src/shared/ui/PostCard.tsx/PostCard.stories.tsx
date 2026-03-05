@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { PostCard } from "./PostCard";
 
 import postImage from "../../../../public/images/post-image-mock.png";
-import avatarImage from "../../../../public/images/avatar-image-mock.png";
+import avatarImage from "../../../../public/images/post-image-mock.png";
 
 const meta = {
   title: "UI/PostCard",
@@ -19,6 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    variant: "full",
     slides: [{ id: 1, postImage }],
     avatarImage,
     userName: "User Name",
