@@ -20,6 +20,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     variant: "full",
+    userId: 365,
     slides: [{ id: 1, postImage }],
     avatarImage,
     userName: "User Name",

@@ -34,13 +34,9 @@ export const UserPostList = ({ userId, className }: Props) => {
   if (error) return <p>Failed to load posts</p>;
   if (!posts.length) return <p>User has no posts</p>;
 
-  const openPostHandler = (id: number) => {
-    setSelectedPostId(id);
-  };
+  const openPostHandler = (id: number) => setSelectedPostId(id);
 
-  const closeHandler = () => {
-    setSelectedPostId(null);
-  };
+  const closeHandler = () => setSelectedPostId(null);
 
   return (
     <div className={clsx(s.list, className)}>
