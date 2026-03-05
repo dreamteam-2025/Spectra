@@ -7,7 +7,7 @@ import { useUpdateAuthTokenMutation } from "../../api/authApi";
 // Хук только для инициализации процесса OAuth2 Google
 export const useGoogleOauthLogin = () => {
   const router = useRouter();
-  const [updateTokens] = useUpdateAuthTokenMutation()
+  const [updateTokens] = useUpdateAuthTokenMutation();
 
   // Возвращаем функцию для открытия popup с нужным сформированным URL
   const openGoogleOauthPopup = () => {
@@ -48,11 +48,8 @@ export const useGoogleOauthLogin = () => {
     // обработчик сообщений
     const recieveMessage = (event: MessageEvent) => {
       // раннее прерывание, если popup был открыт не на нашем доменном адресе
-      // проверяем hostname вместо полного origin, чтобы OAuth не ломался из-за www/http/port различий
-      const allowedHost = new URL(process.env.NEXT_PUBLIC_DOMAIN_ADDRESS!).hostname;
-      const originHost = new URL(event.origin).hostname;
-
-      if (originHost !== allowedHost) return;
+      // строгая проверка соответствия:
+      if (event.origin !== window.location.origin) return;
 
       const data = event.data;
 

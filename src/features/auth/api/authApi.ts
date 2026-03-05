@@ -179,5 +179,5 @@ export const {
   usePasswordRecoveryResendingMutation,
   useNewPasswordMutation,
   useLoginGoogleMutation,
-  useUpdateAuthTokenMutation
+  useUpdateAuthTokenMutation,
 } = authApi;
