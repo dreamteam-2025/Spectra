@@ -61,7 +61,7 @@ export const authApi = baseApi.injectEndpoints({
 
     passwordRecovery: build.mutation<void, PasswordRecovery>({
       query: payload => ({
-        method: "post",
+        method: "POST",
         url: "auth/password-recovery",
         body: payload,
       }),
@@ -69,7 +69,7 @@ export const authApi = baseApi.injectEndpoints({
 
     passwordRecoveryResending: build.mutation<void, PasswordRecoveryResending>({
       query: payload => ({
-        method: "post",
+        method: "POST",
         url: "auth/password-recovery-resending",
         body: payload,
       }),
@@ -92,7 +92,7 @@ export const authApi = baseApi.injectEndpoints({
     // OAuth2 Github
     loginGithub: build.query<void, LoginOauthGithubArgs>({
       query: ({ redirectUrl }) => ({
-        method: "get",
+        method: "GET",
         url: "auth/github/login",
         params: { redirect_url: redirectUrl },
       }),
@@ -114,7 +114,7 @@ export const authApi = baseApi.injectEndpoints({
     // OAuth2 Google
     loginGoogle: build.mutation<LoginGoogleResponse, LoginGoogleArgs>({
       query: payload => ({
-        method: "post",
+        method: "POST",
         url: "auth/google/login",
         body: payload,
       }),
@@ -133,8 +133,8 @@ export const authApi = baseApi.injectEndpoints({
 
     updateAuthToken: build.mutation<{ accessToken: string }, void>({
       query: () => ({
-        url: "auth/update",
         method: "POST",
+        url: "auth/update",
         body: {},
       }),
       onQueryStarted: async (_args, { dispatch, queryFulfilled }) => {
@@ -148,8 +148,8 @@ export const authApi = baseApi.injectEndpoints({
     logout: build.mutation<void, void>({
       query: () => {
         return {
+          method: "POST",
           url: "auth/logout",
-          method: "post",
           body: {},
         };
       },
