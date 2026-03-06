@@ -1,0 +1,122 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.rowField {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.halfField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.label {
+  color: #808080;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.requiredLabel {
+  position: relative;
+  width: fit-content;
+
+  &::after {
+    content: "*";
+    color: #ff0000;
+    margin-left: 4px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.field input,
+.halfField select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--dark-100);
+  color: var(--light-100);
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: transparent;
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.field textarea {
+  width: 100%;
+  height: 84px;
+  max-height: 84px;
+  padding: 10px 12px;
+  border: 1px solid var(--dark-100);
+  color: var(--light-100);
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: var(--dark-400);
+  resize: none;
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.halfField select option {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.halfField select:disabled option {
+  color: #999999;
+}
+
+.transparentSelect {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--dark-100);
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--light-100);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.transparentSelect option {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.transparentSelect:disabled option {
+  color: #999999;
+}
+
+.disabledButton {
+  opacity: 0.5;
+  cursor: not-allowed;
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
