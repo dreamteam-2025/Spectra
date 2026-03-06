@@ -1,0 +1,5 @@
+// Реэкспорт необходимого на уровне сегментов внутри слоя widgets
+export * from "./header";
+export * from "./sideBar";
+export * from "./registeredUsersCounter";
+export * from "./post";

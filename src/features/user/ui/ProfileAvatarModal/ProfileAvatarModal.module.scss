@@ -1,0 +1,72 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--light-100);
+}
+
+.closeBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--light-100);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body {
+  height: 536px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.selectWrap {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+
+.croppingWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cropCenter {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

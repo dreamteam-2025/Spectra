@@ -1,0 +1,211 @@
+@forward "../shared/styles/colors.scss";
+
+:root {
+  --header-height: 60px;
+  --sidebar-width: 220px;
+  --content-padding: 24px;
+}
+
+// Обнуление стилей
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--dark-700);
+
+  // regular_text_16
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--light-100);
+
+  // bold_text
+  strong,
+  b {
+    font-weight: 700;
+    color: inherit;
+  }
+}
+
+// ====================================================
+.appContainer {
+  display: grid;
+  margin: 0 auto;
+  grid-template-areas: "main";
+  grid-template-columns: 1fr;
+}
+
+.appContainer:has(aside:not(.sidebarPlaceholder)) {
+  grid-template-areas: "sidebar main";
+  grid-template-columns: var(--sidebar-width) 1fr;
+}
+
+.sidebarPlaceholder {
+  grid-area: sidebar;
+  width: 0;
+  visibility: hidden;
+}
+
+// SideBar занимает свою область
+.appContainer > aside {
+  grid-area: sidebar;
+  width: 100%;
+  max-width: var(--sidebar-width);
+  box-sizing: border-box;
+}
+
+// Основной контент (main) занимает свою область
+.appContainer > main {
+  grid-area: main;
+  min-width: 200px;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--content-padding);
+  padding-right: 60px;
+  min-width: 200px;
+}
+// ====================================================
+
+a {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.71429;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: var(--accent-300);
+  cursor: pointer;
+
+  small {
+    font-size: 12px;
+    line-height: 1.33333;
+  }
+
+  // Все состояния одинаковые
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    color: var(--accent-300);
+    text-decoration: underline;
+  }
+
+  // Добавил от себя небольшую интерактивность
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  // Доступность - фокус для клавиатуры
+  &:focus-visible {
+    outline: 2px solid var(--accent-300);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+// Typography
+.largeHeading {
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.38462;
+  color: var(--light-100);
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.8;
+  color: var(--light-100);
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.33333;
+  color: var(--light-100);
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--light-100);
+}
+
+.regular-14 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.71429;
+  color: var(--light-100);
+}
+
+.medium-14 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.71429;
+  color: var(--light-100);
+}
+
+.bold-14 {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.71429;
+  color: var(--light-100);
+}
+
+.small-text {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: var(--light-100);
+}
+
+.small-semibold {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.33333;
+  color: var(--light-100);
+}
+
+// для стилизации react-toastify:
+.Toastify__toast--error {
+  border: 1px solid var(--danger-500) !important;
+  border-radius: 2px;
+}
+
+.Toastify__toast--success {
+  border: 1px solid var(--success-500) !important;
+  border-radius: 2px;
+}

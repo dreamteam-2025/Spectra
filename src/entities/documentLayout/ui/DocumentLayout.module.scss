@@ -1,0 +1,17 @@
+.documentLayout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1280px;
+    margin-top: 30px;
+    .content{
+        margin-top: 20px;
+        width: 936px;
+        height: 958px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 171%;
+        text-align: center;
+        color: var(--light-100);
+    }
+}

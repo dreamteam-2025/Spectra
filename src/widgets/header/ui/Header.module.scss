@@ -1,0 +1,70 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid var(--dark-100);
+}
+
+.largeHeading {
+  font-size: xx-large;
+  font-weight: 700;
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.inner {
+  //max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.row {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 36px;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--light-100);
+  font-weight: 600;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.link {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 6px 24px;
+  cursor: pointer;
+  border-radius: 2px;
+  text-decoration: none !important;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  border: none;
+  outline: none;
+}
+.button {
+  color: white !important;
+  background: var(--accent-500);
+
+  &:not(:disabled):hover {
+    background: var(--accent-100);
+  }
+
+  &:not(:disabled):active {
+    background: var(--accent-700);
+  }
+
+  &:not(:disabled):focus-visible {
+    outline: 2px solid var(--accent-700);
+  }
+}

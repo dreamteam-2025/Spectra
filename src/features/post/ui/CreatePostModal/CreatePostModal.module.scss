@@ -1,0 +1,111 @@
+.modal {
+  width: 492px;
+  height: 564px;
+  max-width: 92vw;
+  overflow: hidden;
+}
+
+/* Step 1: "Add Photo" слева, X справа */
+.headerSelect {
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  align-items: center;
+  padding: 0 12px;
+  height: 48px;
+}
+
+/* Step 2/3: back | center title | action button */
+.headerCropping,
+.headerPublish {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  height: 48px;
+}
+
+.titleLeft {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.titleCenter {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Иконки back / close */
+.iconBtn {
+  all: unset;
+  cursor: pointer;
+  width: 40px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--light-100);
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Next / Publish справа */
+.nextBtn,
+.publishBtn {
+  height: 36px;
+  padding: 0 12px;
+  font-weight: 600;
+  background: transparent !important;
+}
+
+/* ===== Confirm dialog ===== */
+
+.confirmDialogWrap {
+  max-width: 520px;
+}
+
+.confirmButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // ✅ по сторонам
+  width: 100%;
+  padding-top: 16px;
+}
+
+.confirmButtons :global(button) {
+  width: 120px; // или 124px/128px — зависит от твоего Button
+  height: 36px;
+}
+
+.confirmDialogWrap {
+  max-width: 520px;
+}
+
+/* Контейнер кнопок */
+.confirmButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // ← разносит по краям
+  width: 100%;
+  padding-top: 16px;
+}
+
+/* Левые и правые обёртки */
+.leftBtn,
+.rightBtn {
+  display: flex;
+}
+
+/* Фиксируем размер кнопок как в макете */
+.leftBtn :global(button),
+.rightBtn :global(button) {
+  width: 120px;
+  height: 36px;
+}
+
+.leftBtn :global(button),
+.rightBtn :global(button) {
+  width: 140px; // ← увеличили ширину
+  height: 36px;
+  white-space: nowrap; // ← запрещаем перенос текста
+}

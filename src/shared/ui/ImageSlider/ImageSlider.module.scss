@@ -1,0 +1,186 @@
+$smallSize: 240px;
+$bigSize: 490px;
+
+$smallArrow: 24px;
+$bigArrow: 48px;
+
+$smallDot: 6px;
+$bigDot: 8px;
+
+$smallDotsContainer: 12px;
+$bigDotsContainer: 24px;
+
+$smallCommonIndent: 8px;
+$bigCommonIndent: 14px;
+
+$smallDotsMargin: 4px;
+$bigDotsMargin: 6px;
+
+.imageContainer {
+  position: relative;
+  margin: 0 auto;
+  image-rendering: auto;
+
+  // Показываем навигацию при наведении на контейнер
+  &:hover {
+    .left,
+    .right {
+      opacity: 0.5;
+      visibility: visible;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .dotsContainer {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--dark-100);
+}
+
+.slider {
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.left,
+.right {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  transform: translate(0, -50%);
+
+  cursor: pointer;
+
+  border-radius: 2px;
+
+  background: color-mix(in srgb, var(--dark-300) 50%, transparent);
+
+  // Скрываем по умолчанию
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.dotsContainer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: color-mix(in srgb, var(--dark-300) 50%, transparent);
+  border-radius: 2px;
+  z-index: 1;
+
+  // Скрываем по умолчанию
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+
+  .dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      border-radius: 50%;
+      background-color: var(--light-100);
+    }
+
+    &.active::before {
+      background-color: var(--accent-500);
+    }
+  }
+}
+
+// миксин для variant ImageSlider
+@mixin sliderVariant($size, $arrowContainerSize, $dotSize, $dotsContainerSize, $dotsMargin, $indent) {
+  max-width: $size;
+  max-height: $size;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+
+  .left,
+  .right {
+    width: $arrowContainerSize;
+    height: $arrowContainerSize;
+
+    &.left {
+      left: $indent;
+    }
+
+    &.right {
+      right: $indent;
+    }
+
+    img {
+      width: $arrowContainerSize;
+      height: $arrowContainerSize;
+    }
+  }
+
+  .dotsContainer {
+    height: $dotsContainerSize;
+    bottom: $indent;
+
+    .dot {
+      width: $dotSize;
+      height: $dotSize;
+      margin: 0 $dotsMargin;
+
+      &::before {
+        width: $dotSize;
+        height: $dotSize;
+      }
+
+      &:first-child {
+        margin-left: $dotsMargin * 2;
+        margin-right: $dotsMargin;
+      }
+
+      &:last-child {
+        margin-right: $dotsMargin * 2;
+        margin-left: $dotsMargin;
+      }
+    }
+  }
+}
+
+// применение миксина
+.small {
+  @include sliderVariant($smallSize, $smallArrow, $smallDot, $smallDotsContainer, $smallDotsMargin, $smallCommonIndent);
+}
+
+.big {
+  @include sliderVariant($bigSize, $bigArrow, $bigDot, $bigDotsContainer, $bigDotsMargin, $bigCommonIndent);
+}

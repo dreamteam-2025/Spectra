@@ -1,0 +1,92 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  max-width: 95vw;
+  max-height: 90vh;
+
+  background: var(--dark-300);
+  color: var(--light-100);
+
+  border: 1px solid var(--dark-100);
+  border-radius: 2px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* горизонтальные паддинги одинаковые */
+.header,
+.description,
+.children {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 24px;
+  flex: 0 0 auto;
+}
+
+.headerSlot {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  flex: 0 0 auto;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.close {
+  all: unset;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--light-100);
+}
+
+.divider {
+  border: none;
+  height: 1px;
+  background: var(--dark-100);
+
+  margin-left: calc(var(--dialog-pad-x, 24px) * -1);
+  margin-right: calc(var(--dialog-pad-x, 24px) * -1);
+
+  flex: 0 0 auto;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #d1d1d1;
+  flex: 0 0 auto;
+  padding-top: 16px;
+  padding-left: var(--dialog-pad-x, 0px);
+  padding-right: var(--dialog-pad-x, 0px);
+}
+
+.children {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+
+  padding-top: 0;
+  padding-right: var(--dialog-pad-x, 0px);
+}

@@ -1,0 +1,10 @@
+.iconSvg {
+  margin-right: 10px;
+  width: 24px;
+  height: 24px;
+
+  .iconFill {
+    fill: currentColor;
+    transition: fill 0.3s ease;
+  }
+}

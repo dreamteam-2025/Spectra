@@ -1,0 +1,109 @@
+.sideBar {
+  position: sticky;
+  // height: calc(100vh - 61px);
+  height: 100vh;
+  top: 0px;
+  width: 220px;
+
+  border-right: 1px solid var(--dark-100);
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+
+  .wrapperUlCenterWidth {
+    width: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    gap: 180px;
+
+    ul li {
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      color: var(--light-100);
+      transition: color 0.3s ease;
+      user-select: none;
+
+      &:hover {
+        color: var(--accent-100);
+      }
+
+      &:active,
+      &.active {
+        color: var(--accent-500);
+        font-weight: 600;
+      }
+
+      img,
+      svg {
+        margin-right: 10px;
+      }
+    }
+
+    .mainUlSideBar {
+      //height: calc(100% - 80px);
+
+      .Ul1 {
+        padding-top: 80px;
+      }
+
+      .Ul2 {
+        padding-top: 35px;
+      }
+    }
+
+    // Стили для третьего списка (logout)
+    .Ul3 {
+      padding-bottom: 40px;
+
+      li {
+        // Убираем активное состояние для logout
+        &:active,
+        &.active {
+          color: var(--light-100);
+          font-weight: normal;
+        }
+
+        &:hover {
+          color: var(--danger-300); // Красный цвет при наведении на logout
+        }
+      }
+    }
+
+    // Специальный класс для logout item
+    .logoutItem {
+      &:hover {
+        color: var(--danger-300) !important;
+      }
+
+      // Убираем стандартное активное состояние
+      &:active,
+      &.active {
+        color: var(--light-100) !important;
+        font-weight: normal !important;
+      }
+    }
+  }
+}
+
+.dialogWrap {
+  height: 220px;
+  .dialogButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+
+    .cancelButton {
+      min-width: 100px;
+    }
+
+    .confirmButton {
+      min-width: 100px;
+      margin-right: 15px;
+    }
+  }
+}

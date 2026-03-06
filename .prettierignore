@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+.coverage
+*.min.js
+pnpm-lock.yaml
+.env
+.env.local
+.next/
+.nuxt/
+.output/

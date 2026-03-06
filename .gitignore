@@ -5,10 +5,6 @@
 /.pnp
 .pnp.*
 .yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
 
 # testing
 /coverage
@@ -31,7 +27,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+#.env
+.env.local
 
 # vercel
 .vercel
@@ -43,3 +40,11 @@ next-env.d.ts
 # we use pnpm
 package-lock.json
 yarn.lock
+*storybook.log
+storybook-static
+
+# webshtorm
+.idea
+
+# tests
+**/__test__

@@ -1,0 +1,144 @@
+"use client";
+
+import { Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { SignUpInputs, signupSchema } from "../model/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Card, CheckBox, Dialog, handleErrors, Input, ROUTES } from "@/shared";
+import s from "./SignUp.module.scss";
+import Link from "next/link";
+import Image from "next/image";
+import { useSignUpMutation } from "@/features/auth/api/authApi";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useGithubOauthLogin, useGoogleOauthLogin } from "@/features";
+
+export const SignUp = () => {
+  const [signUp, { isLoading }] = useSignUpMutation();
+
+  const router = useRouter();
+
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [submitEmail, setSubmitEmail] = useState<string>("");
+
+  const { openOauthPopup } = useGithubOauthLogin();
+  const { openGoogleOauthPopup } = useGoogleOauthLogin();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors, isValid, touchedFields },
+  } = useForm<SignUpInputs>({
+    defaultValues: { username: "", email: "", password: "", confirmPassword: "", acceptTerms: false },
+    resolver: zodResolver(signupSchema),
+    mode: "onChange",
+  });
+
+  async function onSubmit(data: SignUpInputs) {
+    try {
+      await signUp({
+        userName: data.username,
+        email: data.email,
+        password: data.password,
+        baseUrl: window.location.origin,
+      }).unwrap();
+
+      setSubmitEmail(data.email);
+      reset();
+      setIsDialogOpen(true);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const handleDialogOpen = (open: boolean) => {
+    setIsDialogOpen(open);
+
+    if (!open) {
+      router.push(ROUTES.AUTH.LOGIN);
+    }
+  };
+
+  return (
+    <main>
+      {/* {isLoading && <Loader />} */}
+      <Card className={s.container}>
+        <h1 className={s.title}>Sign Up</h1>
+        <section className={s.logos}>
+          <button type="button" onClick={openGoogleOauthPopup}>
+            <Image src="/icons/google.svg" alt="google" width={36} height={36} />
+          </button>
+          <button type="button" onClick={openOauthPopup}>
+            <Image src="/icons/github.svg" alt="github" width={36} height={36} />
+          </button>
+        </section>
+        <form noValidate onSubmit={handleSubmit(onSubmit)} className={s.form}>
+          <Input
+            fullWidth
+            label="Username"
+            {...register("username")}
+            error={touchedFields.username ? errors.username?.message : undefined}
+          ></Input>
+          <Input
+            fullWidth
+            wrapperClassName={s.field}
+            label="Email"
+            {...register("email")}
+            error={touchedFields.email ? errors.email?.message : undefined}
+          ></Input>
+          <Input
+            fullWidth
+            type="password"
+            label="Password"
+            {...register("password")}
+            error={touchedFields.password ? errors.password?.message : undefined}
+          ></Input>
+          <Input
+            fullWidth
+            type="password"
+            label="Password confirmation"
+            {...register("confirmPassword")}
+            error={touchedFields.confirmPassword ? errors.confirmPassword?.message : undefined}
+          ></Input>
+
+          <Controller
+            control={control}
+            name="acceptTerms"
+            render={({ field }) => (
+              <CheckBox ref={field.ref} checked={field.value} onChange={field.onChange}>
+                <span className="small-text">
+                  I agree to the&nbsp;
+                  <Link href={ROUTES.APP.TERMS}>
+                    <span className={s.link}>Terms of Service</span>
+                  </Link>
+                  &nbsp;and&nbsp;
+                  <Link href={ROUTES.APP.PRIVACY}>
+                    <span className={s.link}>Privacy Policy</span>
+                  </Link>
+                </span>
+              </CheckBox>
+            )}
+          />
+
+          <Button type="submit" variant="primary" disabled={!isValid || isLoading}>
+            Sign Up
+          </Button>
+        </form>
+        <p className={s.prompt}> Do you have an account? </p>
+
+        <Link className={s.loginLink} href={ROUTES.AUTH.LOGIN}>
+          Sign In
+        </Link>
+      </Card>
+
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={handleDialogOpen}
+        title="Email sent"
+        description={`We have sent a link to confirm your email to ${submitEmail}`}
+      />
+    </main>
+  );
+};
