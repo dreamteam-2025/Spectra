@@ -86,7 +86,7 @@ export const ImageSlider = ({ slides, variant = "small" }: Props) => {
           alt={`Slide ${currentIndex + 1}`}
           aria-label={`Slide ${currentIndex + 1} of ${validSlides.length}`}
           priority={currentIndex === 0}
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
           //onError={() => setHasError(true)}
         />
 
