@@ -8,8 +8,9 @@ import { useGetUserInfoByIdQuery, userApi } from "@/features/user/api/userApi";
 import { Button, Loader, ROUTES } from "@/shared";
 import { useMeQuery } from "@/features";
 import { UserInfoByIdResponse } from "@/features/user/api/userApi.types";
-import { useAppDispatch } from "@/shared/lib";
+import { useAppDispatch, useIsClient } from "@/shared/lib";
 import { useEffect } from "react";
+import { ActionsSkeleton } from "./ActionsSkeleton";
 
 type Props = {
   userId: string;
@@ -22,6 +23,7 @@ type Props = {
 export const Profile = ({ userId, searchParams, initialUserInfo }: Props) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const isClient = useIsClient();
   const userIdNumber = userId ? Number(userId) : undefined;
 
   // заполняем кеш RTK Query начальными данными при монтировании (initialUserInfo из пропсов)
@@ -59,15 +61,39 @@ export const Profile = ({ userId, searchParams, initialUserInfo }: Props) => {
 
   const isOwnProfile = me?.userId === userInfo?.id;
 
+  // Рендер блока действий с учётом состояния загрузки и окружения
+  const renderActions = () => {
+    // На сервере всегда скелетон
+    if (!isClient) {
+      return <ActionsSkeleton />;
+    }
+
+    // На клиенте, пока грузится me - тоже скелетон
+    if (meLoading) {
+      return <ActionsSkeleton />;
+    }
+
+    // Если пользователь авторизован
+    if (me) {
+      if (isOwnProfile) {
+        return (
+          <Button variant="secondary" onClick={() => router.push(ROUTES.APP.SETTINGS)}>
+            Profile Settings
+          </Button>
+        );
+      } else {
+        return (
+          <>
+            <Button variant="primary">Follow</Button>
+            <Button variant="secondary">Send Message</Button>
+          </>
+        );
+      }
+    }
+  };
+
   // Формируем actions в зависимости от владельца профиля
-  const actions = isOwnProfile ? (
-    <Button children={"Profile Settings"} variant={"secondary"} onClick={() => router.push(ROUTES.APP.SETTINGS)} />
-  ) : (
-    <>
-      <Button children={"Follow"} variant={"primary"} />
-      <Button children={"Send Message"} variant={"secondary"} />
-    </>
-  );
+  const actions = renderActions();
 
   return (
     <main className={s.contentWrapper}>
