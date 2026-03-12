@@ -1,0 +1,21 @@
+.wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  gap: 42px;
+
+  .block {
+    width: 100%;
+
+    .title {
+      margin-bottom: 6px;
+    }
+  }
+
+  .payments {
+    align-self: flex-end;
+  }
+}

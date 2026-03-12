@@ -1,0 +1,42 @@
+.payment {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.paymentCard {
+  width: 160px;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--dark-500);
+  border: 1px solid var(--dark-300);
+  border-radius: 6px;
+
+  cursor: pointer;
+  transition: border 0.2s;
+
+  img {
+    height: 45px;
+  }
+
+  &:hover {
+    border-color: var(--accent-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-700);
+  }
+}
+
+.active {
+  border-color: var(--accent-700);
+}
+
+.or {
+  color: var(--light-100);
+  font-size: 14px;
+}

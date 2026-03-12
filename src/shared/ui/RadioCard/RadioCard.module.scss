@@ -1,0 +1,64 @@
+.card {
+  padding: 16px;
+  background: var(--dark-500);
+  border: 1px solid var(--dark-300);
+  border-radius: 2px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.input {
+  display: none;
+}
+
+.radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--light-100);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.active .radio {
+  border-color: var(--light-100);
+}
+
+.radio::after {
+  content: "";
+  position: absolute;
+  width: 8.5px;
+  height: 8.5px;
+  border-radius: 50%;
+  background: var(--light-100);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.15s ease;
+}
+
+.active .radio::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.label {
+  font-size: 14px;
+  color: var(--light-100);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
