@@ -1,45 +1,78 @@
 "use client";
 
-import { Button } from "@/shared";
+import { Button, DatePicker, Input, SelectBox } from "@/shared";
 import s from "./GeneralInformation.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { ProfileAvatarModal } from "@/features";
+import { UserAvatar } from "@/entities";
+import { TextArea } from "@/shared/ui/TextArea/TextArea";
 
-interface CountryData {
-  [key: string]: {
-    name: string;
-    cities: string[];
-  };
-}
-
-const countriesData: CountryData = {
-  country1: {
-    name: "Country1",
-    cities: ["City1", "City2", "City3"],
+const countriesOptions = [
+  {
+    label: "Russia",
+    value: "Russia",
+    cities: [
+      { label: "Moscow", value: "Moscow" },
+      { label: "St. Petersburg", value: "St. Petersburg" },
+      { label: "Novosibirsk", value: "Novosibirsk" },
+      { label: "Murmansk", value: "Murmansk" },
+      { label: "Krasnoyarsk", value: "Krasnoyarsk" },
+    ],
   },
-  country2: {
-    name: "Country2",
-    cities: ["City4", "City5", "City6"],
+  {
+    label: "Germany",
+    value: "Germany",
+    cities: [
+      { label: "Berlin", value: "Berlin" },
+      { label: "Munich", value: "Munich" },
+      { label: "Hamburg", value: "Hamburg" },
+      { label: "Frankfurt", value: "Frankfurt" },
+      { label: "Cologne", value: "Cologne" },
+    ],
   },
-  country3: {
-    name: "Country3",
-    cities: ["City7", "City8", "City9"],
+  {
+    label: "Armenia",
+    value: "Armenia",
+    cities: [
+      { label: "Yerevan", value: "Yerevan" },
+      { label: "Gyumri", value: "Gyumri" },
+      { label: "Vanadzor", value: "Vanadzor" },
+      { label: "Vagharshapat", value: "Vagharshapat" },
+      { label: "Hrazdan", value: "Hrazdan" },
+    ],
   },
-};
+  {
+    label: "Belarus",
+    value: "Belarus",
+    cities: [
+      { label: "Minsk", value: "Minsk" },
+      { label: "Gomel", value: "Gomel" },
+      { label: "Mogilev", value: "Mogilev" },
+      { label: "Vitebsk", value: "Vitebsk" },
+      { label: "Grodno", value: "Grodno" },
+    ],
+  },
+];
 
 export const GeneralInformation = () => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date>();
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCountry(e.target.value);
+  const handleCountryChange = (country: string) => {
+    setSelectedCountry(country);
     setSelectedCity("");
   };
 
-  const cities = selectedCountry ? countriesData[selectedCountry].cities : [];
+  const citiesOptions = useMemo(() => {
+    const country = countriesOptions.find(c => c.value === selectedCountry);
+    return country ? country.cities : [];
+  }, [selectedCountry]);
 
   useEffect(() => {
     const isValid =
@@ -60,66 +93,57 @@ export const GeneralInformation = () => {
   };
 
   return (
-    <form className={s.wrapper} onSubmit={handleSubmit}>
-      <div className={s.field}>
-        <label className={`${s.label} ${s.requiredLabel}`}>Username</label>
-        <input required value={username} onChange={e => setUsername(e.target.value)} />
+    <div className={s.mainWrapper}>
+      <div className={s.avatarSectionWrapper}>
+        <UserAvatar />
+        <ProfileAvatarModal open={isOpenModal} onOpenChange={setIsOpenModal} />
+        <Button variant={"outlined"} onClick={() => setIsOpenModal(prev => !prev)}>
+          Select Profile Photo
+        </Button>
       </div>
 
-      <div className={s.field}>
-        <label className={`${s.label} ${s.requiredLabel}`}>First Name</label>
-        <input required value={firstName} onChange={e => setFirstName(e.target.value)} />
-      </div>
+      <form className={s.wrapper} onSubmit={handleSubmit}>
+        <Input required value={username} onChange={e => setUsername(e.target.value)} label="Username" fullWidth />
 
-      <div className={s.field}>
-        <label className={`${s.label} ${s.requiredLabel}`}>Last Name</label>
-        <input required value={lastName} onChange={e => setLastName(e.target.value)} />
-      </div>
+        <Input required value={firstName} onChange={e => setFirstName(e.target.value)} label="First Name" fullWidth />
 
-      <div className={s.rowField}>
-        <div className={s.halfField}>
-          <label className={s.label}>Country</label>
-          <select value={selectedCountry} onChange={handleCountryChange} className={s.transparentSelect} required>
-            <option value="" disabled>
-              Country
-            </option>
-            {Object.entries(countriesData).map(([value, { name }]) => (
-              <option key={value} value={value}>
-                {name}
-              </option>
-            ))}
-          </select>
+        <Input required value={lastName} onChange={e => setLastName(e.target.value)} label="Last Name" fullWidth />
+
+        <DatePicker value={selectedDate} onChange={selectedDate => setSelectedDate(selectedDate)} />
+
+        <div className={s.rowField}>
+          <div className={s.halfField}>
+            <SelectBox
+              width="100%"
+              label="Country"
+              placeholder="Country"
+              value={selectedCountry}
+              onChange={selectedCountry => handleCountryChange(selectedCountry)}
+              options={countriesOptions}
+              required
+            />
+          </div>
+
+          <div className={s.halfField}>
+            <SelectBox
+              width="100%"
+              label="City"
+              placeholder="City"
+              value={selectedCity}
+              onChange={selectedCity => setSelectedCity(selectedCity)}
+              disabled={!selectedCountry}
+              options={citiesOptions}
+              required
+            />
+          </div>
         </div>
 
-        <div className={s.halfField}>
-          <label className={s.label}>City</label>
-          <select
-            value={selectedCity}
-            onChange={e => setSelectedCity(e.target.value)}
-            disabled={!selectedCountry}
-            className={s.transparentSelect}
-            required
-          >
-            <option value="" disabled>
-              {selectedCountry ? "City" : "Select a country first"}
-            </option>
-            {cities.map(city => (
-              <option key={city} value={city}>
-                {city}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+        <TextArea placeholder={"About me..."} label="About me" />
 
-      <div className={s.field}>
-        <label className={s.label}>About me</label>
-        <textarea placeholder="Text area" />
-      </div>
-
-      <Button variant="primary" disabled={!isFormValid} className={!isFormValid ? s.disabledButton : ""}>
-        Save Changes
-      </Button>
-    </form>
+        <Button variant="primary" disabled={!isFormValid} className={!isFormValid ? s.disabledButton : ""}>
+          Save Changes
+        </Button>
+      </form>
+    </div>
   );
 };
