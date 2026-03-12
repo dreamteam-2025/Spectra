@@ -1,7 +1,7 @@
 import { Profile } from "@/(pages)";
 import { UserInfoByIdResponse } from "@/features/user/api/userApi.types";
 import { Metadata } from "next";
-import { getUserInfo } from "./getUserInfo";
+import { getUserInfo } from "@/entities";
 import { notFound } from "next/navigation";
 
 type Props = {
